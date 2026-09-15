@@ -3099,7 +3099,15 @@ if 'bazy' not in st.session_state:
         }
     ]
 }
-#Restar aplikacji mobilnych 
+# ==============================================================================
+# INICJALIZACJA STANU SESJI I MOTYWÓW
+# ==============================================================================
+if 'theme' not in st.session_state:
+    st.session_state.theme = "Ciemny"
+
+if 'admin_logged_in' not in st.session_state:
+    st.session_state.admin_logged_in = False
+
 if 'wybrana_baza' not in st.session_state:
     st.session_state.wybrana_baza = None
 if 'aktywny_tryb' not in st.session_state:
@@ -3112,6 +3120,10 @@ if 'sprawdzono_odpowiedz' not in st.session_state:
     st.session_state.sprawdzono_odpowiedz = False
 if 'odpowiedzi_egzamin' not in st.session_state:
     st.session_state.odpowiedzi_egzamin = {}
+if 'czas_konca' not in st.session_state:
+    st.session_state.czas_konca = None
+if 'test_zakonczony' not in st.session_state:
+    st.session_state.test_zakonczony = False
 
 # Konfiguracja układu strony
 st.set_page_config(
@@ -3125,47 +3137,22 @@ if st.session_state.theme == "Jasny":
     st.markdown("""
     <style>
         .stApp { background-color: #f8f9fa; color: #212529; }
-        
         section[data-testid="stSidebar"] { background-color: #f1f3f5 !important; }
         section[data-testid="stSidebar"] * { color: #212529 !important; }
-
         input, textarea, select, div[role="combobox"], div[data-baseweb="select"] {
-            background-color: #ffffff !important;
-            color: #212529 !important;
-            border: 1px solid #ced4da !important;
+            background-color: #ffffff !important; color: #212529 !important; border: 1px solid #ced4da !important;
         }
-        div[data-baseweb="select"] * {
-            background-color: #ffffff !important;
-            color: #212529 !important;
-        }
-        
+        div[data-baseweb="select"] * { background-color: #ffffff !important; color: #212529 !important; }
         .stButton>button, .stFormSubmitButton>button {
-            background-color: #e9ecef !important;
-            color: #212529 !important;
-            border: 1px solid #ced4da !important;
-            width: 100% !important;
+            background-color: #e9ecef !important; color: #212529 !important; border: 1px solid #ced4da !important; width: 100% !important;
         }
-        .stButton>button:hover, .stFormSubmitButton>button:hover {
-            background-color: #dee2e6 !important;
-            border-color: #adb5bd !important;
-        }
-
+        .stButton>button:hover, .stFormSubmitButton>button:hover { background-color: #dee2e6 !important; border-color: #adb5bd !important; }
         label, .stRadio p, .stCheckbox p, p { color: #212529 !important; }
-
         .main-header { font-size: 22px; font-weight: bold; color: #0d6efd; border-bottom: 2px solid #dee2e6; padding-bottom: 5px; margin-bottom: 15px; }
         .question-box { background-color: #ffffff; padding: 15px; border-radius: 6px; border: 1px solid #ced4da; margin-bottom: 15px; color: #212529; }
         .legal-box { background-color: #e7f1ff; padding: 15px; border-radius: 6px; border: 1px solid #b6d4fe; margin-top: 15px; margin-bottom: 15px; color: #084298; }
-
-        /* Równe kafelki na stronie głównej - jasny motyw */
         .card-blue, .card-yellow, .card-green, .card-red {
-            padding: 20px;
-            border-radius: 8px;
-            height: 220px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            margin-bottom: 20px;
-            box-sizing: border-box;
+            padding: 20px; border-radius: 8px; height: 220px; display: flex; flex-direction: column; justify-content: flex-start; margin-bottom: 20px; box-sizing: border-box;
         }
         .card-blue { background-color: #cfe2ff; color: #084298; border: 1px solid #b6d4fe; }
         .card-yellow { background-color: #ffe5d0; color: #7c2d12; border: 1px solid #ffbb99; }
@@ -3173,44 +3160,23 @@ if st.session_state.theme == "Jasny":
         .card-red { background-color: #f8d7da; color: #842029; border: 1px solid #f5c2c7; }
     </style>
     """, unsafe_allow_html=True)
-elif st.session_state.theme in ["Cciemny", "Ciemny"]:
+else:
     st.markdown("""
     <style>
         .stApp { background-color: #0e1117; color: #ffffff; }
-        
         section[data-testid="stSidebar"] { background-color: #161b22 !important; }
         section[data-testid="stSidebar"] * { color: #ffffff !important; }
-
         input, textarea, select, div[role="combobox"], div[data-baseweb="select"] {
-            background-color: #21262d !important;
-            color: #ffffff !important;
-            border: 1px solid #30363d !important;
+            background-color: #21262d !important; color: #ffffff !important; border: 1px solid #30363d !important;
         }
-        div[data-baseweb="select"] * {
-            background-color: #21262d !important;
-            color: #ffffff !important;
-        }
-
-        .stButton>button, .stFormSubmitButton>button {
-            width: 100% !important;
-        }
-
+        div[data-baseweb="select"] * { background-color: #21262d !important; color: #ffffff !important; }
+        .stButton>button, .stFormSubmitButton>button { width: 100% !important; }
         label, .stRadio p, .stCheckbox p, p { color: #ffffff !important; }
-
         .main-header { font-size: 22px; font-weight: bold; color: #58a6ff; border-bottom: 2px solid #30363d; padding-bottom: 5px; margin-bottom: 15px; }
         .question-box { background-color: #161b22; padding: 15px; border-radius: 6px; border: 1px solid #30363d; margin-bottom: 15px; color: #ffffff; }
         .legal-box { background-color: #0d1117; padding: 15px; border-radius: 6px; border: 1px solid #238636; margin-top: 15px; margin-bottom: 15px; color: #e6edf3; }
-
-        /* Równe kafelki na stronie głównej - ciemny motyw */
         .card-blue, .card-yellow, .card-green, .card-red {
-            padding: 20px;
-            border-radius: 8px;
-            height: 220px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            margin-bottom: 20px;
-            box-sizing: border-box;
+            padding: 20px; border-radius: 8px; height: 220px; display: flex; flex-direction: column; justify-content: flex-start; margin-bottom: 20px; box-sizing: border-box;
         }
         .card-blue { background-color: #1f364d; color: #58a6ff; border: 1px solid #30363d; }
         .card-yellow { background-color: #452800; color: #ffbc54; border: 1px solid #633800; }
@@ -3218,62 +3184,39 @@ elif st.session_state.theme in ["Cciemny", "Ciemny"]:
         .card-red { background-color: #421e22; color: #f85149; border: 1px solid #da3633; }
     </style>
     """, unsafe_allow_html=True)
-else:
-    st.markdown("""
-    <style>
-        @media (prefers-color-scheme: dark) {
-            .stApp { background-color: #0e1117; color: #ffffff; }
-            section[data-testid="stSidebar"] { background-color: #161b22 !important; }
-            section[data-testid="stSidebar"] * { color: #ffffff !important; }
-            input, textarea, select, div[role="combobox"], div[data-baseweb="select"] { background-color: #21262d !important; color: #ffffff !important; border: 1px solid #30363d !important; }
-            div[data-baseweb="select"] * { background-color: #21262d !important; color: #ffffff !important; }
-            .stButton>button, .stFormSubmitButton>button { width: 100% !important; }
-            label, .stRadio p, .stCheckbox p, p { color: #ffffff !important; }
-            .main-header { font-size: 22px; font-weight: bold; color: #58a6ff; border-bottom: 2px solid #30363d; padding-bottom: 5px; margin-bottom: 15px; }
-            .question-box { background-color: #161b22; padding: 15px; border-radius: 6px; border: 1px solid #30363d; margin-bottom: 15px; color: #ffffff; }
-            .legal-box { background-color: #0d1117; padding: 15px; border-radius: 6px; border: 1px solid #238636; margin-top: 15px; margin-bottom: 15px; color: #e6edf3; }
-            .card-blue { background-color: #1f364d; color: #58a6ff; border: 1px solid #30363d; }
-            .card-yellow { background-color: #452800; color: #ffbc54; border: 1px solid #633800; }
-            .card-green { background-color: #1b3a2b; color: #3fb950; border: 1px solid #238636; }
-            .card-red { background-color: #421e22; color: #f85149; border: 1px solid #da3633; }
-            .card-blue, .card-yellow, .card-green, .card-red { padding: 20px; border-radius: 8px; height: 220px; display: flex; flex-direction: column; justify-content: flex-start; margin-bottom: 20px; box-sizing: border-box; }
-        }
-        @media (prefers-color-scheme: light) {
-            .stApp { background-color: #f8f9fa; color: #212529; }
-            section[data-testid="stSidebar"] { background-color: #f1f3f5 !important; }
-            section[data-testid="stSidebar"] * { color: #212529 !important; }
-            input, textarea, select, div[role="combobox"], div[data-baseweb="select"] { background-color: #ffffff !important; color: #212529 !important; border: 1px solid #ced4da !important; }
-            div[data-baseweb="select"] * { background-color: #ffffff !important; color: #212529 !important; }
-            .stButton>button, .stFormSubmitButton>button { background-color: #e9ecef !important; color: #212529 !important; border: 1px solid #ced4da !important; width: 100% !important; }
-            label, .stRadio p, .stCheckbox p, p { color: #212529 !important; }
-            .main-header { font-size: 22px; font-weight: bold; color: #0d6efd; border-bottom: 2px solid #dee2e6; padding-bottom: 5px; margin-bottom: 15px; }
-            .question-box { background-color: #ffffff; padding: 15px; border-radius: 6px; border: 1px solid #ced4da; margin-bottom: 15px; color: #212529; }
-            .legal-box { background-color: #e7f1ff; padding: 15px; border-radius: 6px; border: 1px solid #b6d4fe; margin-top: 15px; margin-bottom: 15px; color: #084298; }
-            .card-blue { background-color: #cfe2ff; color: #084298; border: 1px solid #b6d4fe; }
-            .card-yellow { background-color: #ffe5d0; color: #7c2d12; border: 1px solid #ffbb99; }
-            .card-green { background-color: #d1e7dd; color: #0f5132; border: 1px solid #badbcc; }
-            .card-red { background-color: #f8d7da; color: #842029; border: 1px solid #f5c2c7; }
-            .card-blue, .card-yellow, .card-green, .card-red { padding: 20px; border-radius: 8px; height: 220px; display: flex; flex-direction: column; justify-content: flex-start; margin-bottom: 20px; box-sizing: border-box; }
-        }
-    </style>
-    """, unsafe_allow_html=True)
 
 # Pomocnicze funkcje nawigacyjne
-def start_sesji(tryb):
+def start_sesji(tryb, limit_pytan=None):
     st.session_state.aktywny_tryb = tryb
     st.session_state.indeks = 0
     st.session_state.sprawdzono_odpowiedz = False
     st.session_state.odpowiedzi_egzamin = {}
-    pula = list(st.session_state.bazy[st.session_state.wybrana_baza])
-    if "Losow" in tryb or "Egzamin" in tryb:
+    st.session_state.test_zakonczony = False
+    
+    if tryb == "Tryb Egzaminu z CAŁEJ BAZY (50 pytań / 30 min)":
+        pula = []
+        for baza in st.session_state.bazy.values():
+            pula.extend(baza)
         random.shuffle(pula)
-    st.session_state.pytania_sesji = pula
+        if limit_pytan:
+            pula = pula[:limit_pytan]
+        st.session_state.pytania_sesji = pula
+        st.session_state.czas_konca = time.time() + (30 * 60) # 30 minut
+    else:
+        pula = list(st.session_state.bazy[st.session_state.wybrana_baza])
+        random.shuffle(pula)
+        if limit_pytan:
+            pula = pula[:limit_pytan]
+        st.session_state.pytania_sesji = pula
+        st.session_state.czas_konca = None
 
 def powrot_do_wyboru():
     st.session_state.wybrana_baza = None
     st.session_state.aktywny_tryb = None
     st.session_state.indeks = 0
     st.session_state.sprawdzono_odpowiedz = False
+    st.session_state.test_zakonczony = False
+    st.session_state.czas_konca = None
 
 # ==============================================================================
 # MENU GŁÓWNE W PASKU BOCZNYM
@@ -3304,17 +3247,15 @@ if menu_glowne == "🏠 Strona Główna":
         st.markdown("""
         <div class="card-blue">
             <h4 style="margin-top:0;">🎮 Rozwiązywanie Testów</h4>
-            <p style="margin:0;">Wybierz część bazy, ustal tryb nauki lub spróbuj sił w symulacji egzaminu.</p>
+            <p style="margin:0;">Wybierz część bazy, ustal tryb nauki, egzaminu lub uruchom test z całej bazy.</p>
         </div>
         """, unsafe_allow_html=True)
-        
         st.markdown("""
         <div class="card-green">
             <h4 style="margin-top:0;">🔍 Baza Pytań</h4>
             <p style="margin:0;">Przeglądaj pytania razem z przypisanymi podstawami prawnymi oraz tekstami artykułów.</p>
         </div>
         """, unsafe_allow_html=True)
-        
     with col2:
         st.markdown("""
         <div class="card-yellow">
@@ -3322,7 +3263,6 @@ if menu_glowne == "🏠 Strona Główna":
             <p style="margin:0;">Rozszerzaj bazę testową o własne pytania i odpowiedzi.</p>
         </div>
         """, unsafe_allow_html=True)
-        
         st.markdown("""
         <div class="card-red">
             <h4 style="margin-top:0;">🔑 Tryb Administratora</h4>
@@ -3334,8 +3274,16 @@ if menu_glowne == "🏠 Strona Główna":
 # WIDOK: TESTY I NAUKA
 # ==============================================================================
 elif menu_glowne == "🎮 Testy i Nauka":
-    if st.session_state.wybrana_baza is None:
-        st.markdown("<div class='main-header'>Wybierz część bazy pytań</div>", unsafe_allow_html=True)
+    # Opcja szybkiego uruchomienia egzaminu z całej bazy bezpośrednio z głównego menu modułu testowego
+    if st.session_state.wybrana_baza is None and st.session_state.aktywny_tryb is None:
+        st.markdown("<div class='main-header'>Wybierz tryb testowy lub bazę pytań</div>", unsafe_allow_html=True)
+        
+        if st.button("🚀 Uruchom Egzamin z CAŁEJ BAZY (50 pytań / 30 min)", use_container_width=True, type="primary"):
+            start_sesji("Tryb Egzaminu z CAŁEJ BAZY (50 pytań / 30 min)", limit_pytan=50)
+            st.rerun()
+            
+        st.markdown("---")
+        st.write("Lub wybierz pojedynczą część bazy danych:")
         for nazwa_bazy in st.session_state.bazy.keys():
             if st.button(f"📁 {nazwa_bazy}", use_container_width=True):
                 st.session_state.wybrana_baza = nazwa_bazy
@@ -3347,35 +3295,45 @@ elif menu_glowne == "🎮 Testy i Nauka":
         st.markdown(f"**Wybrana baza liczy: {len(baza_pytania)} pytań**")
         st.write("")
 
-        if st.button("Tryb Nauki (Kolejno + Podpowiedzi)", use_container_width=True):
-            start_sesji("Tryb Nauki (Kolejno + Podpowiedzi)")
+        if st.button("Tryb Nauki (Losowo – 30 pytań z podpowiedziami)", use_container_width=True):
+            start_sesji("Tryb Nauki (Losowo)", limit_pytan=30)
             st.rerun()
 
-        if st.button("Tryb Nauki (Losowa kolejność + Podpowiedzi)", use_container_width=True):
-            start_sesji("Tryb Nauki (Losowa kolejność + Podpowiedzi)")
-            st.rerun()
-
-        if st.button("Tryb Egzaminu (Losowo, Wynik na końcu)", use_container_width=True):
-            start_sesji("Tryb Egzaminu (Losowo, Wynik na końcu)")
+        if st.button("Tryb Egzaminu (Losowo – 35 pytań, wynik na końcu)", use_container_width=True):
+            start_sesji("Tryb Egzaminu", limit_pytan=35)
             st.rerun()
 
         st.write("")
-        if st.button("← Powrót do wyboru części", use_container_width=True):
+        if st.button("← Powrót do wyboru baz", use_container_width=True):
             powrot_do_wyboru()
             st.rerun()
 
     else:
-        st.markdown(f"<div class='main-header'>{st.session_state.aktywny_tryb} - {st.session_state.wybrana_baza}</div>", unsafe_allow_html=True)
+        # Obsługa licznika czasu dla egzaminu z całej bazy
+        if st.session_state.czas_konca is not None and not st.session_state.test_zakonczony:
+            pozostaly_czas = int(st.session_state.czas_konca - time.time())
+            if pozostaly_czas <= 0:
+                st.session_state.test_zakonczony = True
+                st.warning("⏱️ Czas minął! Egzamin został automatycznie zakończony.")
+                st.rerun()
+            else:
+                minuty = pozostaly_czas // 60
+                sekundy = pozostaly_czas % 60
+                st.markdown(f"### ⏱️ Pozostały czas egzaminu: **{minuty:02d}:{sekundy:02d}**")
+                time.sleep(1)
+                st.rerun()
+
+        st.markdown(f"<div class='main-header'>{st.session_state.aktywny_tryb}</div>", unsafe_allow_html=True)
         lista = st.session_state.pytania_sesji
         idx = st.session_state.indeks
 
-        if st.button("← Zmień tryb / powrót"):
-            st.session_state.aktywny_tryb = None
+        if st.button("← Przerwij i wróć do menu"):
+            powrot_do_wyboru()
             st.rerun()
 
         st.markdown("---")
 
-        if idx < len(lista):
+        if idx < len(lista) and not st.session_state.test_zakonczony:
             p = lista[idx]
             st.markdown(f"**Pytanie {idx + 1} z {len(lista)}** (ID: {p['id']})")
             st.markdown(f"<div class='question-box'><h3>{p['pytanie']}</h3></div>", unsafe_allow_html=True)
@@ -3386,7 +3344,6 @@ elif menu_glowne == "🎮 Testy i Nauka":
                     for k, v in p["odpowiedzi"].items():
                         if st.checkbox(f"**{k}**: {v}", key=f"cb_nauka_{idx}_{k}"):
                             wybrane.append(k)
-                    
                     sprawdz = st.form_submit_button("Sprawdź odpowiedź")
 
                 if sprawdz:
@@ -3395,7 +3352,6 @@ elif menu_glowne == "🎮 Testy i Nauka":
                 if st.session_state.sprawdzono_odpowiedz:
                     poprawne = set(p["poprawne"])
                     zaznaczone = set(wybrane)
-                    
                     if zaznaczone == poprawne:
                         st.success("✅ Poprawna odpowiedź!")
                     else:
@@ -3403,7 +3359,6 @@ elif menu_glowne == "🎮 Testy i Nauka":
 
                     podstawa = p.get("podstawa_prawna", "Brak zdefiniowanej podstawy prawnej")
                     artykul = p.get("tresc_artykulu", "Brak opisu treści artykułu")
-                    
                     st.markdown(f"""
                     <div class='legal-box'>
                         <strong>📜 Podstawa prawna:</strong> {podstawa}<br><br>
@@ -3411,7 +3366,6 @@ elif menu_glowne == "🎮 Testy i Nauka":
                         <em>{artykul}</em>
                     </div>
                     """, unsafe_allow_html=True)
-
             else:
                 poprzednie_wybory = st.session_state.odpowiedzi_egzamin.get(idx, [])
                 wybrane = []
@@ -3419,7 +3373,6 @@ elif menu_glowne == "🎮 Testy i Nauka":
                     zaznaczone = k in poprzednie_wybory
                     if st.checkbox(f"**{k}**: {v}", value=zaznaczone, key=f"cb_egz_{idx}_{k}"):
                         wybrane.append(k)
-                
                 st.session_state.odpowiedzi_egzamin[idx] = wybrane
 
             col_p, col_n = st.columns([1, 1])
@@ -3435,13 +3388,12 @@ elif menu_glowne == "🎮 Testy i Nauka":
                         st.session_state.sprawdzono_odpowiedz = False
                         st.rerun()
                 else:
-                    if st.button("🏁 Zakończ Test"):
-                        st.session_state.indeks += 1
+                    if st.button("🏁 Zakończ Test / Egzamin"):
+                        st.session_state.test_zakonczony = True
                         st.rerun()
-
         else:
             st.balloons()
-            st.success("🎉 Zakończyłeś test!")
+            st.success("🎉 Zakończyłeś test / egzamin!")
             
             if "Egzamin" in st.session_state.aktywny_tryb:
                 punkty = 0
@@ -3450,11 +3402,10 @@ elif menu_glowne == "🎮 Testy i Nauka":
                     correct_ans = set(q["poprawne"])
                     if user_ans == correct_ans:
                         punkty += 1
-
                 st.markdown(f"### Twój Wynik Egzaminu: **{punkty} / {len(lista)}** ({(punkty/len(lista)*100):.1f}%)")
 
             if st.button("🔄 Rozpocznij ponownie"):
-                start_sesji(st.session_state.aktywny_tryb)
+                powrot_do_wyboru()
                 st.rerun()
 
 # ==============================================================================
@@ -3555,7 +3506,6 @@ elif menu_glowne == "🔑 Panel Administratora":
             p = lista_pytan[pytanie_idx]
 
             col_del, col_edit = st.columns([1, 4])
-            
             with col_del:
                 st.write("**Usuwanie**")
                 if st.button("🗑️ Usuń pytanie", type="primary"):
@@ -3568,7 +3518,6 @@ elif menu_glowne == "🔑 Panel Administratora":
 
             with st.form(key=f"edit_form_{p['id']}"):
                 nowa_tresc = st.text_area("Treść pytania:", value=p["pytanie"])
-                
                 ans_a = st.text_input("Odpowiedź A:", value=p["odpowiedzi"].get("A", ""))
                 ans_b = st.text_input("Odpowiedź B:", value=p["odpowiedzi"].get("B", ""))
                 ans_c = st.text_input("Odpowiedź C:", value=p["odpowiedzi"].get("C", ""))

@@ -17,16 +17,1310 @@ if 'admin_logged_in' not in st.session_state:
 
 if 'bazy' not in st.session_state:
     st.session_state.bazy = {
-        "BAZA PYTAŃ - CZĘŚĆ 1 (...)": [
+        "BAZA PYTAŃ - CZĘŚĆ 1 (Hydrogeologia i geologia inżynierska [...])": [
         # ... pytania z części 3 ...
     ],  # <--- WAŻNY PRECINEK TUTAJ!
-    "BAZA PYTAŃ - CZĘŚĆ 2 (...)": [
+    "BAZA PYTAŃ - CZĘŚĆ 2 (Informacja geologiczna, organy administracji geologicznej, organy nadzoru górniczego, plany ruchu zakładu górniczego)": [
         # ... pytania z części 3 ...
     ],  # <--- WAŻNY PRECINEK TUTAJ!
-        "BAZA PYTAŃ - CZĘŚĆ 3 (...)": [
-        # ... pytania z części 3 ...
-    ],  # <--- WAŻNY PRECINEK TUTAJ!
-        "BAZA PYTAŃ - CZĘŚĆ 4 (Kwalifikacje, kary, przepisy przejściowe i inne)": [
+    
+    "BAZA PYTAŃ - CZĘŚĆ 3 (Pojęcia ogólne, własność górnicza, koncesje, kwalifikacje geologiczne)": [
+        "id": 1,
+        "pytanie": "Ustawa Prawo geologiczne i górnicze określa zasady i warunki podejmowania, wykonywania oraz zakończenia działalności w zakresie:",
+        "odpowiedzi": {
+            "A": "naziemnego składowania odpadów;",
+            "B": "wytwarzania, przetwarzania, magazynowania, przesyłania, dystrybucji i obrotu paliwami i energią;",
+            "C": "bezzbiornikowego magazynowania substancji;"
+        },
+        "poprawne": ["C"],
+        "podstawa_prawna": "Art. 1 ust. 1 pkt 3 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Ustawa określa zasady i warunki podejmowania, wykonywania oraz zakończenia działalności w zakresie: (...) 3) bezzbiornikowego magazynowania substancji w górotworze, w tym w podziemnych wyrobiskach górniczych."
+    },
+    {
+        "id": 2,
+        "pytanie": "Ustawy Prawo geologiczne i górnicze nie stosuje się do:",
+        "odpowiedzi": {
+            "A": "drążenia tuneli z zastosowaniem techniki górniczej;",
+            "B": "bezzbiornikowego magazynowania substancji w górotworze;",
+            "C": "wydobywania kruszywa do wykonania pilnych prac zabezpieczających przed powodzią w czasie klęski żywiołowej;"
+        },
+        "poprawne": ["C"],
+        "podstawa_prawna": "Art. 3 pkt 6 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Ustawy nie stosuje się do: (...) 6) pozyskiwania drewna i kruszywa do wykonania pilnych prac zabezpieczających przed powodzią w czasie stanu klęski żywiołowej."
+    },
+    {
+        "id": 3,
+        "pytanie": "Kiedy konieczne będzie uzyskanie koncesji na wydobycie piasku i żwiru?",
+        "odpowiedzi": {
+            "A": "Piasek będzie wydobyty przez Jana Kowalskiego z nieruchomości stanowiącej jego własność w ilości 8 m³ jednorazowo oraz sprzedany firmie ABC sp. z o.o.,",
+            "B": "Piasek będzie wydobywany przez Jana Kowalskiego w celu wykonania podmurówki jednorazowo w ilości ok. 5 m³ w roku, z nieruchomości stanowiącej jego własność;",
+            "C": "Piasek będzie wydobywany przez ABC sp. z o.o. oraz wykorzystany w celu wykonania podmurówki w ilości ok. 5 m³ z nieruchomości stanowiącej jej własność,"
+        },
+        "poprawne": ["A", "C"],
+        "podstawa_prawna": "Art. 4 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Robić bez koncesji wydobycie może tylko osoba fizyczna, z nieruchomości własnej, do 10 m³ w roku kalendarzowym, bez prawa rozporządzania (sprzedaży) wydobytą kopaliną i przeznaczając ją wyłącznie na własne potrzeby."
+    },
+    {
+        "id": 4,
+        "pytanie": "Za kopaliny uważa się:",
+        "odpowiedzi": {
+            "A": "Wody lecznicze, wody termalne i solanki",
+            "B": "Tylko wody lecznicze;",
+            "C": "Wody pochodzące z odwadniania kopalń"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 5 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Nie są kopalinami wody, z wyjątkiem wód leczniczych, wód termalnych i solanek."
+    },
+    {
+        "id": 5,
+        "pytanie": "Wodą termalną jest:",
+        "odpowiedzi": {
+            "A": "Każda woda podziemna o zawartości rozpuszczonych składników mineralnych nie mniejszej niż 35g/dm³;",
+            "B": "Woda podziemna, która na wypływie z ujęcia ma temperaturę nie mniejszą niż 20°C;",
+            "C": "Woda podgrzana w termie elektrycznej;"
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 5 ust. 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Wodą termalną jest woda podziemna, która na wypływie z ujęcia ma temperaturę nie mniejszą niż 20°C."
+    },
+    {
+        "id": 6,
+        "pytanie": "Informacją geologiczną w rozumieniu ustawy Prawo geologiczne i górnicze są:",
+        "odpowiedzi": {
+            "A": "Dane geologiczne;",
+            "B": "Próbki geologiczne;",
+            "C": "Opracowania danych geologicznych, w szczególności w dokumentacjach geologicznych;"
+        },
+        "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 6 ust. 1 pkt 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Informacja geologiczna to dane geologiczne, w tym próbki geologiczne, jak również opracowania danych geologicznych, w szczególności zawarte w dokumentacjach geologicznych."
+    },
+    {
+        "id": 7,
+        "pytanie": "Obszar górniczy to:",
+        "odpowiedzi": {
+            "A": "Przestrzeń w górotworze powstała w wyniku robót górniczych;",
+            "B": "Przestrzeń, w granicach której przedsiębiorca jest uprawniony do wydobywania kopaliny oraz prowadzenia robót górniczych związanych z wykonywaniem koncesji;",
+            "C": "Przestrzeń objęta przewidywanymi szkodliwymi wpływami robót górniczych zakładu górniczego;"
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 6 ust. 1 pkt 5 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Obszar górniczy – przestrzeń, w granicach której przedsiębiorca jest uprawniony do wydobywania kopaliny, podziemnego magazynowania substancji, podziemnego składowania odpadów oraz prowadzenia robót górniczych związanych z wykonywaniem koncesji."
+    },
+    {
+        "id": 8,
+        "pytanie": "Własnością górniczą objęte są złoża:",
+        "odpowiedzi": {
+            "A": "Węglowodorów;",
+            "B": "metanu występującego jako kopalina towarzysząca,",
+            "C": "Granitu;"
+        },
+        "poprawne": ["A", "B"],
+        "podstawa_prawna": "Art. 10 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Złoża węglowodorów, węgla kamiennego, metanu występującego jako kopalina towarzysząca (...) są objęte własnością górniczą."
+    },
+    {
+        "id": 9,
+        "pytanie": "Własnością górniczą objęte są złoża:",
+        "odpowiedzi": {
+            "A": "wód leczniczych,",
+            "B": "wód termalnych,",
+            "C": "Solanek;"
+        },
+        "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 10 ust. 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Złoża wód leczniczych, wód termalnych i solanek są objęte własnością górniczą."
+    },
+    {
+        "id": 10,
+        "pytanie": "Własnością górniczą objęte są złoża:",
+        "odpowiedzi": {
+            "A": "węgla kamiennego,",
+            "B": "rud pierwiastków promieniotwórczych,",
+            "C": "gipsu i anhydrytu"
+        },
+        "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 10 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Złoża węgla kamiennego, rud pierwiastków promieniotwórczych (...) stanowią przedmiot własności górniczej."
+    },
+    {
+        "id": 11,
+        "pytanie": "Własnością górniczą nie są objęte złoża:",
+        "odpowiedzi": {
+            "A": "siarki rodzimej,",
+            "B": "wapieni,",
+            "C": "soli kamiennej;"
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 10 ust. 1 i 3 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Złoża kopalin niewymienionych w ust. 1 i 2 (m.in. wapienie, gipsy, kruszywa) są objęte prawem własności nieruchomości gruntowej."
+    },
+    {
+        "id": 12,
+        "pytanie": "Własnością górniczą objęte są:",
+        "odpowiedzi": {
+            "A": "złoża rud metali z wyjątkiem darniowych rud żelaza,",
+            "B": "części górotworu położone poza granicami przestrzennymi nieruchomości gruntowej, w szczególności znajdujące się w granicach obszarów morskich Rzeczypospolitej Polskiej,",
+            "C": "nieruchomości gruntowe;"
+        },
+        "poprawne": ["A", "B"],
+        "podstawa_prawna": "Art. 10 ust. 1 i 4 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Własnością górniczą objęte są złoża rud metali z wyjątkiem darniowych rud żelaza oraz części górotworu położone poza granicami przestrzennymi nieruchomości gruntowej."
+    },
+    {
+        "id": 13,
+        "pytanie": "Prawo własności górniczej przysługuje:",
+        "odpowiedzi": {
+            "A": "Skarbowi Państwa,",
+            "B": "właścicielom nieruchomości gruntowych,",
+            "C": "marszałkom województw;"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 10 ust. 5 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Prawo własności górniczej przysługuje Skarbowi Państwa."
+    },
+    {
+        "id": 14,
+        "pytanie": "Ustanowienie użytkowania górniczego następuje w drodze:",
+        "odpowiedzi": {
+            "A": "decyzji administracyjnej organu koncesyjnego,",
+            "B": "umowy zawartej na piśmie pod rygorem nieważności,",
+            "C": "zatwierdzenia dokumentacji geologicznej złoża kopaliny"
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 13 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Ustanowienie użytkowania górniczego następuje w drodze umowy zawartej na piśmie pod rygorem nieważności."
+    },
+    {
+        "id": 15,
+        "pytanie": "Aby żądać ustanowienia użytkowania górniczego z pierwszeństwem przed innymi, przedsiębiorca powinien:",
+        "odpowiedzi": {
+            "A": "rozpoznać złoże kopaliny, stanowiące przedmiot własności górniczej,",
+            "B": "udokumentować złoże kopaliny w stopniu umożliwiającym sporządzenie projektu zagospodarowania złoża,",
+            "C": "uzyskać decyzję zatwierdzającą dokumentację geologiczną złoża kopaliny;"
+        },
+        "poprawne": ["B", "C"],
+        "podstawa_prawna": "Art. 15 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Ten, kto poszukiwał lub rozpoznał złoże kopaliny (...) i udokumentował je w stopniu umożliwiającym sporządzenie PZZ oraz uzyskał decyzję zatwierdzającą dokumentację geologiczną, może żądać ustanowienia użytkowania górniczego z pierwszeństwem przed innymi."
+    },
+    {
+        "id": 16,
+        "pytanie": "Aby żądać ustanowienia użytkowania górniczego z pierwszeństwem przed innymi, przedsiębiorca powinien:",
+        "odpowiedzi": {
+            "A": "rozpoznać złoże kopaliny, stanowiące przedmiot własności górniczej,",
+            "B": "udokumentować złoże kopaliny w stopniu umożliwiającym sporządzenie projektu zagospodarowania złoża,",
+            "C": "utworzyć fundusz likwidacji zakładu górniczego;"
+        },
+        "poprawne": ["A","B"],
+        "podstawa_prawna": "Art. 15 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Podstawą żądania pierwszeństwa jest udokumentowanie złoża w stopniu umożliwiającym sporządzenie PZZ."
+    },
+    {
+        "id": 17,
+        "pytanie": "Żądanie ustanowienia użytkowania górniczego z pierwszeństwem przed innymi wygasa z upływem:",
+        "odpowiedzi": {
+            "A": "5 lat od dnia doręczenia decyzji zatwierdzającej dokumentację geologiczną złoża kopaliny,",
+            "B": "3 lat od dnia doręczenia decyzji zatwierdzającej dokumentację geologiczną złoża kopaliny,",
+            "C": "4 lat od dnia doręczenia dokumentacji geologicznej;"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 15 ust. 3 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Prawo żądania ustanowienia użytkowania górniczego wygasa z upływem 5 lat od dnia doręczenia decyzji zatwierdzającej dokumentację geologiczną złoża kopaliny."
+    },
+    {
+        "id": 18,
+        "pytanie": "Jeżeli cudza nieruchomość lub jej część jest niezbędna do wykonywania działalności regulowanej ustawą Prawo geologiczne i górnicze przedsiębiorca może żądać umożliwienia korzystania z tej nieruchomości lub jej części:",
+        "odpowiedzi": {
+            "A": "przez czas nieoznaczony, bezpłatnie,",
+            "B": "przez czas nieoznaczony, za wynagrodzeniem,",
+            "C": "przez czas oznaczony, za wynagrodzeniem;"
+        },
+        "poprawne": ["C"],
+        "podstawa_prawna": "Art. 18 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Jeżeli cudza nieruchomość (...) jest niezbędna do wykonywania działalności (...) przedsiębiorca może żądać umożliwienia korzystania z tej nieruchomości lub jej części przez czas oznaczony, za wynagrodzeniem."
+    },
+    {
+        "id": 19,
+        "pytanie": "Korzystanie z wód kopalnianych dla zaspokojenia potrzeb zakładu górniczego jest:",
+        "odpowiedzi": {
+            "A": "płatne,",
+            "B": "bezpłatne,",
+            "C": "zabronione;"
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 20 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Korzystanie z wód pochodzących z odwodnienia wyrobisk górniczych dla potrzeb zakładu górniczego jest bezpłatne."
+    },
+    {
+        "id": 20,
+        "pytanie": "Prawem własności nieruchomości gruntowej objęte są złoża:",
+        "odpowiedzi": {
+            "A": "piasku i żwiru,",
+            "B": "wapieni,",
+            "C": "gipsu i anhydrytu"
+        },
+        "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 10 ust. 3 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Złoża kopalin niewymienionych w ust. 1 i 2 (m.in. piaski, żwiry, wapienie, gipsy i anhydryty) są objęte prawem własności nieruchomości gruntowej."
+    },
+    {
+        "id": 21,
+        "pytanie": "Obiekty, urządzenia oraz instalacje wzniesione w przestrzeni objętej użytkowaniem górniczym stanowią własność:",
+        "odpowiedzi": {
+            "A": "Skarbu Państwa,",
+            "B": "użytkownika górniczego,",
+            "C": "organu koncesyjnego."
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 16 ust. 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Obiekty, urządzenia oraz instalacje wzniesione w przestrzeni objętej użytkowaniem górniczym stanowią własność użytkownika górniczego."
+    },
+    {
+        "id": 22,
+        "pytanie": "W przypadku likwidacji zakładu górniczego, w całości lub w części, przedsiębiorca jest obowiązany:",
+        "odpowiedzi": {
+            "A": "zabezpieczyć lub zlikwidować wyrobiska górnicze oraz urządzenia, instalacje i obiekty zakładu górniczego,",
+            "B": "zabezpieczyć niewykorzystaną część złoża kopaliny,",
+            "C": "zabezpieczyć sąsiednie złoża kopalin;"
+        },
+        "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 129 ust. 1 pkt 1, 2, 3 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "W przypadku likwidacji zakładu górniczego przedsiębiorca jest obowiązany: zabezpieczyć lub zlikwidować wyrobiska, zabezpieczyć niewykorzystaną część złoża oraz zabezpieczyć sąsiednie złoża."
+    },
+    {
+        "id": 23,
+        "pytanie": "W przypadku likwidacji zakładu górniczego, w całości lub w części, przedsiębiorca jest obowiązany:",
+        "odpowiedzi": {
+            "A": "zabezpieczyć niewykorzystaną część złoża kopaliny,",
+            "B": "zabezpieczyć sąsiednie złoża kopalin,",
+            "C": "przedsięwziąć niezbędne środki chroniące wyrobiska sąsiednich zakładów górniczych"
+        },
+        "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 129 ust. 1 pkt 2, 3, 4 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Przedsiębiorca likwidujący zakład górniczy zabezpiecza niewykorzystane i sąsiednie złoża oraz podejmuje kroki w celu ochrony wyrobisk sąsiednich zakładów górniczych."
+    },
+    {
+        "id": 24,
+        "pytanie": "W przypadku likwidacji zakładu górniczego, w całości lub w części, przedsiębiorca jest obowiązany:",
+        "odpowiedzi": {
+            "A": "przedsięwziąć niezbędne środki chroniące wyrobiska sąsiednich zakładów górniczych,",
+            "B": "zabezpieczyć sąsiednie złoża kopalin,",
+            "C": "przedsięwziąć niezbędne środki w celu ochrony środowiska oraz rekultywacji gruntów po działalności górniczej"
+        },
+        "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 129 ust. 1 pkt 3, 4, 5 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Obowiązki przy likwidacji obejmują ochronę wyrobisk sąsiednich zakładów, zabezpieczenie sąsiednich złóż oraz ochronę środowiska i rekultywację."
+    },
+    {
+        "id": 25,
+        "pytanie": "W przypadku likwidacji zakładu górniczego, w całości lub w części, przedsiębiorca jest obowiązany:",
+        "odpowiedzi": {
+            "A": "zabezpieczyć lub zlikwidować wyrobiska górnicze oraz urządzenia, instalacje i obiekty zakładu górniczego,",
+            "B": "zabezpieczyć niewykorzystaną część złoża kopaliny,",
+            "C": "sporządzić dokumentację hydrogeologiczną;"
+        },
+        "poprawne": ["A", "B"],
+        "podstawa_prawna": "Art. 129 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Wśród ustawowych obowiązków likwidacji zakładu wymieniono zabezpieczenie/likwidację wyrobisk oraz zabezpieczenie niewykorzystanej części złoża."
+    },
+    {
+        "id": 25,
+        "pytanie": "Plan ruchu likwidowanego zakładu górniczego wymaga uzgodnienia z:",
+        "odpowiedzi": {
+            "A": "wójtem (burmistrzem, prezydentem),",
+            "B": "marszałkiem województwa,",
+            "C": "starostą;"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 108 ust. 5 (Art 129 ust. 5 uchylony) Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Plan ruchu likwidowanego zakładu górniczego wymaga uzgodnienia z właściwym wójtem (burmistrzem, prezydentem miasta)."
+    },
+    {
+        "id": 26,
+        "pytanie": "Do rekultywacji gruntów po działalności górniczej stosuje się przepisy:",
+        "odpowiedzi": {
+            "A": "ustawy o ochronie gruntów rolnych i leśnych,",
+            "B": "Kodeksu postępowania administracyjnego,",
+            "C": "ustawy o swobodzie działalności gospodarczej;"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 129 ust. 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Do rekultywacji gruntów po działalności górniczej stosuje się przepisy o ochronie gruntów rolnych i leśnych."
+    },
+    {
+        "id": 27,
+        "pytanie": "Obowiązek przeznaczania środków na fundusz likwidacji zakładu górniczego powstaje w przypadku wydobywania kopalin ze złóż:",
+        "odpowiedzi": {
+            "A": "od dnia udzielenia koncesji na wydobywanie kopaliny,",
+            "B": "od dnia wymagalności opłaty eksploatacyjnej,",
+            "C": "od dnia wydania decyzji o zatwierdzeniu dokumentacji geologicznej złoża kopaliny;"
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 128 ust. 6 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Obowiązek tworzenia funduszu likwidacji zakładu górniczego powstaje od dnia powstania obowiązku uiszczania opłaty eksploatacyjnej."
+    },
+    {
+        "id": 28,
+        "pytanie": "Która, z wymienionych obok działalności wymaga uzyskania koncesji:",
+        "odpowiedzi": {
+            "A": "Poszukiwanie i rozpoznawanie złóż gipsu i anhydrytu,",
+            "B": "Poszukiwanie i rozpoznawanie złóż wód leczniczych",
+            "C": "Poszukiwanie i rozpoznawanie złóż kopalin objętych prawem własności nieruchomości gruntowej"
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 21 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Działalność w zakresie poszukiwania lub rozpoznawania złóż kopalin objętych własnością górniczą (m.in. wód leczniczych) wymaga koncesji."
+    },
+    {
+        "id": 29,
+        "pytanie": "Która, z wymienionych obok działalności wymaga uzyskania koncesji:",
+        "odpowiedzi": {
+            "A": "Poszukiwanie i rozpoznawanie złóż rud miedzi;",
+            "B": "Poszukiwanie i rozpoznawanie złóż solanek;",
+            "C": "Podziemne składowanie odpadów"
+        },
+        "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 21 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Koncesji wymaga poszukiwanie/rozpoznawanie złóż stanowiących własność górniczą (rudy miedzi, solanki) oraz podziemne składowanie odpadów."
+    },
+    {
+        "id": 30,
+        "pytanie": "Która, z wymienionych obok działalności wymaga uzyskania koncesji:",
+        "odpowiedzi": {
+            "A": "Poszukiwanie i rozpoznawanie złóż soli potasowo – magnezowej;",
+            "B": "Wydobywanie złóż soli potasowo – magnezowej ze złoża;",
+            "C": "Poszukiwanie i rozpoznawanie złóż kopalin objętych prawem własności nieruchomości gruntowej"
+        },
+        "poprawne": ["A", "B"],
+        "podstawa_prawna": "Art. 21 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Koncesji wymaga poszukiwanie, rozpoznawanie oraz wydobywanie kopalin ze złóż objętych własnością górniczą (m.in. soli potasowo-magnezowych)."
+    },
+    {
+        "id": 31,
+        "pytanie": "Która, z wymienionych obok działalności wymaga uzyskania koncesji:",
+        "odpowiedzi": {
+            "A": "Wydobywanie kopalin ze złóż",
+            "B": "Podziemne bezzbiornikowe magazynowanie substancji",
+            "C": "Poszukiwanie i rozpoznawanie złóż kopalin objętych prawem własności nieruchomości gruntowej"
+        },
+        "poprawne": ["A", "B"],
+        "podstawa_prawna": "Art. 21 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Koncesji wymaga wydobywanie kopalin ze złóż oraz podziemne bezzbiornikowe magazynowanie substancji."
+    },
+    {
+        "id": 32,
+        "pytanie": "Koncesji udziela się na czas:",
+        "odpowiedzi": {
+            "A": "Nie dłuższy niż 50 lat",
+            "B": "Nie dłuższy niż 10 lat",
+            "C": "Bez ograniczeń w czasie"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 21 ust. 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Koncesji udziela się na czas oznaczony, nie krótszy niż 3 lata i nie dłuższy niż 50 lat, chyba że wnioskodawca wnosi o udzielenie koncesji na czas krótszy."
+    },
+    {
+        "id": 33,
+        "pytanie": "Minister środowiska udziela koncesji na:",
+        "odpowiedzi": {
+            "A": "Poszukiwanie złóż węgla brunatnego",
+            "B": "Poszukiwanie i rozpoznawanie złóż wód termalnych",
+            "C": "Podziemne składowanie odpadów"
+        },
+        "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 22 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Minister właściwy do spraw środowiska udziela koncesji na poszukiwanie/rozpoznawanie złóż objętych własnością górniczą, podziemne magazynowanie substancji oraz podziemne składowanie odpadów."
+    },
+    {
+        "id": 34,
+        "pytanie": "Minister środowiska udziela koncesji na:",
+        "odpowiedzi": {
+            "A": "Wydobywanie soli kamiennej;",
+            "B": "Wydobywanie kruszywa naturalnego z dna Morza Bałtyckiego w granicach obszarów morskich RP;",
+            "C": "Wydobywanie wapieni z użyciem środków strzałowych"
+        },
+        "poprawne": ["A", "B"],
+        "podstawa_prawna": "Art. 22 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Minister udziela koncesji na wydobywanie kopalin ze złóż objętych własnością górniczą (soli kamiennej) oraz wydobywanie kopalin w granicach obszarów morskich RP."
+    },
+    {
+        "id": 35,
+        "pytanie": "Starosta udziela koncesji na wydobywanie kopalin ze złóż, jeżeli spełnione są jednocześnie trzy wymagania. Wskaż, które muszą być spełnione aby koncesji mógł udzielić starosta (które nie dyskwalifikują starostę jako organ koncesyjny):",
+        "odpowiedzi": {
+            "A": "Obszar udokumentowanego złoża objętego własnością górniczą nie przekracza 2 ha;",
+            "B": "Wydobycie kopaliny ze złoża w roku kalendarzowym nie przekroczy 20 000 m³;",
+            "C": "Działalność będzie prowadzona metodą głębinową, bez użycia środków strzałowych;"
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 22 ust. 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Starosta udziela koncesji na wydobywanie kopalinii, jeżeli obszar złoża nieobjętego własnością górniczą nie przekracza 2 ha, wydobycie w roku nie przekroczy 20 000 m³, a prace prowadzone są metodą odkrywkową bez środków strzałowych."
+    },
+    {
+        "id": 36,
+        "pytanie": "Starosta udziela koncesji na wydobywanie kopalin ze złóż, jeżeli spełnione są jednocześnie trzy wymagania. Wskaż, które muszą być spełnione aby koncesji mógł udzielić starosta (które nie dyskwalifikują starostę jako organ koncesyjny):",
+        "odpowiedzi": {
+            "A": "Obszar udokumentowanego złoża nieobjętego własnością górniczą nie przekracza 2 ha;",
+            "B": "Wydobycie kopaliny ze złoża nie przekroczy 20 000 m³ kwartalnie, i wyniesie nie więcej niż 80 000 m³ rocznie;",
+            "C": "Działalność będzie prowadzona metodą odkrywkową, bez użycia środków strzałowych;"
+        },
+        "poprawne": ["A", "C"],
+        "podstawa_prawna": "Art. 22 ust. 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Kryteria właściwości starosty to: złoże nieobjęte własnością górniczą do 2 ha, odkrywka bez użycia środków strzałowych oraz limit roczny wydobycia do 20 000 m³."
+    },
+    {
+        "id": 37,
+        "pytanie": "Starosta udziela koncesji na wydobywanie kopalin ze złóż, jeżeli spełnione są jednocześnie trzy wymagania. Wskaż, które muszą być spełnione aby koncesji mógł udzielić starosta (które nie dyskwalifikują starostę jako organ koncesyjny):",
+        "odpowiedzi": {
+            "A": "Obszar udokumentowanego złoża nieobjętego własnością górniczą nie przekracza 2 ha;",
+            "B": "Wydobycie kopaliny ze złoża w roku kalendarzowym nie przekroczy 20 000 m³;",
+            "C": "Działalność będzie prowadzona metodą odkrywkową, z użyciem środków strzałowych;"
+        },
+        "poprawne": ["A", "B"],
+        "podstawa_prawna": "Art. 22 ust. 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Wymagania dla starosty obejmują obszar do 2 ha oraz roczne wydobycie do 20 000 m³ (użycie środków strzałowych dyskwalifikuje starostę)."
+    },
+    {
+        "id": 38,
+        "pytanie": "Koncesji na wydobywanie granitu, jeżeli wydobycie w roku kalendarzowym wyniesie 15 000 m³ udziela:",
+        "odpowiedzi": {
+            "A": "Minister właściwy do spraw środowiska;",
+            "B": "Marszałek województwa;",
+            "C": "Starosta"
+        },
+        "poprawne": ["C"],
+        "podstawa_prawna": "Art. 22 ust. 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Granit nie podlega własności górniczej. Jeżeli spełnia warunki metody odkrywkowej bez materiałów wybuchowych oraz progu do 20 000 m³/rok, organem jest starosta."
+    },
+    {
+        "id": 39,
+        "pytanie": "Koncesji na wydobywanie kaolinu, jeżeli obszar udokumentowanego złoża wynosi 20 ha, udziela:",
+        "odpowiedzi": {
+            "A": "Marszałek województwa;",
+            "B": "Minister właściwy do spraw środowiska;",
+            "C": "Starosta"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 22 ust. 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Ponieważ powierchnia złoża przekracza 2 ha (wynosi 20 ha), właściwym organem koncesyjnym staje się marszałek województwa."
+    },
+    {
+        "id": 40,
+        "pytanie": "Koncesji na wydobywanie siarki rodzimej, jeżeli obszar udokumentowanego złoża wynosi 350 ha, udziela:",
+        "odpowiedzi": {
+            "A": "Minister właściwy do spraw środowiska;",
+            "B": "Marszałek województwa;",
+            "C": "Starosta"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 22 ust. 1 pkt 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Siarka rodzima objęta jest własnością górniczą, dlatego koncesji na jej wydobywanie udziela Minister właściwy do spraw środowiska."
+    },
+    {
+        "id": 41,
+        "pytanie": "Koncesji na wydobywanie marmuru, jeżeli eksploatacja będzie prowadzona z użyciem środków strzałowych, udziela:",
+        "odpowiedzi": {
+            "A": "Marszałek województwa;",
+            "B": "Minister właściwy do spraw środowiska;",
+            "C": "Starosta"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 22 ust. 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Użycie środków strzałowych wyklucza właściwość starosty, przekazując kompetencje marszałkowi województwa."
+    },
+    {
+        "id": 42,
+        "pytanie": "Udzielenie koncesji na wydobywanie złóż węgla kamiennego wymaga uzgodnienia z:",
+        "odpowiedzi": {
+            "A": "Ministrem właściwym do spraw gospodarki;",
+            "B": "Ministrem spraw wewnętrznych;",
+            "C": "Ministrem rozwoju regionalnego"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 23 ust. 1 pkt 3 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Udzielenie koncesji na wydobywanie węgla kamiennego wymaga uzgodnienia z ministrem właściwym do spraw gospodarki."
+    },
+    {
+        "id": 43,
+        "pytanie": "Opinia Prezesa Państwowej Agencji Atomistyki wymagana jest przed udzieleniem koncesji na:",
+        "odpowiedzi": {
+            "A": "Poszukiwanie lub rozpoznawanie rud pierwiastków promieniotwórczych;",
+            "B": "Wydobywanie rud pierwiastków promieniotwórczych ze złóż;",
+            "C": "Podziemne składowanie odpadów promieniotwórczych;"
+        },
+        "poprawne": ["A", "B"],
+        "podstawa_prawna": "Art. 23 ust. 2 pkt 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Udzielenie koncesji na poszukiwanie, rozpoznawanie lub wydobywanie rud pierwiastków promieniotwórczych wymaga opinii Prezesa Państwowej Agencji Atomistyki."
+    },
+    {
+        "id": 44,
+        "pytanie": "Udzielenie koncesji na wydobywanie kopalin z obszaru bezpośredniego lub potencjalnego zagrożenia powodzią wymaga:",
+        "odpowiedzi": {
+            "A": "Uzgodnienia z organem odpowiedzialnym za utrzymanie wód;",
+            "B": "Opinii organu właściwego do wydania pozwolenia wodnoprawnego;",
+            "C": "Uzgodnienia z ministrem właściwym do spraw gospodarki morskiej;"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 23 ust. 1 pkt 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Udzielenie koncesji na obszarach zagrożenia powodziowego wymaga uzgodnienia z organem odpowiedzialnym za utrzymanie wód (Wody Polskie)."
+    },
+    {
+        "id": 45,
+        "pytanie": "We wniosku o udzielenie koncesji, poza wymaganiami przewidzianymi przepisami z zakresu ochrony środowiska i działalności gospodarczej, określa się m. in.:",
+        "odpowiedzi": {
+            "A": "Stan prawny nieruchomości, w granicach których ma być wykonywana zamierzona działalność;",
+            "B": "Czas, na jaki koncesja ma być udzielona, bez wskazania terminu rozpoczęcia działalności;",
+            "C": "Sposób przeciwdziałania ujemnym wpływom zamierzonej działalności na środowisko;"
+        },
+        "poprawne": ["A", "C"],
+        "podstawa_prawna": "Art. 24 ust. 1 pkt 1, 6 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Wniosek o udzielenie koncesji zawiera stan prawny nieruchomości oraz proponowane sposoby przeciwdziałania ujemnym wpływom na środowisko."
+    },
+    {
+        "id": 46,
+        "pytanie": "We wniosku o udzielenie koncesji na poszukiwanie i rozpoznawanie węglowodorów, poza wymaganiami przewidzianymi przepisami z zakresu ochrony środowiska i działalności gospodarczej, określa się m. in.:",
+        "odpowiedzi": {
+            "A": "Stan prawny nieruchomości, w granicach których ma być wykonywana zamierzona działalność;",
+            "B": "Środki, jakimi wnioskodawca dysponuje w celu zapewnienia prawidłowego wykonywania zamierzonej działalności;",
+            "C": "Sposób przeciwdziałania ujemnym wpływom zamierzonej działalności na środowisko;"
+        },
+        "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 24 ust. 1 oraz Art. 24a Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Wniosek obejmuje stan prawny gruntów, środki finansowe/techniczne oraz metody ochrony środowiska."
+    },
+    {
+        "id": 47,
+        "pytanie": "We wniosku o udzielenie koncesji na wydobywanie miedzi, poza wymaganiami przewidzianymi przepisami z zakresu ochrony środowiska i działalności gospodarczej, określa się m. in.:",
+        "odpowiedzi": {
+            "A": "Stan prawny nieruchomości, w granicach których ma być wykonywana zamierzona działalność;",
+            "B": "Czas, na jaki koncesja ma być udzielona, ze wskazaniem terminu rozpoczęcia działalności;",
+            "C": "Sposób przeciwdziałania ujemnym wpływom zamierzonej działalności na rynkowe ceny miedzi;"
+        },
+        "poprawne": ["A", "B"],
+        "podstawa_prawna": "Art. 24 ust. 1 pkt 1, 4 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Wniosek o koncesję na wydobywanie kopaliny określa stan prawny nieruchomości oraz czas trwania koncesji ze wskazaniem terminu rozpoczęcia działalności."
+    },
+    {
+        "id": 48,
+        "pytanie": "Do wniosku o udzielenie koncesji na poszukiwanie lub rozpoznawanie złoża kopaliny, w przypadku zamierzonego wykonywania robót geologicznych, dołącza się:",
+        "odpowiedzi": {
+            "A": "2 egzemplarze projektu robót geologicznych;",
+            "B": "Kopię decyzji zatwierdzającej projekt robót geologicznych;",
+            "C": "Projekt zagospodarowania złoża;"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 25 ust. 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Do wniosku o udzielenie koncesji na poszukiwanie lub rozpoznawanie złoża kopaliny dołącza się projekt robót geologicznych w 2 egzemplarzach."
+    },
+    {
+        "id": 49,
+        "pytanie": "Do wniosku o udzielenie koncesji na wydobywanie kopalin ze złóż dołącza się:",
+        "odpowiedzi": {
+            "A": "2 egzemplarze projektu robót geologicznych;",
+            "B": "Dowody istnienia prawa do korzystania z informacji geologicznej, jakie w zakresie niezbędnym do prowadzenia zamierzonej działalności przysługuje wnioskodawcy",
+            "C": "Kopię decyzji zatwierdzającej dokumentację geologiczną"
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 26 ust. 1 pkt 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Do wniosku o koncesję wydobywczą dołącza się dowód prawa do informacji geologicznej oraz projekt zagospodarowania złoża."
+    },
+    {
+        "id": 50,
+        "pytanie": "Do wniosku o udzielenie koncesji przez starostę na wydobywanie kopalin ze złóż dołącza się:",
+        "odpowiedzi": {
+            "A": "Dowody istnienia prawa do korzystania z informacji geologicznej, jakie w zakresie niezbędnym do prowadzenia zamierzonej działalności przysługuje wnioskodawcy",
+            "B": "Kopię decyzji zatwierdzającej dokumentację geologiczną",
+            "C": "Projekt zagospodarowania złoża"
+        },
+        "poprawne": ["A", "C"],
+        "podstawa_prawna": "Art. 26 ust. 1 i 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Niezależnie od organu, do wniosku dołącza się dowód prawa do informacji geologicznej oraz projekt zagospodarowania złoża."
+    },
+    {
+        "id": 51,
+        "pytanie": "Organ koncesyjny odmawia udzielenia koncesji jeżeli:",
+        "odpowiedzi": {
+            "A": "Zamierzona działalność sprzeciwia się interesowi publicznemu, w szczególności związanemu z bezpieczeństwem państwa,",
+            "B": "Zamierzona działalność sprzeciwia się interesowi publicznemu, w szczególności związanemu z racjonalną gospodarką złożami kopalin;",
+            "C": "Zamierzona działalność uniemożliwiłaby wykorzystanie nieruchomości zgodnie z przeznaczeniem określonym przez miejscowy plan zagospodarowania przestrzennego;"
+        },
+        "poprawne": ["A", "C"],
+        "podstawa_prawna": "Art. 29 ust. 1 pkt 1, 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Organ odmawia koncesji, gdy działalność sprzeciwia się interesowi publicznemu lub uniemożliwia wykorzystanie nieruchomości wg MPZP."
+    },
+    {
+        "id": 52,
+        "pytanie": "Odmowa udzielenia koncesji na podziemne składowanie odpadów następuje w przypadku gdy:",
+        "odpowiedzi": {
+            "A": "istnieje uzasadniona technicznie, ekologicznie lub ekonomicznie możliwość ich (odpadów) odzysku;",
+            "B": "istnieje możliwość unieszkodliwienia odpadów w inny sposób niż przez ich składowanie;",
+            "C": "Zamierzona działalność sprzeciwia się interesowi publicznemu, w szczególności związanemu z bezpieczeństwem państwa;"
+        },
+        "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 29 ust. 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Odmowa udzielenia koncesji na składowanie odpadów następuje, gdy istnieje możliwość ich odzysku lub unieszkodliwienia w inny sposób, albo gdy sprzeciwia się to interesowi publicznemu."
+    },
+    {
+        "id": 53,
+        "pytanie": "Koncesja określa m.in.:",
+        "odpowiedzi": {
+            "A": "Rodzaj i sposób wykonywania zamierzonej działalności;",
+            "B": "Przestrzeń, w granicach której ma być wykonywana zamierzona działalność;",
+            "C": "Czas obowiązywania koncesji;"
+        },
+        "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 30 ust. 1 pkt 1, 2, 3 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Koncesja określa rodzaj i sposób wykonywania działalności, przestrzeń wykonywania oraz czas jej obowiązywania."
+    },
+    {
+        "id": 54,
+        "pytanie": "Koncesja określa m.in.:",
+        "odpowiedzi": {
+            "A": "Termin rozpoczęcia działalności określonej koncesją, a w razie potrzeby – przesłanki, których spełnienie oznacza rozpoczęcie działalności;",
+            "B": "Rodzaj i sposób wykonywania zamierzonej działalności;",
+            "C": "Przestrzeń, w granicach której ma być wykonywana zamierzona działalność;"
+        },
+        "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 30 ust. 1 pkt 1, 2, 4 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Koncesja określa m.in. termin rozpoczęcia działalności, rodzaj i sposób prac oraz granice przestrzenne."
+    },
+    {
+        "id": 55,
+        "pytanie": "Koncesja na poszukiwanie lub rozpoznawanie złoża kopaliny określa m.in.:",
+        "odpowiedzi": {
+            "A": "Cel, zakres i rodzaj zamierzonych prac geologicznych;",
+            "B": "Zakres i harmonogram przekazywania informacji geologicznych i próbek uzyskanych w wyniku wykonywania robót geologicznych;",
+            "C": "Wysokość opłaty za działalność określoną w koncesji;"
+        },
+        "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 31 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Koncesja na poszukiwanie/rozpoznawanie określa cel, zakres i rodzaj prac, harmonogram przekazywania informacji oraz opłatę."
+    },
+    {
+        "id": 56,
+        "pytanie": "Koncesja na poszukiwanie lub rozpoznawanie złoża kopaliny określa m.in.:",
+        "odpowiedzi": {
+            "A": "Cel, zakres i rodzaj zamierzonych prac geologicznych;",
+            "B": "Zakres i harmonogram przekazywania informacji geologicznych i próbek uzyskanych w wyniku wykonywania robót geologicznych;",
+            "C": "Minimalny stopień wykorzystania zasobów złoża;"
+        },
+        "poprawne": ["A", "B"],
+        "podstawa_prawna": "Art. 31 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Koncesja poszukiwawcza zawiera cel, zakres i harmonogram prac (stopień wykorzystania dotyczy koncesji wydobywczej)."
+    },
+    {
+        "id": 57,
+        "pytanie": "Maksymalna powierzchnia terenu objętego koncesją na poszukiwanie lub rozpoznawanie złoża kopaliny wynosi:",
+        "odpowiedzi": {
+            "A": "1200 km²",
+            "B": "2400 km²",
+            "C": "Nie ma górnej granicy powierzchni terenu objętego koncesją na poszukiwanie lub rozpoznawanie złoża kopaliny"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 31 ust. 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Powierzchnia terenu objętego koncesją na poszukiwanie lub rozpoznawanie złoża kopaliny nie może przekraczać 1200 km²."
+    },
+    {
+        "id": 58,
+        "pytanie": "Granice obszaru i terenu górniczego wyznaczane są w koncesji:",
+        "odpowiedzi": {
+            "A": "na poszukiwanie lub rozpoznawanie złoża kopaliny",
+            "B": "Na podziemne bezzbiornikowe magazynowanie substancji do górotworu",
+            "C": "Na wydobywanie kopaliny ze złoża"
+        },
+        "poprawne": ["B", "C"],
+        "podstawa_prawna": "Art. 32 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Obszar i teren górniczy wyznacza się w koncesji na wydobywanie kopaliny, magazynowanie substancji lub składowanie odpadów."
+    },
+    {
+        "id": 59,
+        "pytanie": "Koncesja na wydobywanie kopaliny ze złoża może określać:",
+        "odpowiedzi": {
+            "A": "Minimalny stopień wykorzystywania zasobów złoża;",
+            "B": "Warunki wtłaczania wód pochodzących z odwodnienia wyrobisk górniczych;",
+            "C": "Przedsięwzięcia niezbędne w zakresie racjonalnej gospodarki złożem;"
+        },
+        "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 32 ust. 2, 4 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Koncesja wydobywcza może określać minimalne wykorzystanie zasobów, racjonalną gospodarkę oraz warunki wtłaczania wód z odwodnień."
+    },
+    {
+        "id": 60,
+        "pytanie": "Koncesja na podziemne składowanie odpadów określa m.in.:",
+        "odpowiedzi": {
+            "A": "Typ podziemnego składowiska;",
+            "B": "Rodzaj i ilość odpadów dopuszczonych do składowania,",
+            "C": "Zakres i sposób monitorowania składowiska;"
+        },
+        "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 32 ust. 3 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Koncesja na składowanie odpadów określa ich typ, rodzaj i ilość oraz metody monitorowania."
+    },
+    {
+        "id": 61,
+        "pytanie": "Przedsiębiorca jest obowiązany niezwłocznie złożyć wniosek o dokonanie zmiany koncesji, jeżeli:",
+        "odpowiedzi": {
+            "A": "Rzeczywiste szkodliwe wpływy robót górniczych zakładu górniczego przekroczą wyznaczone w koncesji granice terenu górniczego;",
+            "B": "Rzeczywiste szkodliwe wpływy robót górniczych zakładu górniczego przekroczą wyznaczone w koncesji granice obszaru górniczego;",
+            "C": "Rzeczywiste szkodliwe wpływy robót górniczych zakładu górniczego przekroczą wyznaczone w koncesji granice obszaru poszukiwań złóż;"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 34 ust. 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "W przypadku gdy przewidywane szkodliwe wpływy robót przekroczą granice terenu górniczego, przedsiębiorca niezwłocznie wnioskuje o zmianę koncesji."
+    },
+    {
+        "id": 62,
+        "pytanie": "Rejestr obszarów górniczych prowadzi:",
+        "odpowiedzi": {
+            "A": "państwowa służba geologiczna;",
+            "B": "Prezes Wyższego Urzędu Górniczego;",
+            "C": "Minister właściwy do spraw gospodarki nieruchomościami;"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 167 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Rejestr obszarów górniczych prowadzi państwowa służba geologiczna (PIG-PIB)."
+    },
+    {
+        "id": 63,
+        "pytanie": "Rejestr obszarów górniczych prowadzi:",
+        "odpowiedzi": {
+            "A": "państwowa służba geologiczna;",
+            "B": "okręgowe urzędy górnicze",
+            "C": "Minister właściwy do spraw administracji;"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 167 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Rejestr obszarów górniczych prowadzi państwowa służba geologiczna."
+    },
+    {
+        "id": 64,
+        "pytanie": "Koncesja wygasa:",
+        "odpowiedzi": {
+            "A": "Z upływem czasu, na jaki została udzielona;",
+            "B": "Jeżeli stała się bezprzedmiotowa",
+            "C": "W przypadku jej zrzeczenia się;"
+        },
+        "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 38 ust. 1 pkt 1, 2, 3 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Koncesja wygasa: z upływem czasu, gdy stała się bezprzedmiotowa lub w przypadku jej zrzeczenia się."
+    },
+    {
+        "id": 65,
+        "pytanie": "Koncesja wygasa:",
+        "odpowiedzi": {
+            "A": "Z upływem czasu, na jaki została udzielona;",
+            "B": "W przypadku śmierci przedsiębiorcy będącego osobą fizyczną",
+            "C": "W przypadku likwidacji przedsiębiorcy innego niż osoba fizyczna;"
+        },
+        "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 38 ust. 1 pkt 1, 4, 5 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Przyczynami wygaśnięcia koncesji są: upływ czasu, śmierć przedsiębiorcy będącego osobą fizyczną oraz likwidacja podmiotu."
+    },
+    {
+        "id": 66,
+        "pytanie": "Wskaż warunki, które musi spełnić podmiot, aby koncesja mogła być przeniesiona na jego rzecz:",
+        "odpowiedzi": {
+            "A": "W zakresie niezbędnym do wykonywania zamierzonej działalności podmiot musi wykazać się prawem do korzystania z informacji geologicznej;",
+            "B": "Podmiot musi wykazać, iż jest w stanie spełnić wymagania związane z wykonywaniem zamierzonej działalności;",
+            "C": "Podmiot musi wyrazić zgodę na przyjęcie wszystkich warunków określonych w koncesji;"
+        },
+        "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 36 ust. 1 pkt 1, 2, 3 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Przeniesienie koncesji wymaga akceptacji warunków koncesji, wykazania możliwości spełnienia wymogów oraz prawa do informacji geologicznej."
+    },
+    {
+        "id": 67,
+        "pytanie": "Wskaż dokumenty, które są podstawą wyznaczenia granic obszaru górniczego:",
+        "odpowiedzi": {
+            "A": "Projekt robót geologicznych;",
+            "B": "Dokumentacja geologiczna;",
+            "C": "Projekt zagospodarowania złoża"
+        },
+        "poprawne": ["B", "C"],
+        "podstawa_prawna": "Art. 32 ust. 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Granice obszaru i terenu górniczego wyznacza się na podstawie dokumentacji geologicznej i projektu zagospodarowania złoża."
+    },
+    {
+        "id": 68,
+        "pytanie": "Zgodnie z Prawem geologicznymi i górniczym zabronione jest:",
+        "odpowiedzi": {
+            "A": "Poszukiwanie lub rozpoznawanie kopalin w granicach obszarów morskich;",
+            "B": "Poszukiwanie lub rozpoznawanie złóż kopalin objętych własnością górniczą bez koncesji;",
+            "C": "Poszukiwanie lub rozpoznawanie złóż kopalin objętych prawem własności nieruchomości gruntowej;"
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 21 ust. 1 pkt 1 w zw. z Art. 177 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Wykonywanie działalności w zakresie poszukiwania lub rozpoznawania złóż stanowiących własność górniczą bez wymaganej koncesji jest zabronione i karalne."
+    },
+    {
+        "id": 69,
+        "pytanie": "Zgodnie z Prawem geologicznym i górniczym zakazane oraz zagrożone karą pozbawienia wolności lub grzywny jest:",
+        "odpowiedzi": {
+            "A": "Niezastosowanie się do decyzji organu nakazującej wstrzymanie wydobywania kopalin ze złóż;",
+            "B": "Kierowanie pracami geologicznymi bez wymaganych kwalifikacji;",
+            "C": "Podziemne bezzbiornikowe magazynowanie substancji bez koncesji;"
+        },
+        "poprawne": ["A", "C"],
+        "podstawa_prawna": "Art. 176 i Art. 177 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Prowadzenie magazynowania bez koncesji oraz nieprzestrzeganie decyzji o wstrzymaniu wydobycia stanowią czyn zabroniony zagrożony karą."
+    },
+    {
+        "id": 70,
+        "pytanie": "W przypadku naruszenia przez przedsiębiorcę obowiązków określonych w koncesji na wydobywanie kopalin ze złoża oraz wyrządzenia poważnej szkody w środowisku organ koncesyjny:",
+        "odpowiedzi": {
+            "A": "zakazuje przedsiębiorcy prowadzenia działalności polegającej na wydobywaniu kopalin na okres od 3 do 10 lat;",
+            "B": "wzywa do niezwłocznego usunięcia naruszeń pod rygorem cofnięcia koncesji lub ograniczenia jej zakresu bez odszkodowania;",
+            "C": "Zawiadamia o nieprawidłowości Państwową Inspekcję Geologiczną;"
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 37 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "W przypadku naruszenia warunków koncesji organ wzywa do usunięcia uchybień, a w przypadku braku reakcji cofa koncesję lub ogranicza jej zakres bez odszkodowania."
+    },
+    {
+        "id": 71,
+        "pytanie": "Właściciel nieruchomości znajdującej się w pobliżu zakładu górniczego:",
+        "odpowiedzi": {
+            "A": "Może skutecznie dochodzić przed sądem powszechnym nałożenia na zakład górniczy zakazu prowadzenia działalności;",
+            "B": "Nie może sprzeciwić się zagrożeniom spowodowanym ruchem zakładu górniczego, jeżeli jest prowadzony zgodnie z ustawą;",
+            "C": "Może żądać naprawienia szkody wyrządzonej ruchem zakładu górniczego;"
+        },
+        "poprawne": ["B", "C"],
+        "podstawa_prawna": "Art. 144 ust. 1 i Art. 145 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Właściciel nie może sprzeciwić się działaniom zgodnym z ustawą, lecz przysługuje mu roszczenie o naprawienie szkody."
+    },
+    {
+        "id": 72,
+        "pytanie": "Zasady odpowiedzialności zakładów górniczych za szkody wyrządzone w związku z ich ruchem określa:",
+        "odpowiedzi": {
+            "A": "Ustawa z dnia 9 czerwca 2011 r. Prawo geologiczne i górnicze;",
+            "B": "Kodeks postępowania administracyjnego, w zakresie neuregulowanym w ustawie Prawo geologiczne i górnicze;",
+            "C": "Kodeks cywilny, w zakresie nieuregulowanym w ustawie Prawo geologiczne i górnicze;"
+        },
+        "poprawne": ["A", "C"],
+        "podstawa_prawna": "Art. 144 ust. 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Do odpowiedzialności za szkody stosuje się przepisy PGiG, a w sprawach nieuregulowanych – przepisy Kodeksu cywilnego."
+    },
+    {
+        "id": 73,
+        "pytanie": "Odpowiedzialność za szkodę spowodowaną ruchem zakładu górniczego ponosi:",
+        "odpowiedzi": {
+            "A": "Właściciel nieruchomości, na której znajduje się zakład górniczy, z którego działalnością związane jest powstanie szkody;",
+            "B": "Przedsiębiorca prowadzący ruch zakładu górniczego;",
+            "C": "Skarb Państwa, gdy nie istnieje przedsiębiorca odpowiedzialny za szkodę ani jego następca prawny;"
+        },
+        "poprawne": ["B", "C"],
+        "podstawa_prawna": "Art. 146 ust. 1 i ust. 4 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Za szkodę odpowiada przedsiębiorca prowadzący ruch zakładu, a pomocniczo Skarb Państwa w przypadku braku przedsiębiorcy lub jego następcy."
+    },
+    {
+        "id": 74,
+        "pytanie": "Kto odpowiada za szkodę spowodowaną ruchem zakładu górniczego, gdy nie można ustalić, kto wyrządził szkodę?",
+        "odpowiedzi": {
+            "A": "Przedsiębiorca, który w dniu ujawnienia się szkody ma prawo prowadzić w obszarze górniczym, w granicach którego wystąpiła szkoda, działalność;",
+            "B": "Właściwa gmina;",
+            "C": "Właściwy organ nadzoru górniczego;"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 146 ust. 3 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Jeżeli nie można ustalić, kto wyrządził szkodę, odpowiada przedsiębiorca, który w dniu ujawnienia szkody ma prawo prowadzić działalność w danym obszarze."
+    },
+    {
+        "id": 75,
+        "pytanie": "W jakim terminie przedawnia się roszczenie o naprawienie szkody górniczej?",
+        "odpowiedzi": {
+            "A": "W terminie 5 lat od wyrządzenia szkody;",
+            "B": "W terminie 5 lat od dowiedzenia się o szkodzie;",
+            "C": "W ogóle się nie przedawnia;"
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 149 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Roszczenie o naprawienie szkody przedawnia się z upływem 5 lat od dnia dowiedzenia się o szkodzie."
+    },
+    {
+        "id": 76,
+        "pytanie": "Naprawienie szkody wyrządzonej przez ruch zakładu górniczego może nastąpić przez:",
+        "odpowiedzi": {
+            "A": "Przywrócenie stanu poprzedniego, w szczególności dostarczenie gruntów tego samego rodzaju;",
+            "B": "Zapłatę odpowiedniej sumy pieniężnej;",
+            "C": "Rekultywację terenu zdegradowanego;"
+        },
+        "poprawne": ["A", "B"],
+        "podstawa_prawna": "Art. 147 ust. 1 i 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Naprawienie szkody następuje przez przywrócenie stanu poprzedniego lub zapłatę odszkodowania pieniężnego."
+    },
+    {
+        "id": 77,
+        "pytanie": "Opłata za uzyskanie koncesji na poszukiwanie złóż kopalin:",
+        "odpowiedzi": {
+            "A": "Jest uiszczana do 31 marca każdego roku przez okres trwania koncesji - w stałej wysokości wynikającej z koncesji;",
+            "B": "Jest uiszczana do 31 marca każdego roku przez okres trwania koncesji w pierwszym roku w wysokości wynikającej z koncesji, a w kolejnych latach z waloryzacją;",
+            "C": "Jest uiszczana jednorazowo w terminie 14 dni, od dnia, kiedy koncesja stanie się ostateczna;"
+        },
+        "poprawne": ["C"],
+        "podstawa_prawna": "Art. 133 ust. 4 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Opłatę za działalność poszukiwawczą/rozpoznawczą wnosi się jednorazowo w terminie 14 dni od dnia, w którym koncesja stała się ostateczna."
+    },
+    {
+        "id": 78,
+        "pytanie": "Opłata za uzyskanie koncesji na poszukiwanie złóż kopalin stanowi:",
+        "odpowiedzi": {
+            "A": "Iloczyn wyrażonej w kilometrach kwadratowych powierzchni terenu objętej koncesją oraz okresu obowiązywania koncesji;",
+            "B": "Iloczyn odpowiedniej stawki opłaty oraz wyrażonej w kilometrach kwadratowych powierzchni terenu objętej koncesją;",
+            "C": "Iloczyn odpowiedniej stawki opłaty oraz okresu obowiązywania koncesji;"
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 133 ust. 3 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Opłata stanowi iloczyn stawki opłaty oraz powierzchni terenu wyrażonej w kilometrach kwadratowych."
+    },
+    {
+        "id": 79,
+        "pytanie": "W przypadku koncesji na poszukiwanie lub rozpoznawanie opłata jest ustalana:",
+        "odpowiedzi": {
+            "A": "Zawsze jednorazowo w treści koncesji, bez względu ewentualne późniejsze przedłużenie czasu trwania koncesji;",
+            "B": "Jednorazowo w treści koncesji, z zastrzeżeniem, że w przypadku wydłużenia czasu obowiązywania koncesji, organ ponowne ustala opłatę;",
+            "C": "Za każdy rok obowiązywania koncesji w wysokości wynikającej z rozporządzenia;"
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 133 ust. 5 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Opłatę ustala się jednorazowo w koncesji; w przypadku przedłużenia terminu jej obowiązywania, organ ponownie ustala opłatę."
+    },
+    {
+        "id": 80,
+        "pytanie": "Stawka opłaty za działalność w zakresie poszukiwania oraz rozpoznawania złóż kopalin stanowi:",
+        "odpowiedzi": {
+            "A": "Iloczyn odpowiedniej stawki opłaty oraz okresu trwania koncesji;",
+            "B": "Iloczyn odpowiedniej stawki opłaty oraz wyrażonej w kilometrach kwadratowych powierzchni terenu objętej koncesją;",
+            "C": "Dwukrotność iloczynu odpowiedniej stawki oraz powierzchni"
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 133 ust. 3 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Opłata jest wyliczana jako iloczyn ustalonej stawki i powierzchni terenu w km²."
+    },
+    {
+        "id": 81,
+        "pytanie": "Przedsiębiorca, który uzyskał koncesję na wydobywanie kopaliny wnosi opłatę eksploatacyjną ustaloną jako:",
+        "odpowiedzi": {
+            "A": "Iloczyn wydobytej kopaliny oraz stawki właściwej opłaty wynikającej z załącznika do ustawy;",
+            "B": "Iloczyn wydobytej kopaliny oraz stałej stawki właściwej opłaty ustalonej kwotowo w koncesji;",
+            "C": "Iloczyn powierzchni obszaru górniczego oraz stawki z załącznika"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 134 ust. 1, 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Opłata eksploatacyjna stanowi iloczyn ilości kopaliny wydobytej ze złoża i stawki opłaty."
+    },
+    {
+        "id": 82,
+        "pytanie": "Wysokość opłaty eksploatacyjnej za wydobyty gaz ziemny wysokometanowy jest uzależniona od:",
+        "odpowiedzi": {
+            "A": "Ilości tys. m³ wydobytego gazu;",
+            "B": "Ilości ton wydobytego gazu;",
+            "C": "Ilości kilogramów wydobytego gazu;"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Załącznik do Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Stawki opłat eksploatacyjnych dla gazu ziemnego wyrażane są w odniesieniu do tysiąca metrów sześciennych (1000 m³)."
+    },
+    {
+        "id": 83,
+        "pytanie": "Opłata eksploatacyjna za działalność podziemnego bezzbiornikowego magazynowania substancji jest ustalana jako:",
+        "odpowiedzi": {
+            "A": "Iloczyn stawki opłaty oraz wyrażonej w kilometrach kwadratowych powierzchni terenu;",
+            "B": "Iloczyn stawki opłaty oraz ilości substancji, która w okresie rozliczeniowym została wprowadzona do górotworu;",
+            "C": "Iloraz stawki opłaty oraz ilości substancji"
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 135 ust. 4 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Opłata za magazynowanie stanowi iloczyn stawki opłaty oraz ilości substancji wprowadzonej do górotworu w okresie rozliczeniowym."
+    },
+    {
+        "id": 84,
+        "pytanie": "Okresem rozliczeniowym z tytułu opłaty eksploatacyjnej za kopalinę wydobytą jest:",
+        "odpowiedzi": {
+            "A": "Półrocze;",
+            "B": "Kwartal;",
+            "C": "Rok;"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 137 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Okresem rozliczeniowym dla opłaty eksploatacyjnej jest półrocze."
+    },
+    {
+        "id": 85,
+        "pytanie": "Wysokość opłaty eksploatacyjnej ustala:",
+        "odpowiedzi": {
+            "A": "Organ koncesyjny, każdorazowo w decyzji;",
+            "B": "Organ koncesyjny w sytuacji, gdy przedsiębiorca nie dokonał wpłaty lub dokonał wpłaty w niewłaściwej wysokości;",
+            "C": "Samodzielnie przedsiębiorca;"
+        },
+        "poprawne": ["B", "C"],
+        "podstawa_prawna": "Art. 137 ust. 3 oraz Art. 138 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Przedsiębiorca sam ustala wysokość opłaty eksploatacyjnej, a organ ustala ją decyzją dopiero w przypadku uchylania się lub podania błędnych kwot."
+    },
+    {
+        "id": 86,
+        "pytanie": "Przedsiębiorca posiadający koncesję na wydobycie kopaliny ma obowiązek:",
+        "odpowiedzi": {
+            "A": "Samodzielnego ustalenia wysokość opłaty eksploatacyjnej;",
+            "B": "Przedstawienia organowi koncesyjnemu, gminie oraz NFOŚiGW informacji dot. rodzaju, ilości kopaliny i przyjętej stawki;",
+            "C": "Zapłaty opłaty eksploatacyjnej, jeżeli jej wysokość wynosi co najmniej 300 zł;"
+        },
+        "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 137 ust. 1, 3, 4 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Przedsiębiorca samodzielnie ustala opłatę, przedkłada informacje organom oraz dokonuje wpłaty (jeżeli jej kwota przekracza 300 zł)."
+    },
+    {
+        "id": 87,
+        "pytanie": "W przypadku, gdy przedsiębiorca nie prowadził w ogóle w okresie rozliczeniowym wydobycia kopaliny:",
+        "odpowiedzi": {
+            "A": "Nie powstaje obowiązek zapłaty opłaty eksploatacyjnej;",
+            "B": "Nie powstaje obowiązek przesłania organowi koncesyjnemu, gminie oraz NFOŚiGW informacji o braku wydobycia;",
+            "C": "Organ Koncesyjny stwierdza cofnięcie koncesji;"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 137 ust. 4 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "W przypadku braku wydobycia opłata nie występuje, jednak należy przedłożyć informację ze wskaźnikiem zerowym."
+    },
+    {
+        "id": 88,
+        "pytanie": "Opłatę dodatkową ustala się w przypadku:",
+        "odpowiedzi": {
+            "A": "Wydobywania kopaliny towarzyszącej oraz współwystępującej;",
+            "B": "Prowadzenia działalności z rażącym naruszeniem warunków określonych w koncesji lub zatwierdzonym projekcie robót geologicznych;",
+            "C": "Przedłużenie o dodatkowy okres obowiązywania koncesji;"
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 139 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Prowadzenie działalności z rażącym naruszeniem warunków koncesji lub projektu robót skutkuje wymierzeniem opłaty dodatkowej."
+    },
+    {
+        "id": 89,
+        "pytanie": "Kto ustala wysokość opłaty dodatkowej?",
+        "odpowiedzi": {
+            "A": "Organ koncesyjny lub organ, który zatwierdził projekt robót geologicznych;",
+            "B": "Przedsiębiorca samodzielnie;",
+            "C": "Prezes Narodowego Funduszu Ochrony Środowiska i Gospodarki Wodnej;"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 139 ust. 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Opłatę dodatkową ustala, w drodze decyzji, właściwy organ koncesyjny lub organ administracji geologicznej."
+    },
+    {
+        "id": 90,
+        "pytanie": "Opłatę dodatkową za wydobywanie kopaliny bez wymaganej koncesji ustala się w wysokości:",
+        "odpowiedzi": {
+            "A": "Pięciu milionów złotych;",
+            "B": "Pięciokrotnej stawki opłaty eksploatacyjnej dla danego rodzaju kopaliny, pomnożonej przez ilość wydobytej w ten sposób kopaliny;",
+            "C": "Pięciokrotnej stawki opłaty dla danego rodzaju kopaliny za każdy kilometr kwadratowy;"
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 139 ust. 3 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Opłata dodatkowa wynosi pięciokrotność stawki opłaty eksploatacyjnej pomnożoną przez ilość wydobytej kopaliny."
+    },
+    {
+        "id": 91,
+        "pytanie": "Robotą geologiczną jest:",
+        "odpowiedzi": {
+            "A": "wykonywanie w ramach prac geologicznych wszelkich czynności poniżej powierzchni terenu;",
+            "B": "Likwidacja wyrobisk po czynnościach wykonywanych w ramach prac geologicznych poniżej powierzchni terenu;",
+            "C": "Analiza próbek geologicznych w laboratorium;"
+        },
+        "poprawne": ["A", "B"],
+        "podstawa_prawna": "Art. 6 ust. 1 pkt 11 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Robotą geologiczną jest wykonywanie w ramach prac geologicznych wszelkich czynności poniżej powierzchni terenu, w tym wyrobisk i likwidacji wyrobisk."
+    },
+    {
+        "id": 92,
+        "pytanie": "Węglowodorami w rozumieniu ustawy Prawo geologiczne i górnicze są:",
+        "odpowiedzi": {
+            "A": "Metan występujący w złożach węgla kamiennego;",
+            "B": "Ropa naftowa;",
+            "C": "Gaz ziemny;"
+        },
+        "poprawne": ["B", "C"],
+        "podstawa_prawna": "Art. 6 ust. 1 pkt 16 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Węglowodory – ropa naftowa, gaz ziemny oraz ich naturalne pochodne."
+    },
+    {
+        "id": 93,
+        "pytanie": "Złożem kopaliny w rozumieniu ustawy Prawo geologiczne i górnicze jest:",
+        "odpowiedzi": {
+            "A": "Każde nagromadzenie minerałów, skał oraz innych substancji niezależnie od tego, czy jej wydobywanie jest ekonomicznie opłacalne;",
+            "B": "Naturalne nagromadzenie minerałów, skał oraz innych substancji, których wydobywanie może przynieść korzyść gospodarczą;",
+            "C": "Wyłącznie te złoże, które zostało uwzględnione w miejscowym planie zagospodarowania przestrzennego;"
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 6 ust. 1 pkt 8 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Złoże kopaliny – naturalne nagromadzenie minerałów, skał oraz innych substancji, których wydobywanie może przynieść korzyść gospodarczą."
+    },
+    {
+        "id": 94,
+        "pytanie": "Organem administracji geologicznej uprawnionym do wydania koncesji na wydobywanie kopaliny ze złóż w ilości do 20.000m³ w roku z obszaru nie większego niż 2 ha, bez użycia środków strzałowych, metodą odkrywkową jest:",
+        "odpowiedzi": {
+            "A": "Starosta powiatowy;",
+            "B": "Burmistrz miasta;",
+            "C": "Prezydent Miasta na prawach powiatu;"
+        },
+        "poprawne": ["A", "C"],
+        "podstawa_prawna": "Art. 22 ust. 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Koncesji w tych przypadkach udziela starosta (funkcję starosty w miastach na prawach powiatu sprawuje prezydent miasta)."
+    },
+    {
+        "id": 95,
+        "pytanie": "Podejmowanie działalności polegającej na wydobywaniu kopaliny ze złoża jest dozwolone wówczas gdy:",
+        "odpowiedzi": {
+            "A": "Nie naruszy przeznaczenia nieruchomości określonego w miejscowym planie zagospodarowania przestrzennego oraz w odrębnych przepisach;",
+            "B": "Nie naruszy sposobu wykorzystywania nieruchomości ustalonego w studium uwarunkowań i kierunków zagospodarowania przestrzennego gminy oraz w odrębnych przepisach;",
+            "C": "Treść miejscowego planu zagospodarowania przestrzennego nie ma w ogóle wpływu na udzielenie koncesji na wydobycie kopalin;"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 7 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Podejmowanie działalności regulowanej ustawą nie może naruszać przeznaczenia nieruchomości określonego w MPZP."
+    },
+    {
+        "id": 96,
+        "pytanie": "Kwalifikacje w zakresie wykonywania, dozorowania i kierowania pracami geologicznymi kat. I są zdefiniowane jako:",
+        "odpowiedzi": {
+            "A": "poszukiwanie i rozpoznawanie złóż węglowodorów;",
+            "B": "poszukiwanie i rozpoznawanie złóż kopalin objętych własnością górniczą (z pewnymi wyjątkami);",
+            "C": "poszukiwanie i rozpoznawanie złóż kopalin objętych prawem własności nieruchomości gruntowej"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 50 ust. 2 pkt 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Kategoria I obejmuje poszukiwanie i rozpoznawanie złóż węglowodorów."
+    },
+    {
+        "id": 97,
+        "pytanie": "Kwalifikacje w zakresie wykonywania, dozorowania i kierowania pracami geologicznymi kat. II są zdefiniowane jako:",
+        "odpowiedzi": {
+            "A": "poszukiwanie i rozpoznawanie złóż węglowodorów;",
+            "B": "poszukiwanie i rozpoznawanie złóż kopalin objętych własnością górniczą, z wyjątkiem złóż ropy naftowej i gazu ziemnego, wód leczniczych, wód termalnych i solanek...",
+            "C": "określanie warunków geologiczno-inżynierskich..."
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 50 ust. 2 pkt 2 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Kategoria II dotyczy poszukiwania i rozpoznawania złóż kopalin objętych własnością górniczą (oprócz ropy, gazu, wód leczniczych, termalnych i solanek) oraz złoża gruntowego."
+    },
+    {
+        "id": 98,
+        "pytanie": "Kwalifikacje w zakresie wykonywania, dozorowania i kierowania pracami geologicznymi kat. III są zdefiniowane jako:",
+        "odpowiedzi": {
+            "A": "poszukiwanie i rozpoznawanie złóż kopalin objętych prawem własności nieruchomości gruntowej;",
+            "B": "poszukiwanie i rozpoznawanie złóż kopalin objętych własnością górniczą...",
+            "C": "poszukiwanie i rozpoznawanie złóż węglowodorów;"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 50 ust. 2 pkt 3 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Kategoria III obejmuje poszukiwanie i rozpoznawanie złóż kopalin objętych prawem własności nieruchomości gruntowej."
+    },
+    {
+        "id": 99,
+        "pytanie": "Kwalifikacje w zakresie wykonywania, dozorowania i kierowania pracami geologicznymi kat. IV są zdefiniowane jako:",
+        "odpowiedzi": {
+            "A": "poszukiwanie i rozpoznawanie zasobów wód podziemnych, w tym wód leczniczych, wód termalnych i solanek, określanie warunków hydrogeologicznych...",
+            "B": "poszukiwanie i rozpoznawanie złóż kopalin objętych prawem własności nieruchomości gruntowej;",
+            "C": "poszukiwanie i rozpoznawanie złóż węglowodorów;"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 50 ust. 2 pkt 4 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Kategoria IV dotyczy poszukiwania i rozpoznawania wód podziemnych, solanek, wód leczniczych i termalnych oraz sprawowania hydrogeologii."
+    },
+    {
+        "id": 100,
+        "pytanie": "Kwalifikacje w zakresie wykonywania, dozorowania i kierowania pracami geologicznymi kat. V są zdefiniowane jako:",
+        "odpowiedzi": {
+            "A": "określanie warunków geologiczno-inżynierskich na potrzeby zagospodarowania przestrzennego, posadawiania obiektów budowlanych...",
+            "B": "poszukiwanie i rozpoznawanie zasobów wód podziemnych...",
+            "C": "wykonywanie prac kartografii geologicznej..."
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 50 ust. 2 pkt 5 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Kategoria V obejmuje zakresem hydrogeologię, czyli m.in.: poszukiwanie i rozpoznawanie zasobów wód podziemnych (z wyłączeniem solanek, wód leczniczych i termalnych) oraz określanie warunków hydrogeologicznych."
+    },
+    {
+        "id": 101,
+        "pytanie": "Kwalifikacje w zakresie wykonywania, dozorowania i kierowania pracami geologicznymi kat. VI są zdefiniowane jako:",
+        "odpowiedzi": {
+            "A": "wykonywanie prac kartografii geologicznej wraz z projektowaniem i dokumentowaniem tych prac...",
+            "B": "poszukiwanie i rozpoznawanie zasobów wód podziemnych...",
+            "C": "określanie warunków geologiczno-inżynierskich na potrzeby zagospodarowania przestrzennego..."
+        },
+        "poprawne": ["C"],
+        "podstawa_prawna": "Art. 50 ust. 2 pkt 6 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Kategoria VI obejmuje określanie warunków geologiczno-inżynierskich m.in. na potrzeby zagospodarowania przestrzennego oraz posadawiania obiektów budowlanych."
+    },
+    {
+        "id": 102,
+        "pytanie": "Kwalifikacje w zakresie wykonywania, dozorowania i kierowania pracami geologicznymi kat. VII są zdefiniowane jako:",
+        "odpowiedzi": {
+            "A": "określanie warunków geologiczno-inżynierskich na potrzeby zagospodarowania przestrzennego, posadawiania obiektów budowlanych, z wyjątkiem posadawiania obiektów budowlanych zakładów górniczych oraz budownictwa wodnego;",
+            "B": "określanie warunków geologiczno-inżynierskich na potrzeby... zakładów górniczych i budownictwa wodnego;",
+            "C": "poszukiwanie i rozpoznawanie złóż kopalin..."
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 50 ust. 2 pkt 7 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Kategoria VII obejmuje geologię inżynierską ograniczoną (z wyłączeniem budownictwa wodnego i zakładów górniczych)."
+    },
+    {
+        "id": 103,
+        "pytanie": "Kwalifikacje w zakresie wykonywania, dozorowania i kierowania pracami geologicznymi kat. VIII są zdefiniowane jako:",
+        "odpowiedzi": {
+            "A": "wykonywanie prac kartografii geologicznej wraz z projektowaniem i dokumentowaniem tych prac, z wyjątkiem map sporządzanych w ramach pozostałych kategorii kwalifikacji;",
+            "B": "poszukiwanie i rozpoznawanie złóż kopalin objętych własnością górniczą...",
+            "C": "poszukiwanie i rozpoznawanie złóż kopalin objętych prawem własności nieruchomości gruntowej;"
+        },
+        "poprawne": ["A"],
+        "podstawa_prawna": "Art. 50 ust. 2 pkt 8 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Kategoria VIII obejmuje kartografię geologiczną (zakres uzupełniający)."
+    },
+    {
+        "id": 104,
+        "pytanie": "Kwalifikacje w zakresie wykonywania, dozorowania i kierowania pracami geologicznymi kat. IX są zdefiniowane jako:",
+        "odpowiedzi": {
+            "A": "kierowanie i wykonywanie w terenie badań geofizycznych wraz z projektowaniem i dokumentowaniem tych badań, z wyjątkiem badań sejsmicznych i geofizyki wiertniczej;",
+            "B": "kierowanie i wykonywanie w terenie badań geofizycznych, w tym badań sejsmicznych i geofizyki wiertniczej, także przy użyciu środków strzałowych...",
+            "C": "poszukiwanie i rozpoznawanie złóż kopalin objętych prawem własności nieruchomości gruntowej;"
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 50 ust. 2 pkt 9 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Kategoria IX obejmuje badania geofizyczne pełnego zakresu (w tym sejsmikę i geofizykę wiertniczą)."
+    },
+    {
+        "id": 105,
+        "pytanie": "Stwierdzenie posiadanych kwalifikacji w zakresie kategorii XIII tj. kierowanie w terenie robotami geologicznymi wykonywanymi poza granicami obszaru górniczego, wykonywanymi bez użycia środków strzałowych albo gdy projektowana głębokość wyrobiska nie przekracza 100 m. następuje w drodze świadectwa wydanego przez:",
+        "odpowiedzi": {
+            "A": "Ministra właściwego ds. środowiska;",
+            "B": "marszałka województwa;",
+            "C": "wojewodę"
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 58 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Stwierdzenia kwalifikacji kategorii XIII dokonuje właściwy marszałek województwa."
+    },
+    {
+        "id": 106,
+        "pytanie": "Marszałek województwa stwierdza kwalifikacje osób w zakresie:",
+        "odpowiedzi": {
+            "A": "poszukiwania i rozpoznawanie złóż kopalin objętych prawem własności nieruchomości gruntowej;",
+            "B": "kierowania w terenie robotami geologicznymi wykonywanymi poza granicami obszaru górniczego, wykonywanymi bez użycia środków strzałowych albo gdy projektowana głębokość wyrobiska nie przekracza 100 m;",
+            "C": "wykonywania czynności dozoru geologicznego nad pracami geologicznymi, z wyjątkiem badań geofizycznych;"
+        },
+        "poprawne": ["B", "C"],
+        "podstawa_prawna": "Art. 58 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Marszałek województwa jest organem właściwym do nadawania kwalifikacji kategorii XI oraz XII."
+    },
+    {
+        "id": 107,
+        "pytanie": "W stosunku do osoby, która wykonuje czynności polegające na wykonywaniu, dozorowaniu i kierowaniu pracami geologicznymi z rażącym niedbalstwem, z naruszeniem ustawy lub rażącym naruszeniem wydanych na jej podstawie przepisów można orzec zakaz ich wykonywania na okres do:",
+        "odpowiedzi": {
+            "A": "5 lat;",
+            "B": "2 lat;",
+            "C": "nie ma takiej możliwości"
+        },
+        "poprawne": ["B"],
+        "podstawa_prawna": "Art. 68 ust. 1 Ustawy Prawo geologiczne i górnicze",
+        "tresc_artykulu": "W przypadku stwierdzenia niedbalstwa przy pracach geologicznych można orzec zakaz wykonywania tych czynności na okres do 2 lat."
+    ],  
+        "BAZA PYTAŃ - CZĘŚĆ 4 (Projekty robót, dokumentacje geologiczne, inne dokumentacje, operaty ewidencyjne, projekty zagospodarowania złóż)": [
     {
         "id": 1,
         "pytanie": "Prace geologiczne z zastosowaniem robót geologicznych mogą być wykonane tylko na podstawie:",

@@ -1320,7 +1320,8 @@ if 'bazy' not in st.session_state:
         "poprawne": ["B"],
         "podstawa_prawna": "Art. 68 ust. 1 Ustawy Prawo geologiczne i górnicze",
         "tresc_artykulu": "W przypadku stwierdzenia niedbalstwa przy pracach geologicznych można orzec zakaz wykonywania tych czynności na okres do 2 lat."
-    ],  
+    }
+],  
         "BAZA PYTAŃ - CZĘŚĆ 4 (Projekty robót, dokumentacje geologiczne, inne dokumentacje, operaty ewidencyjne, projekty zagospodarowania złóż)": [
     {
         "id": 1,

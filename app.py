@@ -405,4 +405,4 @@ class AplikacjaQuizu:
 
         btn_reset = ttk.Button(frame_wynik, text="Powrót do Menu", style="Menu.TButton", command=self.ekran_wyboru_czesci)
         btn_reset.pack(pady=15)
-
+ 

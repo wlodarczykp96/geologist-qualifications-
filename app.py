@@ -16,7 +16,7 @@ if 'admin_logged_in' not in st.session_state:
     st.session_state.admin_logged_in = False
 
 if 'bazy' not in st.session_state:
-    st.session_state.bazy = {
+    st.session_state.bazy = [
         "Część 1 (Projekty, hydrogeologia, geologia)": [
             {
                 "id": 1,
@@ -43,7 +43,6 @@ if 'bazy' not in st.session_state:
                 "tresc_artykulu": "Koncesji na podziemne składowanie odpadów udziela się pod warunkiem ustanowienia zabezpieczenia roszczeń mogących powstać wskutek wykonywania działalności objętej tą koncesją."
             }
         ],
-
 # ==============================================================================
 # BAZA PYTAŃ - CZĘŚĆ 2
 # ==============================================================================

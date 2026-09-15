@@ -17,6 +17,15 @@ if 'admin_logged_in' not in st.session_state:
 
 if 'bazy' not in st.session_state:
     st.session_state.bazy = [
+        "BAZA PYTAŃ - CZĘŚĆ 1 (...)": [
+        # ... pytania z części 3 ...
+    ],  # <--- WAŻNY PRECINEK TUTAJ!
+    "BAZA PYTAŃ - CZĘŚĆ 2 (...)": [
+        # ... pytania z części 3 ...
+    ],  # <--- WAŻNY PRECINEK TUTAJ!
+        "BAZA PYTAŃ - CZĘŚĆ 3 (...)": [
+        # ... pytania z części 3 ...
+    ],  # <--- WAŻNY PRECINEK TUTAJ!
         "BAZA PYTAŃ - CZĘŚĆ 4 (Kwalifikacje, kary, przepisy przejściowe i inne)": [
     {
         "id": 1,

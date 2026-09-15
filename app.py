@@ -25,6 +25,7 @@ if 'bazy' not in st.session_state:
     ],  # <--- WAŻNY PRECINEK TUTAJ!
     
     "BAZA PYTAŃ - CZĘŚĆ 3 (Pojęcia ogólne, własność górnicza, koncesje, kwalifikacje geologiczne)": [
+        {
         "id": 1,
         "pytanie": "Ustawa Prawo geologiczne i górnicze określa zasady i warunki podejmowania, wykonywania oraz zakończenia działalności w zakresie:",
         "odpowiedzi": {

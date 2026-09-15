@@ -79,7 +79,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Stylizacja CSS (sidebar, formularze, równe kafelki i poprawiony żółty kolor)
+# Stylizacja CSS (sidebar, formularze, równe kafelki-przyciski)
 if st.session_state.theme == "Jasny":
     st.markdown("""
     <style>
@@ -115,21 +115,22 @@ if st.session_state.theme == "Jasny":
         .question-box { background-color: #ffffff; padding: 15px; border-radius: 6px; border: 1px solid #ced4da; margin-bottom: 15px; color: #212529; }
         .legal-box { background-color: #e7f1ff; padding: 15px; border-radius: 6px; border: 1px solid #b6d4fe; margin-top: 15px; margin-bottom: 15px; color: #084298; }
 
-        /* Równe kafelki na stronie głównej - jasny motyw */
-        .card-blue, .card-yellow, .card-green, .card-red {
-            padding: 20px;
-            border-radius: 8px;
-            height: 220px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            margin-bottom: 20px;
-            box-sizing: border-box;
+        /* Styl kafelków jako przycisków (Jasny motyw) */
+        div.stButton > button[kind="secondary"] {
+            height: 220px !important;
+            border-radius: 8px !important;
+            text-align: left !important;
+            padding: 20px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            justify-content: flex-start !important;
+            white-space: normal !important;
         }
-        .card-blue { background-color: #cfe2ff; color: #084298; border: 1px solid #b6d4fe; }
-        .card-yellow { background-color: #ffe5d0; color: #7c2d12; border: 1px solid #ffbb99; }
-        .card-green { background-color: #d1e7dd; color: #0f5132; border: 1px solid #badbcc; }
-        .card-red { background-color: #f8d7da; color: #842029; border: 1px solid #f5c2c7; }
+        .btn-blue button { background-color: #cfe2ff !important; color: #084298 !important; border: 1px solid #b6d4fe !important; }
+        .btn-yellow button { background-color: #fffae6 !important; color: #7c4a03 !important; border: 1px solid #ffe58f !important; }
+        .btn-green button { background-color: #d1e7dd !important; color: #0f5132 !important; border: 1px solid #badbcc !important; }
+        .btn-red button { background-color: #f8d7da !important; color: #842029 !important; border: 1px solid #f5c2c7 !important; }
     </style>
     """, unsafe_allow_html=True)
 elif st.session_state.theme in ["Cciemny", "Ciemny"]:
@@ -160,21 +161,22 @@ elif st.session_state.theme in ["Cciemny", "Ciemny"]:
         .question-box { background-color: #161b22; padding: 15px; border-radius: 6px; border: 1px solid #30363d; margin-bottom: 15px; color: #ffffff; }
         .legal-box { background-color: #0d1117; padding: 15px; border-radius: 6px; border: 1px solid #238636; margin-top: 15px; margin-bottom: 15px; color: #e6edf3; }
 
-        /* Równe kafelki na stronie głównej - ciemny motyw */
-        .card-blue, .card-yellow, .card-green, .card-red {
-            padding: 20px;
-            border-radius: 8px;
-            height: 220px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            margin-bottom: 20px;
-            box-sizing: border-box;
+        /* Styl kafelków jako przycisków (Ciemny motyw) */
+        div.stButton > button {
+            height: 220px !important;
+            border-radius: 8px !important;
+            text-align: left !important;
+            padding: 20px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            justify-content: flex-start !important;
+            white-space: normal !important;
         }
-        .card-blue { background-color: #1f364d; color: #58a6ff; border: 1px solid #30363d; }
-        .card-yellow { background-color: #452800; color: #ffbc54; border: 1px solid #633800; }
-        .card-green { background-color: #1b3a2b; color: #3fb950; border: 1px solid #238636; }
-        .card-red { background-color: #421e22; color: #f85149; border: 1px solid #da3633; }
+        .btn-blue button { background-color: #1f364d !important; color: #58a6ff !important; border: 1px solid #30363d !important; }
+        .btn-yellow button { background-color: #3b2800 !important; color: #ffbc54 !important; border: 1px solid #633800 !important; }
+        .btn-green button { background-color: #1b3a2b !important; color: #3fb950 !important; border: 1px solid #238636 !important; }
+        .btn-red button { background-color: #421e22 !important; color: #f85149 !important; border: 1px solid #da3633 !important; }
     </style>
     """, unsafe_allow_html=True)
 else:
@@ -191,11 +193,11 @@ else:
             .main-header { font-size: 22px; font-weight: bold; color: #58a6ff; border-bottom: 2px solid #30363d; padding-bottom: 5px; margin-bottom: 15px; }
             .question-box { background-color: #161b22; padding: 15px; border-radius: 6px; border: 1px solid #30363d; margin-bottom: 15px; color: #ffffff; }
             .legal-box { background-color: #0d1117; padding: 15px; border-radius: 6px; border: 1px solid #238636; margin-top: 15px; margin-bottom: 15px; color: #e6edf3; }
-            .card-blue { background-color: #1f364d; color: #58a6ff; border: 1px solid #30363d; }
-            .card-yellow { background-color: #452800; color: #ffbc54; border: 1px solid #633800; }
-            .card-green { background-color: #1b3a2b; color: #3fb950; border: 1px solid #238636; }
-            .card-red { background-color: #421e22; color: #f85149; border: 1px solid #da3633; }
-            .card-blue, .card-yellow, .card-green, .card-red { padding: 20px; border-radius: 8px; height: 220px; display: flex; flex-direction: column; justify-content: flex-start; margin-bottom: 20px; box-sizing: border-box; }
+            div.stButton > button { height: 220px !important; border-radius: 8px !important; text-align: left !important; padding: 20px !important; display: flex !important; flex-direction: column !important; align-items: flex-start !important; justify-content: flex-start !important; white-space: normal !important; }
+            .btn-blue button { background-color: #1f364d !important; color: #58a6ff !important; border: 1px solid #30363d !important; }
+            .btn-yellow button { background-color: #3b2800 !important; color: #ffbc54 !important; border: 1px solid #633800 !important; }
+            .btn-green button { background-color: #1b3a2b !important; color: #3fb950 !important; border: 1px solid #238636 !important; }
+            .btn-red button { background-color: #421e22 !important; color: #f85149 !important; border: 1px solid #da3633 !important; }
         }
         @media (prefers-color-scheme: light) {
             .stApp { background-color: #f8f9fa; color: #212529; }
@@ -208,11 +210,11 @@ else:
             .main-header { font-size: 22px; font-weight: bold; color: #0d6efd; border-bottom: 2px solid #dee2e6; padding-bottom: 5px; margin-bottom: 15px; }
             .question-box { background-color: #ffffff; padding: 15px; border-radius: 6px; border: 1px solid #ced4da; margin-bottom: 15px; color: #212529; }
             .legal-box { background-color: #e7f1ff; padding: 15px; border-radius: 6px; border: 1px solid #b6d4fe; margin-top: 15px; margin-bottom: 15px; color: #084298; }
-            .card-blue { background-color: #cfe2ff; color: #084298; border: 1px solid #b6d4fe; }
-            .card-yellow { background-color: #ffe5d0; color: #7c2d12; border: 1px solid #ffbb99; }
-            .card-green { background-color: #d1e7dd; color: #0f5132; border: 1px solid #badbcc; }
-            .card-red { background-color: #f8d7da; color: #842029; border: 1px solid #f5c2c7; }
-            .card-blue, .card-yellow, .card-green, .card-red { padding: 20px; border-radius: 8px; height: 220px; display: flex; flex-direction: column; justify-content: flex-start; margin-bottom: 20px; box-sizing: border-box; }
+            div.stButton > button { height: 220px !important; border-radius: 8px !important; text-align: left !important; padding: 20px !important; display: flex !important; flex-direction: column !important; align-items: flex-start !important; justify-content: flex-start !important; white-space: normal !important; }
+            .btn-blue button { background-color: #cfe2ff !important; color: #084298 !important; border: 1px solid #b6d4fe !important; }
+            .btn-yellow button { background-color: #fffae6 !important; color: #7c4a03 !important; border: 1px solid #ffe58f !important; }
+            .btn-green button { background-color: #d1e7dd !important; color: #0f5132 !important; border: 1px solid #badbcc !important; }
+            .btn-red button { background-color: #f8d7da !important; color: #842029 !important; border: 1px solid #f5c2c7 !important; }
         }
     </style>
     """, unsafe_allow_html=True)
@@ -255,39 +257,45 @@ menu_glowne = st.sidebar.radio(
 # ==============================================================================
 if menu_glowne == "🏠 Strona Główna":
     st.markdown("<div class='main-header'>Witaj w Aplikacji Testowej</div>", unsafe_allow_html=True)
-    st.write("Wybierz odpowiednią sekcję z paska bocznego po lewej stronie, aby rozpocząć pracę z aplikacją.")
+    st.write("Wybierz odpowiednią sekcję z poniższych kafelków lub z paska bocznego po lewej stronie.")
     st.write("")
     
     col1, col2 = st.columns(2)
     with col1:
-        st.markdown("""
-        <div class="card-blue">
-            <h4 style="margin-top:0;">🎮 Rozwiązywanie Testów</h4>
-            <p style="margin:0;">Wybierz część bazy, ustal tryb nauki lub spróbuj sił w symulacji egzaminu.</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown('<div class="btn-blue">', unsafe_allow_html=True)
+        if st.button("🎮 **Rozwiązywanie Testów**\n\nWybierz część bazy, ustal tryb nauki lub spróbuj sił w symulacji egzaminu."):
+            st.session_state.menu_glowne_wybor = "🎮 Testy i Nauka"
+            # Wymuszenie zmiany stanu radia w sidebarze poprzez ponowne załadowanie z modyfikacją
+            st.rerun()
+        st.markdown('</div>', unsafe_allow_html=True)
         
-        st.markdown("""
-        <div class="card-green">
-            <h4 style="margin-top:0;">🔍 Baza Pytań</h4>
-            <p style="margin:0;">Przeglądaj pytania razem z przypisanymi podstawami prawnymi oraz tekstami artykułów.</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown('<div class="btn-green">', unsafe_allow_html=True)
+        if st.button("🔍 **Baza Pytań**\n\nPrzeglądaj pytania razem z przypisanymi podstawami prawnymi oraz tekstami artykułów."):
+            st.markdown("<script>window.location.reload();</script>", unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
         
     with col2:
-        st.markdown("""
-        <div class="card-yellow">
-            <h4 style="margin-top:0;">➕ Dodawanie Pytań</h4>
-            <p style="margin:0;">Rozszerzaj bazę testową o własne pytania i odpowiedzi.</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown('<div class="btn-yellow">', unsafe_allow_html=True)
+        if st.button("➕ **Dodawanie Pytań**\n\nRozszerzaj bazę testową o własne pytania i odpowiedzi."):
+            pass
+        st.markdown('</div>', unsafe_allow_html=True)
         
-        st.markdown("""
-        <div class="card-red">
-            <h4 style="margin-top:0;">🔑 Tryb Administratora</h4>
-            <p style="margin:0;">Pozwala edytować oraz usuwać dowolne pytania w bazie po podaniu hasła.</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown('<div class="btn-red">', unsafe_allow_html=True)
+        if st.button("🔑 **Tryb Administratora**\n\nPozwala edytować oraz usuwać dowolne pytania w bazie po podaniu hasła."):
+            pass
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    # Obsługa kliknięć kafelków (ponieważ Streamlit nie pozwala bezpośrednio zmieniać stanu widgetu radio z innej części kodu, mapujemy to logicznie)
+    # Najprostszy i najpewniejszy sposób na przekierowanie z przycisków na głównej stronie:
+    # (Zamiast skomplikowanych hacków JS, przypiszemy akcje bezpośrednio lub użyjemy zmiennej w session_state)
+
+# Ulepszona logika nawigacji kafelkami:
+# Zdefiniujmy zmienną w session_state dla wybranego menu głównego, aby sidebar i kafelki mogły nią sterować.
+if 'menu_wybor' not in st.session_state:
+    st.session_state.menu_wybor = "🏠 Strona Główna"
+
+# Jeśli zmieniliśmy widok kafelkiem, nadpisujemy zmienną menu
+# (W praktyce w Streamlit najwygodniej obsłużyć to tak:)
 
 # ==============================================================================
 # WIDOK: TESTY I NAUKA

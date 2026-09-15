@@ -3330,13 +3330,12 @@ elif menu_glowne == "🎮 Testy i Nauka":
                 st.session_state.test_zakonczony = True
                 st.rerun()
             else:
-                # Komponent JS odświeżający stronę dokładnie po wygaśnięciu czasu
-                timer_html = f"""
+                timer_html = """
                 <div style="font-size: 18px; font-weight: bold; color: #ff4b4b; background-color: #1f2937; padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: center;">
                     ⏱️ Pozostały czas egzaminu: <span id="countdown">--:--</span>
                 </div>
                 <script>
-                    var endTime = new Date().getTime() + {pozostaly_czas_ms};
+                    var endTime = new Date().getTime() + """ + str(pozostaly_czas_ms) + """;
                     var x = setInterval(function() {
                         var now = new Date().getTime();
                         var distance = endTime - now;

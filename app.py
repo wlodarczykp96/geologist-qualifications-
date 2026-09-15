@@ -3,12 +3,12 @@ import streamlit as st
 
 # Konfiguracja strony Streamlit
 st.set_page_config(
-    page_title="Aplikacja Testowa - Prawo Geologiczne i Górnicze",
+    page_title="Aplikacja Prawo Geologiczne i Górnicze",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Style CSS dopasowane do oryginalnego wyglądu
+# Style CSS dopasowane do ciemnego motywu
 st.markdown("""
 <style>
     .stApp {
@@ -32,10 +32,11 @@ st.markdown("""
     }
     .legal-box {
         background-color: #0d1117;
-        padding: 12px;
+        padding: 15px;
         border-radius: 6px;
         border: 1px solid #238636;
-        margin-top: 10px;
+        margin-top: 15px;
+        margin-bottom: 15px;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -53,6 +54,8 @@ PYTANIA_CZ1 = [
             "C": "nie później niż w terminie dwóch tygodni od dnia otrzymania wezwania ze strony organu koncesyjnego.",
         },
         "poprawne": ["B"],
+        "podstawa_prawna": "Art. 28a ust. 2 Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Przedsiębiorca jest obowiązany przedkładać organowi koncesyjnemu aktualny dowód istnienia zabezpieczenia roszczeń corocznie, w terminie do końca stycznia danego roku."
     },
     {
         "id": 2,
@@ -63,6 +66,8 @@ PYTANIA_CZ1 = [
             "C": "koncesji na wydobywanie kopaliny prowadzone metodą podziemną.",
         },
         "poprawne": ["A"],
+        "podstawa_prawna": "Art. 28a ust. 1 Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Koncesji na podziemne składowanie odpadów udziela się pod warunkiem ustanowienia zabezpieczenia roszczeń mogących powstać wskutek wykonywania działalności objętej tą koncesją."
     },
     {
         "id": 3,
@@ -73,6 +78,8 @@ PYTANIA_CZ1 = [
             "C": "rodzaj, ilość oraz charakterystykę odpadów.",
         },
         "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 26 ust. 1 Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Wniosek o udzielenie koncesji na podziemne składowanie odpadów powinien zawierać określenie technologii składowania, rodzaj, ilość i charakterystykę odpadów oraz projektowane granice obszaru i terenu górniczego."
     }
 ]
 
@@ -87,7 +94,7 @@ PYTANIA_CZ2 = [
         },
         "poprawne": ["A", "B", "C"],
         "podstawa_prawna": "Art. 104 ust. 1 Prawo geologiczne i górnicze",
-        "tresc_artykulu": "Miejscowy plan zagospodarowania przestrzennego dla terenu górniczego sporządza się dla terenu górniczego..."
+        "tresc_artykulu": "Miejscowy plan zagospodarowania przestrzennego dla terenu górniczego sporządza się dla terenu górniczego wyznaczonego koncesją udzieloną na wydobywanie kopalin ze złóż, podziemne bezzbiornikowe magazynowanie substancji albo podziemne składowanie odpadów, jeżeli w wyniku zamierzonej działalności przewiduje się istotne skutki dla środowiska. Plan ten powinien zapewniać integrację wszelkich działań podejmowanych w granicach terenu górniczego w celu ochrony środowiska, w tym obiektów budowlanych."
     },
     {
         "id": 2,
@@ -99,7 +106,7 @@ PYTANIA_CZ2 = [
         },
         "poprawne": ["A", "B", "C"],
         "podstawa_prawna": "Art. 104 ust. 2 pkt 1 Prawo geologiczne i górnicze",
-        "tresc_artykulu": "Miejscowy plan zagospodarowania przestrzennego dla terenu górniczego może w szczególności określić obszary..."
+        "tresc_artykulu": "Miejscowy plan zagospodarowania przestrzennego dla terenu górniczego może w szczególności określić obszary, dla których wyznacza się filar ochronny w granicach którego, ze względu na ochronę dóbr chronionych, kopalina nie może być wydobywana albo może być wydobywana tylko w sposób zapewniający ochronę tych dóbr."
     }
 ]
 
@@ -120,12 +127,15 @@ if 'pytania_sesji' not in st.session_state:
     st.session_state.pytania_sesji = []
 if 'indeks' not in st.session_state:
     st.session_state.indeks = 0
+if 'sprawdzono_odpowiedz' not in st.session_state:
+    st.session_state.sprawdzono_odpowiedz = False
 if 'odpowiedzi_egzamin' not in st.session_state:
     st.session_state.odpowiedzi_egzamin = {}
 
 def start_sesji(tryb):
     st.session_state.aktywny_tryb = tryb
     st.session_state.indeks = 0
+    st.session_state.sprawdzono_odpowiedz = False
     st.session_state.odpowiedzi_egzamin = {}
     
     pula = list(st.session_state.bazy[st.session_state.wybrana_baza])
@@ -137,6 +147,7 @@ def powrot_do_wyboru():
     st.session_state.wybrana_baza = None
     st.session_state.aktywny_tryb = None
     st.session_state.indeks = 0
+    st.session_state.sprawdzono_odpowiedz = False
 
 # ==============================================================================
 # NAWIGACJA BOCZNA
@@ -148,7 +159,7 @@ menu_glowne = st.sidebar.radio(
 )
 
 # ==============================================================================
-# WIDOK 1: TESTY I NAUKA (Z WIDOKIEM MENU Z OBRAZKA)
+# WIDOK 1: TESTY I NAUKA
 # ==============================================================================
 if menu_glowne == "🎮 Testy i Nauka":
     
@@ -160,7 +171,7 @@ if menu_glowne == "🎮 Testy i Nauka":
                 st.session_state.wybrana_baza = nazwa_bazy
                 st.rerun()
 
-    # KROK 2: Wybór trybu rozwiązywania (Ekran z obrazka)
+    # KROK 2: Wybór trybu rozwiązywania
     elif st.session_state.aktywny_tryb is None:
         baza_pytania = st.session_state.bazy[st.session_state.wybrana_baza]
         st.markdown(f"**Wybrana baza:** {st.session_state.wybrana_baza}")
@@ -191,7 +202,6 @@ if menu_glowne == "🎮 Testy i Nauka":
         lista = st.session_state.pytania_sesji
         idx = st.session_state.indeks
 
-        # Przycisk szybkiego wyjścia
         if st.button("← Zmień tryb / powrót"):
             st.session_state.aktywny_tryb = None
             st.rerun()
@@ -203,7 +213,7 @@ if menu_glowne == "🎮 Testy i Nauka":
             st.markdown(f"**Pytanie {idx + 1} z {len(lista)}** (ID: {p['id']})")
             st.markdown(f"<div class='question-box'><h3>{p['pytanie']}</h3></div>", unsafe_allow_html=True)
 
-            # --- TRYBY NAUKI ---
+            # --- TRYBY NAUKI (Z WYŚWIETLANIEM PODSTAWY PRAWNEJ) ---
             if "Nauki" in st.session_state.aktywny_tryb:
                 with st.form(key=f"form_nauka_{idx}"):
                     wybrane = []
@@ -214,27 +224,35 @@ if menu_glowne == "🎮 Testy i Nauka":
                     sprawdz = st.form_submit_button("Sprawdź odpowiedź")
 
                 if sprawdz:
+                    st.session_state.sprawdzono_odpowiedz = True
+
+                if st.session_state.sprawdzono_odpowiedz:
                     poprawne = set(p["poprawne"])
                     zaznaczone = set(wybrane)
+                    
                     if zaznaczone == poprawne:
                         st.success("✅ Poprawna odpowiedź!")
                     else:
                         st.error(f"❌ Błąd! Poprawne odpowiedzi to: {', '.join(p['poprawne'])}")
 
-                    if "podstawa_prawna" in p or "tresc_artykulu" in p:
-                        st.markdown(f"""
-                        <div class='legal-box'>
-                            <strong>📜 Podstawa prawna:</strong> {p.get('podstawa_prawna', 'Brak danych')}<br><br>
-                            <em>{p.get('tresc_artykulu', '')}</em>
-                        </div>
-                        """, unsafe_allow_html=True)
+                    # Sekcja podstawy prawnej i treści artykułu
+                    podstawa = p.get("podstawa_prawna", "Brak zdefiniowanej podstawy prawnej")
+                    artykul = p.get("tresc_artykulu", "Brak opisu treści artykułu")
+                    
+                    st.markdown(f"""
+                    <div class='legal-box'>
+                        <strong>📜 Podstawa prawna:</strong> {podstawa}<br><br>
+                        <strong>📖 Treść artykułu:</strong><br>
+                        <em>{artykul}</em>
+                    </div>
+                    """, unsafe_allow_html=True)
 
             # --- TRYB EGZAMINU ---
             else:
                 poprzednie_wybory = st.session_state.odpowiedzi_egzamin.get(idx, [])
                 wybrane = []
                 for k, v in p["odpowiedzi"].items():
-                    zaznaczone = k in poprawnie_zaznaczone if 'poprawnie_zaznaczone' in locals() else k in poprzednie_wybory
+                    zaznaczone = k in poprzednie_wybory
                     if st.checkbox(f"**{k}**: {v}", value=zaznaczone, key=f"cb_egz_{idx}_{k}"):
                         wybrane.append(k)
                 
@@ -244,18 +262,20 @@ if menu_glowne == "🎮 Testy i Nauka":
             with col_p:
                 if st.button("⬅️ Poprzednie") and idx > 0:
                     st.session_state.indeks -= 1
+                    st.session_state.sprawdzono_odpowiedz = False
                     st.rerun()
             with col_n:
                 if idx < len(lista) - 1:
                     if st.button("Następne ➡️"):
                         st.session_state.indeks += 1
+                        st.session_state.sprawdzono_odpowiedz = False
                         st.rerun()
                 else:
                     if st.button("🏁 Zakończ Test"):
                         st.session_state.indeks += 1
                         st.rerun()
 
-        # Ekran podsumowania po zakończeniu
+        # Ekran podsumowania
         else:
             st.balloons()
             st.success("🎉 Zakończyłeś test!")
@@ -314,7 +334,7 @@ elif menu_glowne == "➕ Dodaj Pytanie":
                 st.session_state.bazy[baza_docelowa].append(nowe_pytanie)
                 st.success(f"Dodano pytanie o ID {nowe_id}!")
             else:
-                st.error("Uzupełnij polach i wybierz co najmniej jedną poprawną odpowiedź!")
+                st.error("Uzupełnij pola i wybierz co najmniej jedną poprawną odpowiedź!")
 
 # ==============================================================================
 # WIDOK 3: PRZEGLĄD BAZY
@@ -331,3 +351,5 @@ elif menu_glowne == "🔍 Przegląd Bazy":
                 st.write(f"{is_correct} **{k}**: {v}")
             if "podstawa_prawna" in item:
                 st.caption(f"Podstawa: {item['podstawa_prawna']}")
+            if "tresc_artykulu" in item:
+                st.info(f"Artykuł: {item['tresc_artykulu']}")

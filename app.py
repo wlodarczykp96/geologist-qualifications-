@@ -3323,19 +3323,41 @@ elif menu_glowne == "🎮 Testy i Nauka":
             st.rerun()
 
     else:
-        # Pasek czasu dla egzaminu
+     # Pasek czasu dla egzaminu działający w tle
         if st.session_state.czas_konca is not None and not st.session_state.test_zakonczony:
-            pozostaly_czas = int(st.session_state.czas_konca - time.time())
-            if pozostaly_czas <= 0:
+            pozostaly_czas_ms = int((st.session_state.czas_konca - time.time()) * 1000)
+            if pozostaly_czas_ms <= 0:
                 st.session_state.test_zakonczony = True
                 st.rerun()
             else:
-                mins, secs = divmod(pozostaly_czas, 60)
-                st.markdown(f"""
+                # Komponent JS odświeżający stronę dokładnie po wygaśnięciu czasu
+                timer_html = f"""
                 <div style="font-size: 18px; font-weight: bold; color: #ff4b4b; background-color: #1f2937; padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: center;">
-                    ⏱️ Pozostały czas egzaminu: {mins:02d}:{secs:02d}
+                    ⏱️ Pozostały czas egzaminu: <span id="countdown">--:--</span>
                 </div>
-                """, unsafe_allow_html=True)
+                <script>
+                    var endTime = new Date().getTime() + {pozostaly_czas_ms};
+                    var x = setInterval(function() {
+                        var now = new Date().getTime();
+                        var distance = endTime - now;
+                        
+                        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                        
+                        minutes = minutes < 10 ? "0" + minutes : minutes;
+                        seconds = seconds < 10 ? "0" + seconds : seconds;
+                        
+                        document.getElementById("countdown").innerHTML = minutes + ":" + seconds;
+                        
+                        if (distance < 0) {
+                            clearInterval(x);
+                            document.getElementById("countdown").innerHTML = "00:00";
+                            window.parent.location.reload();
+                        }
+                    }, 1000);
+                </script>
+                """
+                components.html(timer_html, height=60)
 
         st.markdown(f"<div class='main-header'>{st.session_state.aktywny_tryb}</div>", unsafe_allow_html=True)
         lista = st.session_state.pytania_sesji

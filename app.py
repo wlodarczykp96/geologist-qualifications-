@@ -3323,17 +3323,19 @@ elif menu_glowne == "🎮 Testy i Nauka":
             st.rerun()
 
     else:
-        # Obsługa licznika czasu dla egzaminu z całej bazy
+        # Pasek czasu dla egzaminu
         if st.session_state.czas_konca is not None and not st.session_state.test_zakonczony:
             pozostaly_czas = int(st.session_state.czas_konca - time.time())
             if pozostaly_czas <= 0:
                 st.session_state.test_zakonczony = True
-                st.warning("⏱️ Czas minął! Egzamin został automatycznie zakończony.")
                 st.rerun()
             else:
-                minuty = pozostaly_czas // 60
-                sekundy = pozostaly_czas % 60
-                st.markdown(f"### ⏱️ Pozostały czas egzaminu: **{minuty:02d}:{sekundy:02d}**")
+                mins, secs = divmod(pozostaly_czas, 60)
+                st.markdown(f"""
+                <div style="font-size: 18px; font-weight: bold; color: #ff4b4b; background-color: #1f2937; padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: center;">
+                    ⏱️ Pozostały czas egzaminu: {mins:02d}:{secs:02d}
+                </div>
+                """, unsafe_allow_html=True)
 
         st.markdown(f"<div class='main-header'>{st.session_state.aktywny_tryb}</div>", unsafe_allow_html=True)
         lista = st.session_state.pytania_sesji

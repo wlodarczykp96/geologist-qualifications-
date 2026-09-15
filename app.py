@@ -4,7 +4,7 @@ import streamlit as st
 # ==============================================================================
 # HASŁO ADMINISTRATORA
 # ==============================================================================
-ADMIN_PASSWORD = "admin123"  # <--- Tutaj ustaw swoje hasło administratora
+ADMIN_PASSWORD = "admin123"
 
 # ==============================================================================
 # INICJALIZACJA STANUSESSION I MOTYWÓW
@@ -79,7 +79,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Dynamiczne wstrzykiwanie motywu CSS
+# Dynamiczne wstrzykiwanie poprawionego motywu CSS
 if st.session_state.theme == "Jasny":
     st.markdown("""
     <style>
@@ -87,6 +87,8 @@ if st.session_state.theme == "Jasny":
         .main-header { font-size: 22px; font-weight: bold; color: #0d6efd; border-bottom: 2px solid #dee2e6; padding-bottom: 5px; margin-bottom: 15px; }
         .question-box { background-color: #ffffff; padding: 15px; border-radius: 6px; border: 1px solid #ced4da; margin-bottom: 15px; color: #212529; }
         .legal-box { background-color: #e7f1ff; padding: 15px; border-radius: 6px; border: 1px solid #b6d4fe; margin-top: 15px; margin-bottom: 15px; color: #084298; }
+        /* Poprawka widoczności etykiet tekstowych w jasnym motywie */
+        label, .stRadio p, .stCheckbox p { color: #212529 !important; }
     </style>
     """, unsafe_allow_html=True)
 elif st.session_state.theme in ["Cciemny", "Ciemny"]:
@@ -96,6 +98,7 @@ elif st.session_state.theme in ["Cciemny", "Ciemny"]:
         .main-header { font-size: 22px; font-weight: bold; color: #58a6ff; border-bottom: 2px solid #30363d; padding-bottom: 5px; margin-bottom: 15px; }
         .question-box { background-color: #161b22; padding: 15px; border-radius: 6px; border: 1px solid #30363d; margin-bottom: 15px; color: #ffffff; }
         .legal-box { background-color: #0d1117; padding: 15px; border-radius: 6px; border: 1px solid #238636; margin-top: 15px; margin-bottom: 15px; color: #e6edf3; }
+        label, .stRadio p, .stCheckbox p { color: #ffffff !important; }
     </style>
     """, unsafe_allow_html=True)
 else:
@@ -106,12 +109,14 @@ else:
             .main-header { font-size: 22px; font-weight: bold; color: #58a6ff; border-bottom: 2px solid #30363d; padding-bottom: 5px; margin-bottom: 15px; }
             .question-box { background-color: #161b22; padding: 15px; border-radius: 6px; border: 1px solid #30363d; margin-bottom: 15px; color: #ffffff; }
             .legal-box { background-color: #0d1117; padding: 15px; border-radius: 6px; border: 1px solid #238636; margin-top: 15px; margin-bottom: 15px; color: #e6edf3; }
+            label, .stRadio p, .stCheckbox p { color: #ffffff !important; }
         }
         @media (prefers-color-scheme: light) {
             .stApp { background-color: #f8f9fa; color: #212529; }
             .main-header { font-size: 22px; font-weight: bold; color: #0d6efd; border-bottom: 2px solid #dee2e6; padding-bottom: 5px; margin-bottom: 15px; }
             .question-box { background-color: #ffffff; padding: 15px; border-radius: 6px; border: 1px solid #ced4da; margin-bottom: 15px; color: #212529; }
             .legal-box { background-color: #e7f1ff; padding: 15px; border-radius: 6px; border: 1px solid #b6d4fe; margin-top: 15px; margin-bottom: 15px; color: #084298; }
+            label, .stRadio p, .stCheckbox p { color: #212529 !important; }
         }
     </style>
     """, unsafe_allow_html=True)
@@ -352,7 +357,7 @@ elif menu_glowne == "🔍 Przegląd Bazy":
                 st.info(f"Artykuł: {item['tresc_artykulu']}")
 
 # ==============================================================================
-# WIDOK: PANEL ADMINISTRATORA (EDYCJA I USUWANIE)
+# WIDOK: PANEL ADMINISTRATORA
 # ==============================================================================
 elif menu_glowne == "🔑 Panel Administratora":
     st.markdown("<div class='main-header'>🔑 Panel Administratora</div>", unsafe_allow_html=True)
@@ -385,7 +390,6 @@ elif menu_glowne == "🔑 Panel Administratora":
             opcje_pytan = [f"ID {p['id']}: {p['pytanie'][:60]}..." for p in lista_pytan]
             wybrane_pytanie_str = st.selectbox("Wybierz pytanie do edycji/usunięcia:", opcje_pytan)
             
-            # Pobranie wybranego pytania
             pytanie_idx = opcje_pytan.index(wybrane_pytanie_str)
             p = lista_pytan[pytanie_idx]
 
@@ -422,7 +426,6 @@ elif menu_glowne == "🔑 Panel Administratora":
                     if pop_c: nowe_poprawne.append("C")
 
                     if nowa_tresc and ans_a and ans_b and ans_c and nowe_poprawne:
-                        # Aktualizacja danych obiektu
                         p["pytanie"] = nowa_tresc
                         p["odpowiedzi"] = {"A": ans_a, "B": ans_b, "C": ans_c}
                         p["poprawne"] = nowe_poprawne

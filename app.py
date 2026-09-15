@@ -1,248 +1,333 @@
 import random
 import streamlit as st
 
-# Podstawowa konfiguracja widoku na telefonie
+# Konfiguracja strony Streamlit
 st.set_page_config(
-    page_title="Test Kwalifikacyjny", page_icon="📝", layout="centered"
+    page_title="Aplikacja Testowa - Prawo Geologiczne i Górnicze",
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
-AUTOR = "Jan Kowalski"  # <-- Wpisz swoje imię i nazwisko / nick
+# Style CSS dopasowane do oryginalnego wyglądu
+st.markdown("""
+<style>
+    .stApp {
+        background-color: #0e1117;
+        color: #ffffff;
+    }
+    .main-header {
+        font-size: 20px;
+        font-weight: bold;
+        color: #58a6ff;
+        border-bottom: 2px solid #30363d;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+    }
+    .question-box {
+        background-color: #161b22;
+        padding: 15px;
+        border-radius: 6px;
+        border: 1px solid #30363d;
+        margin-bottom: 15px;
+    }
+    .legal-box {
+        background-color: #0d1117;
+        padding: 12px;
+        border-radius: 6px;
+        border: 1px solid #238636;
+        margin-top: 10px;
+    }
+</style>
+""", unsafe_allow_html=True)
 
-# ==========================================
-# TUTAJ BAZY PYTAŃ (Uzupełnij swoimi danymi)
-# ==========================================
+# ==============================================================================
+# BAZA PYTAŃ - CZĘŚĆ 1 & CZĘŚĆ 2
+# ==============================================================================
 PYTANIA_CZ1 = [
     {
         "id": 1,
-        "pytanie": "Przykładowe pytanie z części 1?",
-        "odpowiedzi": {"A": "Opcja A", "B": "Opcja B", "C": "Opcja C"},
+        "pytanie": "W jakim terminie przedsiębiorca powinien przedłożyć organowi koncesyjnemu aktualny dowód istnienia zabezpieczenia roszczeń mogących powstać wskutek wykonywania działalności objętej koncesją na podziemne składowanie odpadów:",
+        "odpowiedzi": {
+            "A": "raz na kwartał,",
+            "B": "corocznie, w terminie do końca stycznia,",
+            "C": "nie później niż w terminie dwóch tygodni od dnia otrzymania wezwania ze strony organu koncesyjnego.",
+        },
+        "poprawne": ["B"],
+    },
+    {
+        "id": 2,
+        "pytanie": "Koncesji na jaką działalność udziela się zawsze pod warunkiem ustanowienia zabezpieczenia roszczeń mogących powstać wskutek wykonywania działalności nią objętą:",
+        "odpowiedzi": {
+            "A": "koncesji na podziemne składowanie odpadów,",
+            "B": "koncesji na podziemne bezzbiornikowe magazynowanie substancji,",
+            "C": "koncesji na wydobywanie kopaliny prowadzone metodą podziemną.",
+        },
         "poprawne": ["A"],
-        "podstawa_prawna": "Art. 1 Ust. 1",
+    },
+    {
+        "id": 3,
+        "pytanie": "We wniosku o udzielenie koncesji na podziemne składowanie odpadów określa się:",
+        "odpowiedzi": {
+            "A": "technologię składowania,",
+            "B": "projektowane położenie obszaru i terenu górniczego,",
+            "C": "rodzaj, ilość oraz charakterystykę odpadów.",
+        },
+        "poprawne": ["A", "B", "C"],
     }
 ]
 
 PYTANIA_CZ2 = [
-    # Wklej pytania z części 2
+    {
+        "id": 1,
+        "pytanie": "Miejscowy plan zagospodarowania przestrzennego, sporządzany dla terenu górniczego w sytuacji, gdy w wyniku zamierzonej działalności określonej w koncesji przewiduje się istotne skutki dla środowiska powienien zapewniać integrację wszelkich działań podejmowanych w granicach terenu górniczego w celu:",
+        "odpowiedzi": {
+            "A": "Wykonania działalności określonej w koncesji;",
+            "B": "Zapewnienia bezpieczeństwa powszechnego;",
+            "C": "Ochrony środowiska, w tym obiektów budowlanych;"
+        },
+        "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 104 ust. 1 Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Miejscowy plan zagospodarowania przestrzennego dla terenu górniczego sporządza się dla terenu górniczego..."
+    },
+    {
+        "id": 2,
+        "pytanie": "Miejscowy plan zagospodarowania przestrzennego, sporządzany dla terenu górniczego w sytuacji, gdy w wyniku zamierzonej działalności określonej w koncesji przewiduje się istotne skutki dla środowiska, może określić:",
+        "odpowiedzi": {
+            "A": "Obiekty, dla których wyznacza się filar ochronny;",
+            "B": "obszary, dla których wyznacza się filar ochronny;",
+            "C": "Obszary wyłączone z zabudowy;"
+        },
+        "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 104 ust. 2 pkt 1 Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Miejscowy plan zagospodarowania przestrzennego dla terenu górniczego może w szczególności określić obszary..."
+    }
 ]
 
 # ==============================================================================
-# INICJALIZACJA ZMIENNYCH STANU (Session State)
+# INICJALIZACJA STANUSESSION
 # ==============================================================================
-if "krok" not in st.session_state:
-    st.session_state.krok = "WYBOR_CZESCI"
-if "baza_zrodlowa" not in st.session_state:
-    st.session_state.baza_zrodlowa = []
-if "pula_pytan" not in st.session_state:
-    st.session_state.pula_pytan = []
-if "indeks" not in st.session_state:
+if 'bazy' not in st.session_state:
+    st.session_state.bazy = {
+        "Część 1 (Projekty, hydrogeologia, geologia)": PYTANIA_CZ1,
+        "Część 2 (Planowanie, ruch zakładu, przepisy)": PYTANIA_CZ2
+    }
+
+if 'wybrana_baza' not in st.session_state:
+    st.session_state.wybrana_baza = None
+if 'aktywny_tryb' not in st.session_state:
+    st.session_state.aktywny_tryb = None
+if 'pytania_sesji' not in st.session_state:
+    st.session_state.pytania_sesji = []
+if 'indeks' not in st.session_state:
     st.session_state.indeks = 0
-if "tryb_nauki" not in st.session_state:
-    st.session_state.tryb_nauki = True
-if "odpowiedzial" not in st.session_state:
-    st.session_state.odpowiedzial = False
-if "wynik_poprawne" not in st.session_state:
-    st.session_state.wynik_poprawne = 0
-if "wynik_bledne" not in st.session_state:
-    st.session_state.wynik_bledne = 0
-if "bledne_pytania" not in st.session_state:
-    st.session_state.bledne_pytania = []
+if 'odpowiedzi_egzamin' not in st.session_state:
+    st.session_state.odpowiedzi_egzamin = {}
 
-
-# ==============================================================================
-# EKRAN 1: WYBÓR CZĘŚCI BAZY
-# ==============================================================================
-if st.session_state.krok == "WYBOR_CZESCI":
-    st.title("📱 System Testowy")
-    st.caption("Wybierz część bazy pytań, aby rozpocząć.")
-
-    btn_cz1 = st.button(f"Część 1 ({len(PYTANIA_CZ1)} pytań)", use_container_width=True)
-    btn_cz2 = st.button(f"Część 2 ({len(PYTANIA_CZ2)} pytań)", use_container_width=True)
-    btn_obu = st.button(f"Połączone Części ({len(PYTANIA_CZ1) + len(PYTANIA_CZ2)} pytań)", use_container_width=True)
-
-    if btn_cz1:
-        if not PYTANIA_CZ1:
-            st.warning("Baza Części 1 jest pusta!")
-        else:
-            st.session_state.baza_zrodlowa = list(PYTANIA_CZ1)
-            st.session_state.krok = "WYBOR_TRYBU"
-            st.rerun()
-
-    if btn_cz2:
-        if not PYTANIA_CZ2:
-            st.warning("Baza Części 2 jest pusta!")
-        else:
-            st.session_state.baza_zrodlowa = list(PYTANIA_CZ2)
-            st.session_state.krok = "WYBOR_TRYBU"
-            st.rerun()
-
-    if btn_obu:
-        razem = PYTANIA_CZ1 + PYTANIA_CZ2
-        if not razem:
-            st.warning("Połączona baza jest pusta!")
-        else:
-            st.session_state.baza_zrodlowa = list(razem)
-            st.session_state.krok = "WYBOR_TRYBU"
-            st.rerun()
-
-
-# ==============================================================================
-# EKRAN 2: WYBÓR TRYBU ROZWIAZYWANIA
-# ==============================================================================
-elif st.session_state.krok == "WYBOR_TRYBU":
-    st.title("⚙️ Wybierz Tryb")
-    st.caption(f"Wybrana baza liczy: {len(st.session_state.baza_zrodlowa)} pytań")
-
-    if st.button("Tryb Nauki (Kolejno + Podpowiedzi)", use_container_width=True):
-        st.session_state.pula_pytan = list(st.session_state.baza_zrodlowa)
-        st.session_state.tryb_nauki = True
-        st.session_state.krok = "QUIZ"
-        st.session_state.indeks = 0
-        st.session_state.wynik_poprawne = 0
-        st.session_state.wynik_bledne = 0
-        st.session_state.bledne_pytania = []
-        st.session_state.odpowiedzial = False
-        st.rerun()
-
-    if st.button("Tryb Nauki (Losowa kolejność + Podpowiedzi)", use_container_width=True):
-        st.session_state.pula_pytan = list(st.session_state.baza_zrodlowa)
-        random.shuffle(st.session_state.pula_pytan)
-        st.session_state.tryb_nauki = True
-        st.session_state.krok = "QUIZ"
-        st.session_state.indeks = 0
-        st.session_state.wynik_poprawne = 0
-        st.session_state.wynik_bledne = 0
-        st.session_state.bledne_pytania = []
-        st.session_state.odpowiedzial = False
-        st.rerun()
-
-    if st.button("Tryb Egzaminu (Losowo, Wynik na końcu)", use_container_width=True):
-        st.session_state.pula_pytan = list(st.session_state.baza_zrodlowa)
-        random.shuffle(st.session_state.pula_pytan)
-        st.session_state.tryb_nauki = False
-        st.session_state.krok = "QUIZ"
-        st.session_state.indeks = 0
-        st.session_state.wynik_poprawne = 0
-        st.session_state.wynik_bledne = 0
-        st.session_state.bledne_pytania = []
-        st.session_state.odpowiedzial = False
-        st.rerun()
-
-    st.write("")
-    if st.button("← Powrót do wyboru części", use_container_width=True):
-        st.session_state.krok = "WYBOR_CZESCI"
-        st.rerun()
-
-
-# ==============================================================================
-# EKRAN 3: QUIZ / INTERFEJS PYTANIA
-# ==============================================================================
-elif st.session_state.krok == "QUIZ":
-    pytanie = st.session_state.pula_pytan[st.session_state.indeks]
-    razem = len(st.session_state.pula_pytan)
-
-    st.progress((st.session_state.indeks + 1) / razem)
+def start_sesji(tryb):
+    st.session_state.aktywny_tryb = tryb
+    st.session_state.indeks = 0
+    st.session_state.odpowiedzi_egzamin = {}
     
-    col_top1, col_top2 = st.columns([2, 1])
-    with col_top1:
-        st.caption(f"Pytanie {st.session_state.indeks + 1} z {razem} (ID: {pytanie.get('id', '-')})")
-    with col_top2:
-        if st.button("Menu 🏠", key="top_menu"):
-            st.session_state.krok = "WYBOR_CZESCI"
+    pula = list(st.session_state.bazy[st.session_state.wybrana_baza])
+    if "Losow" in tryb or "Egzamin" in tryb:
+        random.shuffle(pula)
+    st.session_state.pytania_sesji = pula
+
+def powrot_do_wyboru():
+    st.session_state.wybrana_baza = None
+    st.session_state.aktywny_tryb = None
+    st.session_state.indeks = 0
+
+# ==============================================================================
+# NAWIGACJA BOCZNA
+# ==============================================================================
+st.sidebar.title("📌 Menu Główne")
+menu_glowne = st.sidebar.radio(
+    "Nawigacja:",
+    ["🎮 Testy i Nauka", "➕ Dodaj Pytanie", "🔍 Przegląd Bazy"]
+)
+
+# ==============================================================================
+# WIDOK 1: TESTY I NAUKA (Z WIDOKIEM MENU Z OBRAZKA)
+# ==============================================================================
+if menu_glowne == "🎮 Testy i Nauka":
+    
+    # KROK 1: Wybór części bazy
+    if st.session_state.wybrana_baza is None:
+        st.markdown("<div class='main-header'>Wybierz część bazy pytań</div>", unsafe_allow_html=True)
+        for nazwa_bazy in st.session_state.bazy.keys():
+            if st.button(f"📁 {nazwa_bazy}", use_container_width=True):
+                st.session_state.wybrana_baza = nazwa_bazy
+                st.rerun()
+
+    # KROK 2: Wybór trybu rozwiązywania (Ekran z obrazka)
+    elif st.session_state.aktywny_tryb is None:
+        baza_pytania = st.session_state.bazy[st.session_state.wybrana_baza]
+        st.markdown(f"**Wybrana baza:** {st.session_state.wybrana_baza}")
+        st.markdown(f"**Wybrana baza liczy: {len(baza_pytania)} pytań**")
+        st.write("")
+
+        if st.button("Tryb Nauki (Kolejno + Podpowiedzi)", use_container_width=True):
+            start_sesji("Tryb Nauki (Kolejno + Podpowiedzi)")
             st.rerun()
 
-    st.markdown(f"### {pytanie['pytanie']}")
+        if st.button("Tryb Nauki (Losowa kolejność + Podpowiedzi)", use_container_width=True):
+            start_sesji("Tryb Nauki (Losowa kolejność + Podpowiedzi)")
+            st.rerun()
 
-    wybrane = []
-    for k, v in pytanie["odpowiedzi"].items():
-        if st.checkbox(f"**{k}.** {v}", key=f"q_{st.session_state.indeks}_{k}"):
-            wybrane.append(k)
+        if st.button("Tryb Egzaminu (Losowo, Wynik na końcu)", use_container_width=True):
+            start_sesji("Tryb Egzaminu (Losowo, Wynik na końcu)")
+            st.rerun()
 
-    st.write("")
+        st.write("")
+        if st.button("← Powrót do wyboru części", use_container_width=True):
+            powrot_do_wyboru()
+            st.rerun()
 
-    if not st.session_state.odpowiedzial:
-        if st.button("Sprawdź / Zatwierdź", use_container_width=True):
-            if not wybrane:
-                st.warning("Zaznacz co najmniej jedną odpowiedź!")
-            else:
-                st.session_state.odpowiedzial = True
-                czy_poprawne = set(wybrane) == set(pytanie["poprawne"])
-
-                if czy_poprawne:
-                    st.session_state.wynik_poprawne += 1
-                    st.session_state.ostatnia_poprawna = True
-                else:
-                    st.session_state.wynik_bledne += 1
-                    st.session_state.ostatnia_poprawna = False
-                    st.session_state.bledne_pytania.append((pytanie, wybrane))
-
-                if not st.session_state.tryb_nauki:
-                    st.session_state.indeks += 1
-                    st.session_state.odpowiedzial = False
-                    if st.session_state.indeks >= razem:
-                        st.session_state.krok = "WYNIK"
-                    st.rerun()
-                else:
-                    st.rerun()
+    # KROK 3: Ekran rozwiązywania pytań
     else:
-        if st.session_state.ostatnia_poprawna:
-            st.success("✅ DOKŁADNIE TAK! Odpowiedź poprawna.")
-        else:
-            st.error(f"❌ BŁĄD!\nTwoja odpowiedź: {', '.join(wybrane)} | Poprawna: {', '.join(pytanie['poprawne'])}")
+        st.markdown(f"<div class='main-header'>{st.session_state.aktywny_tryb} - {st.session_state.wybrana_baza}</div>", unsafe_allow_html=True)
+        
+        lista = st.session_state.pytania_sesji
+        idx = st.session_state.indeks
 
-        if "podstawa_prawna" in pytanie or "tresc_artykulu" in pytanie:
-            with st.expander("📖 Wyjaśnienie / Podstawa prawna", expanded=True):
-                if "podstawa_prawna" in pytanie:
-                    st.markdown(f"**Podstawa:** {pytanie['podstawa_prawna']}")
-                if "tresc_artykulu" in pytanie:
-                    st.write(pytanie['tresc_artykulu'])
-
-        if st.button("Następne pytanie ➔", use_container_width=True):
-            st.session_state.indeks += 1
-            st.session_state.odpowiedzial = False
-            if st.session_state.indeks >= razem:
-                st.session_state.krok = "WYNIK"
+        # Przycisk szybkiego wyjścia
+        if st.button("← Zmień tryb / powrót"):
+            st.session_state.aktywny_tryb = None
             st.rerun()
 
+        st.markdown("---")
+
+        if idx < len(lista):
+            p = lista[idx]
+            st.markdown(f"**Pytanie {idx + 1} z {len(lista)}** (ID: {p['id']})")
+            st.markdown(f"<div class='question-box'><h3>{p['pytanie']}</h3></div>", unsafe_allow_html=True)
+
+            # --- TRYBY NAUKI ---
+            if "Nauki" in st.session_state.aktywny_tryb:
+                with st.form(key=f"form_nauka_{idx}"):
+                    wybrane = []
+                    for k, v in p["odpowiedzi"].items():
+                        if st.checkbox(f"**{k}**: {v}", key=f"cb_nauka_{idx}_{k}"):
+                            wybrane.append(k)
+                    
+                    sprawdz = st.form_submit_button("Sprawdź odpowiedź")
+
+                if sprawdz:
+                    poprawne = set(p["poprawne"])
+                    zaznaczone = set(wybrane)
+                    if zaznaczone == poprawne:
+                        st.success("✅ Poprawna odpowiedź!")
+                    else:
+                        st.error(f"❌ Błąd! Poprawne odpowiedzi to: {', '.join(p['poprawne'])}")
+
+                    if "podstawa_prawna" in p or "tresc_artykulu" in p:
+                        st.markdown(f"""
+                        <div class='legal-box'>
+                            <strong>📜 Podstawa prawna:</strong> {p.get('podstawa_prawna', 'Brak danych')}<br><br>
+                            <em>{p.get('tresc_artykulu', '')}</em>
+                        </div>
+                        """, unsafe_allow_html=True)
+
+            # --- TRYB EGZAMINU ---
+            else:
+                poprzednie_wybory = st.session_state.odpowiedzi_egzamin.get(idx, [])
+                wybrane = []
+                for k, v in p["odpowiedzi"].items():
+                    zaznaczone = k in poprawnie_zaznaczone if 'poprawnie_zaznaczone' in locals() else k in poprzednie_wybory
+                    if st.checkbox(f"**{k}**: {v}", value=zaznaczone, key=f"cb_egz_{idx}_{k}"):
+                        wybrane.append(k)
+                
+                st.session_state.odpowiedzi_egzamin[idx] = wybrane
+
+            col_p, col_n = st.columns([1, 1])
+            with col_p:
+                if st.button("⬅️ Poprzednie") and idx > 0:
+                    st.session_state.indeks -= 1
+                    st.rerun()
+            with col_n:
+                if idx < len(lista) - 1:
+                    if st.button("Następne ➡️"):
+                        st.session_state.indeks += 1
+                        st.rerun()
+                else:
+                    if st.button("🏁 Zakończ Test"):
+                        st.session_state.indeks += 1
+                        st.rerun()
+
+        # Ekran podsumowania po zakończeniu
+        else:
+            st.balloons()
+            st.success("🎉 Zakończyłeś test!")
+            
+            if "Egzamin" in st.session_state.aktywny_tryb:
+                punkty = 0
+                for i, q in enumerate(lista):
+                    user_ans = set(st.session_state.odpowiedzi_egzamin.get(i, []))
+                    correct_ans = set(q["poprawne"])
+                    if user_ans == correct_ans:
+                        punkty += 1
+
+                st.markdown(f"### Twój Wynik Egzaminu: **{punkty} / {len(lista)}** ({(punkty/len(lista)*100):.1f}%)")
+
+            if st.button("🔄 Rozpocznij ponownie"):
+                start_sesji(st.session_state.aktywny_tryb)
+                st.rerun()
 
 # ==============================================================================
-# EKRAN 4: PODSUMOWANIE I WYNIKI
+# WIDOK 2: DODAJ PYTANIE
 # ==============================================================================
-elif st.session_state.krok == "WYNIK":
-    st.title("🎉 Koniec Testu!")
+elif menu_glowne == "➕ Dodaj Pytanie":
+    st.markdown("<div class='main-header'>Dodaj nowe pytanie do bazy</div>", unsafe_allow_html=True)
+    baza_docelowa = st.selectbox("Wybierz bazę:", list(st.session_state.bazy.keys()))
 
-    razem = len(st.session_state.pula_pytan)
-    poprawne = st.session_state.wynik_poprawne
-    bledne = st.session_state.wynik_bledne
-    procent = (poprawne / razem) * 100 if razem > 0 else 0
+    with st.form("form_dodaj"):
+        tresc = st.text_area("Treść pytania:")
+        ans_a = st.text_input("Odpowiedź A:")
+        ans_b = st.text_input("Odpowiedź B:")
+        ans_c = st.text_input("Odpowiedź C:")
+        
+        pop_a = st.checkbox("A jest poprawne")
+        pop_b = st.checkbox("B jest poprawne")
+        pop_c = st.checkbox("C jest poprawne")
+        
+        podstawa = st.text_input("Podstawa prawna (opcjonalnie):")
+        artykul = st.text_area("Treść artykułu (opcjonalnie):")
+        
+        if st.form_submit_button("Zapisz pytanie"):
+            poprawne_list = []
+            if pop_a: poprawne_list.append("A")
+            if pop_b: poprawne_list.append("B")
+            if pop_c: poprawne_list.append("C")
 
-    st.metric(label="Mój Wynik", value=f"{poprawne} / {razem}", delta=f"{procent:.1f}%")
+            if tresc and ans_a and ans_b and ans_c and poprawne_list:
+                nowe_id = max([p["id"] for p in st.session_state.bazy[baza_docelowa]], default=0) + 1
+                nowe_pytanie = {
+                    "id": nowe_id,
+                    "pytanie": tresc,
+                    "odpowiedzi": {"A": ans_a, "B": ans_b, "C": ans_c},
+                    "poprawne": poprawne_list,
+                }
+                if podstawa: nowe_pytanie["podstawa_prawna"] = podstawa
+                if artykul: nowe_pytanie["tresc_artykulu"] = artykul
 
-    col_m1, col_m2 = st.columns(2)
-    with col_m1:
-        st.success(f"Poprawne: **{poprawne}**")
-    with col_m2:
-        st.error(f"Błędne: **{bledne}**")
-
-    if st.session_state.bledne_pytania:
-        st.write("---")
-        st.subheader("Podsumowanie popełnionych błędów:")
-
-        for py, wybrane in st.session_state.bledne_pytania:
-            with st.expander(f"❌ [ID: {py.get('id','-')}] {py['pytanie'][:60]}..."):
-                st.write(f"**Pytanie:** {py['pytanie']}")
-                st.write(f"**Twoja odpowiedź:** {', '.join(wybrane)}")
-                st.write(f"**Poprawna odpowiedź:** {', '.join(py['poprawne'])}")
-                if "podstawa_prawna" in py:
-                    st.caption(f"Podstawa: {py['podstawa_prawna']}")
-
-    st.write("")
-    if st.button("Powrót do Menu Głównego", use_container_width=True):
-        st.session_state.krok = "WYBOR_CZESCI"
-        st.rerun()
-
+                st.session_state.bazy[baza_docelowa].append(nowe_pytanie)
+                st.success(f"Dodano pytanie o ID {nowe_id}!")
+            else:
+                st.error("Uzupełnij polach i wybierz co najmniej jedną poprawną odpowiedź!")
 
 # ==============================================================================
-# STOPKA Z AUTOREM
+# WIDOK 3: PRZEGLĄD BAZY
 # ==============================================================================
-st.write("---")
-st.caption(f"Autor programu: **{AUTOR}**")
+elif menu_glowne == "🔍 Przegląd Bazy":
+    st.markdown("<div class='main-header'>Przegląd Bazy Pytań</div>", unsafe_allow_html=True)
+    wybrana = st.selectbox("Wybierz część:", list(st.session_state.bazy.keys()))
+    
+    for item in st.session_state.bazy[wybrana]:
+        with st.expander(f"ID {item['id']}: {item['pytanie'][:80]}..."):
+            st.write(f"**Pytanie:** {item['pytanie']}")
+            for k, v in item["odpowiedzi"].items():
+                is_correct = "✅" if k in item["poprawne"] else "❌"
+                st.write(f"{is_correct} **{k}**: {v}")
+            if "podstawa_prawna" in item:
+                st.caption(f"Podstawa: {item['podstawa_prawna']}")

@@ -16,7 +16,7 @@ if 'admin_logged_in' not in st.session_state:
     st.session_state.admin_logged_in = False
 
 if 'bazy' not in st.session_state:
-    st.session_state.bazy = [
+    st.session_state.bazy = {
         "BAZA PYTAŃ - CZĘŚĆ 1 (...)": [
         # ... pytania z części 3 ...
     ],  # <--- WAŻNY PRECINEK TUTAJ!
@@ -892,7 +892,7 @@ if 'bazy' not in st.session_state:
         "tresc_artykulu": "Część tekstowa PRG wskazuje lokalizację administracyjną zamierzonych prac oraz uzasadnienie liczby i typu projektowanych wyrobisk."
         }
     ]
-]
+}
 #Restar aplikacji mobilnych 
 if 'wybrana_baza' not in st.session_state:
     st.session_state.wybrana_baza = None

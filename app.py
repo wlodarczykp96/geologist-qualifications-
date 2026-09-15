@@ -3142,7 +3142,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Stylizacja CSS (sidebar, formularze, równe kafelki i poprawiony żółty kolor)
+# Stylizacja CSS
 if st.session_state.theme == "Jasny":
     st.markdown("""
     <style>
@@ -3195,15 +3195,15 @@ else:
     </style>
     """, unsafe_allow_html=True)
 
-# Pomocnicze funkcje nawigacyjne
-def start_sesji(tryb, limit_pytan=None):
+# Pomocnicze funkcje sesyjne
+def start_sesji(tryb, limit_pytan=None, z_calej_bazy=False):
     st.session_state.aktywny_tryb = tryb
     st.session_state.indeks = 0
     st.session_state.sprawdzono_odpowiedz = False
     st.session_state.odpowiedzi_egzamin = {}
     st.session_state.test_zakonczony = False
     
-    if tryb == "Tryb Egzaminu z CAŁEJ BAZY (50 pytań / 30 min)":
+    if z_calej_bazy:
         pula = []
         for baza in st.session_state.bazy.values():
             pula.extend(baza)
@@ -3214,7 +3214,8 @@ def start_sesji(tryb, limit_pytan=None):
         st.session_state.czas_konca = time.time() + (30 * 60) # 30 minut
     else:
         pula = list(st.session_state.bazy[st.session_state.wybrana_baza])
-        random.shuffle(pula)
+        if "Losowo" in tryb or "Egzamin" in tryb:
+            random.shuffle(pula)
         if limit_pytan:
             pula = pula[:limit_pytan]
         st.session_state.pytania_sesji = pula
@@ -3284,12 +3285,11 @@ if menu_glowne == "🏠 Strona Główna":
 # WIDOK: TESTY I NAUKA
 # ==============================================================================
 elif menu_glowne == "🎮 Testy i Nauka":
-    # Opcja szybkiego uruchomienia egzaminu z całej bazy bezpośrednio z głównego menu modułu testowego
     if st.session_state.wybrana_baza is None and st.session_state.aktywny_tryb is None:
         st.markdown("<div class='main-header'>Wybierz tryb testowy lub bazę pytań</div>", unsafe_allow_html=True)
         
         if st.button("🚀 Uruchom Egzamin z CAŁEJ BAZY (50 pytań / 30 min)", use_container_width=True, type="primary"):
-            start_sesji("Tryb Egzaminu z CAŁEJ BAZY (50 pytań / 30 min)", limit_pytan=50)
+            start_sesji("Tryb Egzaminu z CAŁEJ BAZY (50 pytań / 30 min)", limit_pytan=50, z_calej_bazy=True)
             st.rerun()
             
         st.markdown("---")
@@ -3305,12 +3305,16 @@ elif menu_glowne == "🎮 Testy i Nauka":
         st.markdown(f"**Wybrana baza liczy: {len(baza_pytania)} pytań**")
         st.write("")
 
-        if st.button("Tryb Nauki (Losowo – 30 pytań z podpowiedziami)", use_container_width=True):
-            start_sesji("Tryb Nauki (Losowo)", limit_pytan=30)
+        if st.button("Tryb Nauki (Kolejno + Podpowiedzi)", use_container_width=True):
+            start_sesji("Tryb Nauki (Kolejno + Podpowiedzi)", limit_pytan=None)
+            st.rerun()
+
+        if st.button("Tryb Nauki (Losowo – 30 pytań + Podpowiedzi)", use_container_width=True):
+            start_sesji("Tryb Nauki (Losowo – 30 pytań + Podpowiedzi)", limit_pytan=30)
             st.rerun()
 
         if st.button("Tryb Egzaminu (Losowo – 35 pytań, wynik na końcu)", use_container_width=True):
-            start_sesji("Tryb Egzaminu", limit_pytan=35)
+            start_sesji("Tryb Egzaminu (Losowo – 35 pytań)", limit_pytan=35)
             st.rerun()
 
         st.write("")
@@ -3330,8 +3334,6 @@ elif menu_glowne == "🎮 Testy i Nauka":
                 minuty = pozostaly_czas // 60
                 sekundy = pozostaly_czas % 60
                 st.markdown(f"### ⏱️ Pozostały czas egzaminu: **{minuty:02d}:{sekundy:02d}**")
-                time.sleep(1)
-                st.rerun()
 
         st.markdown(f"<div class='main-header'>{st.session_state.aktywny_tryb}</div>", unsafe_allow_html=True)
         lista = st.session_state.pytania_sesji

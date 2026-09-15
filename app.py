@@ -79,27 +79,57 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Stylizacja CSS uwzględniająca cały pasek boczny
+# Stylizacja CSS (sidebar, formularze, równe kafelki i poprawiony żółty kolor)
 if st.session_state.theme == "Jasny":
     st.markdown("""
     <style>
-        /* Tło aplikacji i teksty główne */
         .stApp { background-color: #f8f9fa; color: #212529; }
         
-        /* Pasek boczny (Sidebar) - jasne tło i ciemne czcionki */
-        section[data-testid="stSidebar"] {
-            background-color: #f1f3f5 !important;
+        section[data-testid="stSidebar"] { background-color: #f1f3f5 !important; }
+        section[data-testid="stSidebar"] * { color: #212529 !important; }
+
+        input, textarea, select, div[role="combobox"], div[data-baseweb="select"] {
+            background-color: #ffffff !important;
+            color: #212529 !important;
+            border: 1px solid #ced4da !important;
         }
-        section[data-testid="stSidebar"] * {
+        div[data-baseweb="select"] * {
+            background-color: #ffffff !important;
             color: #212529 !important;
         }
+        
+        .stButton>button, .stFormSubmitButton>button {
+            background-color: #e9ecef !important;
+            color: #212529 !important;
+            border: 1px solid #ced4da !important;
+            width: 100% !important;
+        }
+        .stButton>button:hover, .stFormSubmitButton>button:hover {
+            background-color: #dee2e6 !important;
+            border-color: #adb5bd !important;
+        }
 
-        /* Etykiety i elementy opcji */
-        label, .stRadio p, .stCheckbox p { color: #212529 !important; }
+        label, .stRadio p, .stCheckbox p, p { color: #212529 !important; }
 
         .main-header { font-size: 22px; font-weight: bold; color: #0d6efd; border-bottom: 2px solid #dee2e6; padding-bottom: 5px; margin-bottom: 15px; }
         .question-box { background-color: #ffffff; padding: 15px; border-radius: 6px; border: 1px solid #ced4da; margin-bottom: 15px; color: #212529; }
         .legal-box { background-color: #e7f1ff; padding: 15px; border-radius: 6px; border: 1px solid #b6d4fe; margin-top: 15px; margin-bottom: 15px; color: #084298; }
+
+        /* Równe kafelki na stronie głównej - jasny motyw */
+        .card-blue, .card-yellow, .card-green, .card-red {
+            padding: 20px;
+            border-radius: 8px;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+        .card-blue { background-color: #cfe2ff; color: #084298; border: 1px solid #b6d4fe; }
+        .card-yellow { background-color: #ffe5d0; color: #7c2d12; border: 1px solid #ffbb99; }
+        .card-green { background-color: #d1e7dd; color: #0f5132; border: 1px solid #badbcc; }
+        .card-red { background-color: #f8d7da; color: #842029; border: 1px solid #f5c2c7; }
     </style>
     """, unsafe_allow_html=True)
 elif st.session_state.theme in ["Cciemny", "Ciemny"]:
@@ -107,18 +137,44 @@ elif st.session_state.theme in ["Cciemny", "Ciemny"]:
     <style>
         .stApp { background-color: #0e1117; color: #ffffff; }
         
-        section[data-testid="stSidebar"] {
-            background-color: #161b22 !important;
+        section[data-testid="stSidebar"] { background-color: #161b22 !important; }
+        section[data-testid="stSidebar"] * { color: #ffffff !important; }
+
+        input, textarea, select, div[role="combobox"], div[data-baseweb="select"] {
+            background-color: #21262d !important;
+            color: #ffffff !important;
+            border: 1px solid #30363d !important;
         }
-        section[data-testid="stSidebar"] * {
+        div[data-baseweb="select"] * {
+            background-color: #21262d !important;
             color: #ffffff !important;
         }
 
-        label, .stRadio p, .stCheckbox p { color: #ffffff !important; }
+        .stButton>button, .stFormSubmitButton>button {
+            width: 100% !important;
+        }
+
+        label, .stRadio p, .stCheckbox p, p { color: #ffffff !important; }
 
         .main-header { font-size: 22px; font-weight: bold; color: #58a6ff; border-bottom: 2px solid #30363d; padding-bottom: 5px; margin-bottom: 15px; }
         .question-box { background-color: #161b22; padding: 15px; border-radius: 6px; border: 1px solid #30363d; margin-bottom: 15px; color: #ffffff; }
         .legal-box { background-color: #0d1117; padding: 15px; border-radius: 6px; border: 1px solid #238636; margin-top: 15px; margin-bottom: 15px; color: #e6edf3; }
+
+        /* Równe kafelki na stronie głównej - ciemny motyw */
+        .card-blue, .card-yellow, .card-green, .card-red {
+            padding: 20px;
+            border-radius: 8px;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+        .card-blue { background-color: #1f364d; color: #58a6ff; border: 1px solid #30363d; }
+        .card-yellow { background-color: #452800; color: #ffbc54; border: 1px solid #633800; }
+        .card-green { background-color: #1b3a2b; color: #3fb950; border: 1px solid #238636; }
+        .card-red { background-color: #421e22; color: #f85149; border: 1px solid #da3633; }
     </style>
     """, unsafe_allow_html=True)
 else:
@@ -128,19 +184,35 @@ else:
             .stApp { background-color: #0e1117; color: #ffffff; }
             section[data-testid="stSidebar"] { background-color: #161b22 !important; }
             section[data-testid="stSidebar"] * { color: #ffffff !important; }
-            label, .stRadio p, .stCheckbox p { color: #ffffff !important; }
+            input, textarea, select, div[role="combobox"], div[data-baseweb="select"] { background-color: #21262d !important; color: #ffffff !important; border: 1px solid #30363d !important; }
+            div[data-baseweb="select"] * { background-color: #21262d !important; color: #ffffff !important; }
+            .stButton>button, .stFormSubmitButton>button { width: 100% !important; }
+            label, .stRadio p, .stCheckbox p, p { color: #ffffff !important; }
             .main-header { font-size: 22px; font-weight: bold; color: #58a6ff; border-bottom: 2px solid #30363d; padding-bottom: 5px; margin-bottom: 15px; }
             .question-box { background-color: #161b22; padding: 15px; border-radius: 6px; border: 1px solid #30363d; margin-bottom: 15px; color: #ffffff; }
             .legal-box { background-color: #0d1117; padding: 15px; border-radius: 6px; border: 1px solid #238636; margin-top: 15px; margin-bottom: 15px; color: #e6edf3; }
+            .card-blue { background-color: #1f364d; color: #58a6ff; border: 1px solid #30363d; }
+            .card-yellow { background-color: #452800; color: #ffbc54; border: 1px solid #633800; }
+            .card-green { background-color: #1b3a2b; color: #3fb950; border: 1px solid #238636; }
+            .card-red { background-color: #421e22; color: #f85149; border: 1px solid #da3633; }
+            .card-blue, .card-yellow, .card-green, .card-red { padding: 20px; border-radius: 8px; height: 220px; display: flex; flex-direction: column; justify-content: flex-start; margin-bottom: 20px; box-sizing: border-box; }
         }
         @media (prefers-color-scheme: light) {
             .stApp { background-color: #f8f9fa; color: #212529; }
             section[data-testid="stSidebar"] { background-color: #f1f3f5 !important; }
             section[data-testid="stSidebar"] * { color: #212529 !important; }
-            label, .stRadio p, .stCheckbox p { color: #212529 !important; }
+            input, textarea, select, div[role="combobox"], div[data-baseweb="select"] { background-color: #ffffff !important; color: #212529 !important; border: 1px solid #ced4da !important; }
+            div[data-baseweb="select"] * { background-color: #ffffff !important; color: #212529 !important; }
+            .stButton>button, .stFormSubmitButton>button { background-color: #e9ecef !important; color: #212529 !important; border: 1px solid #ced4da !important; width: 100% !important; }
+            label, .stRadio p, .stCheckbox p, p { color: #212529 !important; }
             .main-header { font-size: 22px; font-weight: bold; color: #0d6efd; border-bottom: 2px solid #dee2e6; padding-bottom: 5px; margin-bottom: 15px; }
             .question-box { background-color: #ffffff; padding: 15px; border-radius: 6px; border: 1px solid #ced4da; margin-bottom: 15px; color: #212529; }
             .legal-box { background-color: #e7f1ff; padding: 15px; border-radius: 6px; border: 1px solid #b6d4fe; margin-top: 15px; margin-bottom: 15px; color: #084298; }
+            .card-blue { background-color: #cfe2ff; color: #084298; border: 1px solid #b6d4fe; }
+            .card-yellow { background-color: #ffe5d0; color: #7c2d12; border: 1px solid #ffbb99; }
+            .card-green { background-color: #d1e7dd; color: #0f5132; border: 1px solid #badbcc; }
+            .card-red { background-color: #f8d7da; color: #842029; border: 1px solid #f5c2c7; }
+            .card-blue, .card-yellow, .card-green, .card-red { padding: 20px; border-radius: 8px; height: 220px; display: flex; flex-direction: column; justify-content: flex-start; margin-bottom: 20px; box-sizing: border-box; }
         }
     </style>
     """, unsafe_allow_html=True)
@@ -184,14 +256,38 @@ menu_glowne = st.sidebar.radio(
 if menu_glowne == "🏠 Strona Główna":
     st.markdown("<div class='main-header'>Witaj w Aplikacji Testowej</div>", unsafe_allow_html=True)
     st.write("Wybierz odpowiednią sekcję z paska bocznego po lewej stronie, aby rozpocząć pracę z aplikacją.")
+    st.write("")
     
     col1, col2 = st.columns(2)
     with col1:
-        st.info("### 🎮 Rozwiązywanie Testów\nWybierz część bazy, ustal tryb nauki lub spróbuj sił w symulacji egzaminu.")
-        st.success("### 🔍 Baza Pytań\nPrzeglądaj pytania razem z przypisanymi podstawami prawnymi oraz tekstami artykułów.")
+        st.markdown("""
+        <div class="card-blue">
+            <h4 style="margin-top:0;">🎮 Rozwiązywanie Testów</h4>
+            <p style="margin:0;">Wybierz część bazy, ustal tryb nauki lub spróbuj sił w symulacji egzaminu.</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+        <div class="card-green">
+            <h4 style="margin-top:0;">🔍 Baza Pytań</h4>
+            <p style="margin:0;">Przeglądaj pytania razem z przypisanymi podstawami prawnymi oraz tekstami artykułów.</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
     with col2:
-        st.warning("### ➕ Dodawanie Pytań\nRozszerzaj bazę testową o własne pytania i odpowiedzi.")
-        st.error("### 🔑 Tryb Administratora\nPozwala edytować oraz usuwać dowolne pytania w bazie po podaniu hasła.")
+        st.markdown("""
+        <div class="card-yellow">
+            <h4 style="margin-top:0;">➕ Dodawanie Pytań</h4>
+            <p style="margin:0;">Rozszerzaj bazę testową o własne pytania i odpowiedzi.</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+        <div class="card-red">
+            <h4 style="margin-top:0;">🔑 Tryb Administratora</h4>
+            <p style="margin:0;">Pozwala edytować oraz usuwać dowolne pytania w bazie po podaniu hasła.</p>
+        </div>
+        """, unsafe_allow_html=True)
 
 # ==============================================================================
 # WIDOK: TESTY I NAUKA

@@ -883,7 +883,7 @@ if 'bazy' not in st.session_state:
         "tresc_artykulu": "Część tekstowa PRG wskazuje lokalizację administracyjną zamierzonych prac oraz uzasadnienie liczby i typu projektowanych wyrobisk."
         }
     ]
-
+]
 #Restar aplikacji mobilnych 
 if 'wybrana_baza' not in st.session_state:
     st.session_state.wybrana_baza = None

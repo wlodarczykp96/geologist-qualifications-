@@ -881,8 +881,8 @@ if 'bazy' not in st.session_state:
         "poprawne": ["A", "C"],
         "podstawa_prawna": "Art. 1 ust. 2 pkt 1, 4 Rozporządzenia MŚ w sprawie PRG",
         "tresc_artykulu": "Część tekstowa PRG wskazuje lokalizację administracyjną zamierzonych prac oraz uzasadnienie liczby i typu projektowanych wyrobisk."
-    }
-]
+        }
+    ]
 
 #Restar aplikacji mobilnych 
 if 'wybrana_baza' not in st.session_state:

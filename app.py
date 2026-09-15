@@ -18,8 +18,18 @@ if 'admin_logged_in' not in st.session_state:
 if 'bazy' not in st.session_state:
     st.session_state.bazy = {
         "BAZA PYTAŃ - CZĘŚĆ 1 (Hydrogeologia i geologia inżynierska [...])": [
-        # ... pytania z części 3 ...
-    ],  # <--- WAŻNY PRECINEK TUTAJ!
+       { "id": 1,
+        "pytanie": "Miejscowy plan zagospodarowania przestrzennego, sporządzany dla terenu górniczego w sytuacji, gdy w wyniku zamierzonej działalności określonej w koncesji przewiduje się istotne skutki dla środowiska powienien zapewniać integrację wszelkich działań podejmowanych w granicach terenu górniczego w celu:",
+        "odpowiedzi": {
+            "A": "Wykonania działalności określonej w koncesji;",
+            "B": "Zapewnienia bezpieczeństwa powszechnego;",
+            "C": "Ochrony środowiska, w tym obiektów budowlanych;"
+        },
+        "poprawne": ["A", "B", "C"],
+        "podstawa_prawna": "Art. 104 ust. 1 Prawo geologiczne i górnicze",
+        "tresc_artykulu": "Miejscowy plan zagospodarowania przestrzennego dla terenu górniczego sporządza się dla terenu górniczego wyznaczonego koncesją udzieloną na wydobywanie kopalin ze złóż, podziemne bezzbiornikowe magazynowanie substancji albo podziemne składowanie odpadów, jeżeli w wyniku zamierzonej działalności przewiduje się istotne skutki dla środowiska. Plan ten powinien zapewniać integrację wszelkich działań podejmowanych w granicach terenu górniczego w celu ochrony środowiska, w tym obiektów budowlanych."
+    },
+    ],  
     "BAZA PYTAŃ - CZĘŚĆ 2 (Informacja geologiczna, organy administracji geologicznej, organy nadzoru górniczego, plany ruchu zakładu górniczego)": [
        { "id": 1,
         "pytanie": "Miejscowy plan zagospodarowania przestrzennego, sporządzany dla terenu górniczego w sytuacji, gdy w wyniku zamierzonej działalności określonej w koncesji przewiduje się istotne skutki dla środowiska powienien zapewniać integrację wszelkich działań podejmowanych w granicach terenu górniczego w celu:",

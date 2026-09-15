@@ -1,6 +1,7 @@
 import streamlit as st
 import random
 import time
+import streamlit.components.v1 as components
 # ==============================================================================
 # HASŁO ADMINISTRATORA
 # ==============================================================================

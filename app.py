@@ -79,26 +79,46 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Dynamiczne wstrzykiwanie poprawionego motywu CSS
+# Stylizacja CSS uwzględniająca cały pasek boczny
 if st.session_state.theme == "Jasny":
     st.markdown("""
     <style>
+        /* Tło aplikacji i teksty główne */
         .stApp { background-color: #f8f9fa; color: #212529; }
+        
+        /* Pasek boczny (Sidebar) - jasne tło i ciemne czcionki */
+        section[data-testid="stSidebar"] {
+            background-color: #f1f3f5 !important;
+        }
+        section[data-testid="stSidebar"] * {
+            color: #212529 !important;
+        }
+
+        /* Etykiety i elementy opcji */
+        label, .stRadio p, .stCheckbox p { color: #212529 !important; }
+
         .main-header { font-size: 22px; font-weight: bold; color: #0d6efd; border-bottom: 2px solid #dee2e6; padding-bottom: 5px; margin-bottom: 15px; }
         .question-box { background-color: #ffffff; padding: 15px; border-radius: 6px; border: 1px solid #ced4da; margin-bottom: 15px; color: #212529; }
         .legal-box { background-color: #e7f1ff; padding: 15px; border-radius: 6px; border: 1px solid #b6d4fe; margin-top: 15px; margin-bottom: 15px; color: #084298; }
-        /* Poprawka widoczności etykiet tekstowych w jasnym motywie */
-        label, .stRadio p, .stCheckbox p { color: #212529 !important; }
     </style>
     """, unsafe_allow_html=True)
 elif st.session_state.theme in ["Cciemny", "Ciemny"]:
     st.markdown("""
     <style>
         .stApp { background-color: #0e1117; color: #ffffff; }
+        
+        section[data-testid="stSidebar"] {
+            background-color: #161b22 !important;
+        }
+        section[data-testid="stSidebar"] * {
+            color: #ffffff !important;
+        }
+
+        label, .stRadio p, .stCheckbox p { color: #ffffff !important; }
+
         .main-header { font-size: 22px; font-weight: bold; color: #58a6ff; border-bottom: 2px solid #30363d; padding-bottom: 5px; margin-bottom: 15px; }
         .question-box { background-color: #161b22; padding: 15px; border-radius: 6px; border: 1px solid #30363d; margin-bottom: 15px; color: #ffffff; }
         .legal-box { background-color: #0d1117; padding: 15px; border-radius: 6px; border: 1px solid #238636; margin-top: 15px; margin-bottom: 15px; color: #e6edf3; }
-        label, .stRadio p, .stCheckbox p { color: #ffffff !important; }
     </style>
     """, unsafe_allow_html=True)
 else:
@@ -106,17 +126,21 @@ else:
     <style>
         @media (prefers-color-scheme: dark) {
             .stApp { background-color: #0e1117; color: #ffffff; }
+            section[data-testid="stSidebar"] { background-color: #161b22 !important; }
+            section[data-testid="stSidebar"] * { color: #ffffff !important; }
+            label, .stRadio p, .stCheckbox p { color: #ffffff !important; }
             .main-header { font-size: 22px; font-weight: bold; color: #58a6ff; border-bottom: 2px solid #30363d; padding-bottom: 5px; margin-bottom: 15px; }
             .question-box { background-color: #161b22; padding: 15px; border-radius: 6px; border: 1px solid #30363d; margin-bottom: 15px; color: #ffffff; }
             .legal-box { background-color: #0d1117; padding: 15px; border-radius: 6px; border: 1px solid #238636; margin-top: 15px; margin-bottom: 15px; color: #e6edf3; }
-            label, .stRadio p, .stCheckbox p { color: #ffffff !important; }
         }
         @media (prefers-color-scheme: light) {
             .stApp { background-color: #f8f9fa; color: #212529; }
+            section[data-testid="stSidebar"] { background-color: #f1f3f5 !important; }
+            section[data-testid="stSidebar"] * { color: #212529 !important; }
+            label, .stRadio p, .stCheckbox p { color: #212529 !important; }
             .main-header { font-size: 22px; font-weight: bold; color: #0d6efd; border-bottom: 2px solid #dee2e6; padding-bottom: 5px; margin-bottom: 15px; }
             .question-box { background-color: #ffffff; padding: 15px; border-radius: 6px; border: 1px solid #ced4da; margin-bottom: 15px; color: #212529; }
             .legal-box { background-color: #e7f1ff; padding: 15px; border-radius: 6px; border: 1px solid #b6d4fe; margin-top: 15px; margin-bottom: 15px; color: #084298; }
-            label, .stRadio p, .stCheckbox p { color: #212529 !important; }
         }
     </style>
     """, unsafe_allow_html=True)

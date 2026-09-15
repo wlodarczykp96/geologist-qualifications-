@@ -1,122 +1,62 @@
 import random
 import streamlit as st
 
-# Konfiguracja strony Streamlit
-st.set_page_config(
-    page_title="Aplikacja Prawo Geologiczne i Górnicze",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
-
-# Style CSS dopasowane do ciemnego motywu
-st.markdown("""
-<style>
-    .stApp {
-        background-color: #0e1117;
-        color: #ffffff;
-    }
-    .main-header {
-        font-size: 20px;
-        font-weight: bold;
-        color: #58a6ff;
-        border-bottom: 2px solid #30363d;
-        padding-bottom: 5px;
-        margin-bottom: 15px;
-    }
-    .question-box {
-        background-color: #161b22;
-        padding: 15px;
-        border-radius: 6px;
-        border: 1px solid #30363d;
-        margin-bottom: 15px;
-    }
-    .legal-box {
-        background-color: #0d1117;
-        padding: 15px;
-        border-radius: 6px;
-        border: 1px solid #238636;
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
-</style>
-""", unsafe_allow_html=True)
+# ==============================================================================
+# HASŁO ADMINISTRATORA
+# ==============================================================================
+ADMIN_PASSWORD = "admin123"  # <--- Tutaj ustaw swoje hasło administratora
 
 # ==============================================================================
-# BAZA PYTAŃ - CZĘŚĆ 1 & CZĘŚĆ 2
+# INICJALIZACJA STANUSESSION I MOTYWÓW
 # ==============================================================================
-PYTANIA_CZ1 = [
-    {
-        "id": 1,
-        "pytanie": "W jakim terminie przedsiębiorca powinien przedłożyć organowi koncesyjnemu aktualny dowód istnienia zabezpieczenia roszczeń mogących powstać wskutek wykonywania działalności objętej koncesją na podziemne składowanie odpadów:",
-        "odpowiedzi": {
-            "A": "raz na kwartał,",
-            "B": "corocznie, w terminie do końca stycznia,",
-            "C": "nie później niż w terminie dwóch tygodni od dnia otrzymania wezwania ze strony organu koncesyjnego.",
-        },
-        "poprawne": ["B"],
-        "podstawa_prawna": "Art. 28a ust. 2 Prawo geologiczne i górnicze",
-        "tresc_artykulu": "Przedsiębiorca jest obowiązany przedkładać organowi koncesyjnemu aktualny dowód istnienia zabezpieczenia roszczeń corocznie, w terminie do końca stycznia danego roku."
-    },
-    {
-        "id": 2,
-        "pytanie": "Koncesji na jaką działalność udziela się zawsze pod warunkiem ustanowienia zabezpieczenia roszczeń mogących powstać wskutek wykonywania działalności nią objętą:",
-        "odpowiedzi": {
-            "A": "koncesji na podziemne składowanie odpadów,",
-            "B": "koncesji na podziemne bezzbiornikowe magazynowanie substancji,",
-            "C": "koncesji na wydobywanie kopaliny prowadzone metodą podziemną.",
-        },
-        "poprawne": ["A"],
-        "podstawa_prawna": "Art. 28a ust. 1 Prawo geologiczne i górnicze",
-        "tresc_artykulu": "Koncesji na podziemne składowanie odpadów udziela się pod warunkiem ustanowienia zabezpieczenia roszczeń mogących powstać wskutek wykonywania działalności objętej tą koncesją."
-    },
-    {
-        "id": 3,
-        "pytanie": "We wniosku o udzielenie koncesji na podziemne składowanie odpadów określa się:",
-        "odpowiedzi": {
-            "A": "technologię składowania,",
-            "B": "projektowane położenie obszaru i terenu górniczego,",
-            "C": "rodzaj, ilość oraz charakterystykę odpadów.",
-        },
-        "poprawne": ["A", "B", "C"],
-        "podstawa_prawna": "Art. 26 ust. 1 Prawo geologiczne i górnicze",
-        "tresc_artykulu": "Wniosek o udzielenie koncesji na podziemne składowanie odpadów powinien zawierać określenie technologii składowania, rodzaj, ilość i charakterystykę odpadów oraz projektowane granice obszaru i terenu górniczego."
-    }
-]
+if 'theme' not in st.session_state:
+    st.session_state.theme = "Ciemny"
 
-PYTANIA_CZ2 = [
-    {
-        "id": 1,
-        "pytanie": "Miejscowy plan zagospodarowania przestrzennego, sporządzany dla terenu górniczego w sytuacji, gdy w wyniku zamierzonej działalności określonej w koncesji przewiduje się istotne skutki dla środowiska powienien zapewniać integrację wszelkich działań podejmowanych w granicach terenu górniczego w celu:",
-        "odpowiedzi": {
-            "A": "Wykonania działalności określonej w koncesji;",
-            "B": "Zapewnienia bezpieczeństwa powszechnego;",
-            "C": "Ochrony środowiska, w tym obiektów budowlanych;"
-        },
-        "poprawne": ["A", "B", "C"],
-        "podstawa_prawna": "Art. 104 ust. 1 Prawo geologiczne i górnicze",
-        "tresc_artykulu": "Miejscowy plan zagospodarowania przestrzennego dla terenu górniczego sporządza się dla terenu górniczego wyznaczonego koncesją udzieloną na wydobywanie kopalin ze złóż, podziemne bezzbiornikowe magazynowanie substancji albo podziemne składowanie odpadów, jeżeli w wyniku zamierzonej działalności przewiduje się istotne skutki dla środowiska. Plan ten powinien zapewniać integrację wszelkich działań podejmowanych w granicach terenu górniczego w celu ochrony środowiska, w tym obiektów budowlanych."
-    },
-    {
-        "id": 2,
-        "pytanie": "Miejscowy plan zagospodarowania przestrzennego, sporządzany dla terenu górniczego w sytuacji, gdy w wyniku zamierzonej działalności określonej w koncesji przewiduje się istotne skutki dla środowiska, może określić:",
-        "odpowiedzi": {
-            "A": "Obiekty, dla których wyznacza się filar ochronny;",
-            "B": "obszary, dla których wyznacza się filar ochronny;",
-            "C": "Obszary wyłączone z zabudowy;"
-        },
-        "poprawne": ["A", "B", "C"],
-        "podstawa_prawna": "Art. 104 ust. 2 pkt 1 Prawo geologiczne i górnicze",
-        "tresc_artykulu": "Miejscowy plan zagospodarowania przestrzennego dla terenu górniczego może w szczególności określić obszary, dla których wyznacza się filar ochronny w granicach którego, ze względu na ochronę dóbr chronionych, kopalina nie może być wydobywana albo może być wydobywana tylko w sposób zapewniający ochronę tych dóbr."
-    }
-]
+if 'admin_logged_in' not in st.session_state:
+    st.session_state.admin_logged_in = False
 
-# ==============================================================================
-# INICJALIZACJA STANUSESSION
-# ==============================================================================
 if 'bazy' not in st.session_state:
     st.session_state.bazy = {
-        "Część 1 (Projekty, hydrogeologia, geologia)": PYTANIA_CZ1,
-        "Część 2 (Planowanie, ruch zakładu, przepisy)": PYTANIA_CZ2
+        "Część 1 (Projekty, hydrogeologia, geologia)": [
+            {
+                "id": 1,
+                "pytanie": "W jakim terminie przedsiębiorca powinien przedłożyć organowi koncesyjnemu aktualny dowód istnienia zabezpieczenia roszczeń mogących powstać wskutek wykonywania działalności objętej koncesją na podziemne składowanie odpadów:",
+                "odpowiedzi": {
+                    "A": "raz na kwartał,",
+                    "B": "corocznie, w terminie do końca stycznia,",
+                    "C": "nie później niż w terminie dwóch tygodni od dnia otrzymania wezwania ze strony organu koncesyjnego.",
+                },
+                "poprawne": ["B"],
+                "podstawa_prawna": "Art. 28a ust. 2 Prawo geologiczne i górnicze",
+                "tresc_artykulu": "Przedsiębiorca jest obowiązany przedkładać organowi koncesyjnemu aktualny dowód istnienia zabezpieczenia roszczeń corocznie, w terminie do końca stycznia danego roku."
+            },
+            {
+                "id": 2,
+                "pytanie": "Koncesji na jaką działalność udziela się zawsze pod warunkiem ustanowienia zabezpieczenia roszczeń mogących powstać wskutek wykonywania działalności nią objętą:",
+                "odpowiedzi": {
+                    "A": "koncesji na podziemne składowanie odpadów,",
+                    "B": "koncesji na podziemne bezzbiornikowe magazynowanie substancji,",
+                    "C": "koncesji na wydobywanie kopaliny prowadzone metodą podziemną.",
+                },
+                "poprawne": ["A"],
+                "podstawa_prawna": "Art. 28a ust. 1 Prawo geologiczne i górnicze",
+                "tresc_artykulu": "Koncesji na podziemne składowanie odpadów udziela się pod warunkiem ustanowienia zabezpieczenia roszczeń mogących powstać wskutek wykonywania działalności objętej tą koncesją."
+            }
+        ],
+        "Część 2 (Planowanie, ruch zakładu, przepisy)": [
+            {
+                "id": 1,
+                "pytanie": "Miejscowy plan zagospodarowania przestrzennego, sporządzany dla terenu górniczego w sytuacji, gdy w wyniku zamierzonej działalności określonej w koncesji przewiduje się istotne skutki dla środowiska powienien zapewniać integrację wszelkich działań podejmowanych w granicach terenu górniczego w celu:",
+                "odpowiedzi": {
+                    "A": "Wykonania działalności określonej w koncesji;",
+                    "B": "Zapewnienia bezpieczeństwa powszechnego;",
+                    "C": "Ochrony środowiska, w tym obiektów budowlanych;"
+                },
+                "poprawne": ["A", "B", "C"],
+                "podstawa_prawna": "Art. 104 ust. 1 Prawo geologiczne i górnicze",
+                "tresc_artykulu": "Miejscowy plan zagospodarowania przestrzennego dla terenu górniczego sporządza się dla terenu górniczego..."
+            }
+        ]
     }
 
 if 'wybrana_baza' not in st.session_state:
@@ -132,12 +72,56 @@ if 'sprawdzono_odpowiedz' not in st.session_state:
 if 'odpowiedzi_egzamin' not in st.session_state:
     st.session_state.odpowiedzi_egzamin = {}
 
+# Konfiguracja układu strony
+st.set_page_config(
+    page_title="Aplikacja Testowa - Prawo Geologiczne i Górnicze",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# Dynamiczne wstrzykiwanie motywu CSS
+if st.session_state.theme == "Jasny":
+    st.markdown("""
+    <style>
+        .stApp { background-color: #f8f9fa; color: #212529; }
+        .main-header { font-size: 22px; font-weight: bold; color: #0d6efd; border-bottom: 2px solid #dee2e6; padding-bottom: 5px; margin-bottom: 15px; }
+        .question-box { background-color: #ffffff; padding: 15px; border-radius: 6px; border: 1px solid #ced4da; margin-bottom: 15px; color: #212529; }
+        .legal-box { background-color: #e7f1ff; padding: 15px; border-radius: 6px; border: 1px solid #b6d4fe; margin-top: 15px; margin-bottom: 15px; color: #084298; }
+    </style>
+    """, unsafe_allow_html=True)
+elif st.session_state.theme in ["Cciemny", "Ciemny"]:
+    st.markdown("""
+    <style>
+        .stApp { background-color: #0e1117; color: #ffffff; }
+        .main-header { font-size: 22px; font-weight: bold; color: #58a6ff; border-bottom: 2px solid #30363d; padding-bottom: 5px; margin-bottom: 15px; }
+        .question-box { background-color: #161b22; padding: 15px; border-radius: 6px; border: 1px solid #30363d; margin-bottom: 15px; color: #ffffff; }
+        .legal-box { background-color: #0d1117; padding: 15px; border-radius: 6px; border: 1px solid #238636; margin-top: 15px; margin-bottom: 15px; color: #e6edf3; }
+    </style>
+    """, unsafe_allow_html=True)
+else:
+    st.markdown("""
+    <style>
+        @media (prefers-color-scheme: dark) {
+            .stApp { background-color: #0e1117; color: #ffffff; }
+            .main-header { font-size: 22px; font-weight: bold; color: #58a6ff; border-bottom: 2px solid #30363d; padding-bottom: 5px; margin-bottom: 15px; }
+            .question-box { background-color: #161b22; padding: 15px; border-radius: 6px; border: 1px solid #30363d; margin-bottom: 15px; color: #ffffff; }
+            .legal-box { background-color: #0d1117; padding: 15px; border-radius: 6px; border: 1px solid #238636; margin-top: 15px; margin-bottom: 15px; color: #e6edf3; }
+        }
+        @media (prefers-color-scheme: light) {
+            .stApp { background-color: #f8f9fa; color: #212529; }
+            .main-header { font-size: 22px; font-weight: bold; color: #0d6efd; border-bottom: 2px solid #dee2e6; padding-bottom: 5px; margin-bottom: 15px; }
+            .question-box { background-color: #ffffff; padding: 15px; border-radius: 6px; border: 1px solid #ced4da; margin-bottom: 15px; color: #212529; }
+            .legal-box { background-color: #e7f1ff; padding: 15px; border-radius: 6px; border: 1px solid #b6d4fe; margin-top: 15px; margin-bottom: 15px; color: #084298; }
+        }
+    </style>
+    """, unsafe_allow_html=True)
+
+# Pomocnicze funkcje nawigacyjne
 def start_sesji(tryb):
     st.session_state.aktywny_tryb = tryb
     st.session_state.indeks = 0
     st.session_state.sprawdzono_odpowiedz = False
     st.session_state.odpowiedzi_egzamin = {}
-    
     pula = list(st.session_state.bazy[st.session_state.wybrana_baza])
     if "Losow" in tryb or "Egzamin" in tryb:
         random.shuffle(pula)
@@ -150,20 +134,40 @@ def powrot_do_wyboru():
     st.session_state.sprawdzono_odpowiedz = False
 
 # ==============================================================================
-# NAWIGACJA BOCZNA
+# MENU GŁÓWNE W PASKU BOCZNYM
 # ==============================================================================
 st.sidebar.title("📌 Menu Główne")
 menu_glowne = st.sidebar.radio(
-    "Nawigacja:",
-    ["🎮 Testy i Nauka", "➕ Dodaj Pytanie", "🔍 Przegląd Bazy"]
+    "Przejdź do:",
+    [
+        "🏠 Strona Główna", 
+        "🎮 Testy i Nauka", 
+        "➕ Dodaj Pytanie", 
+        "🔍 Przegląd Bazy", 
+        "🔑 Panel Administratora",
+        "⚙️ Ustawienia / Motyw"
+    ]
 )
 
 # ==============================================================================
-# WIDOK 1: TESTY I NAUKA
+# WIDOK: STRONA GŁÓWNA
 # ==============================================================================
-if menu_glowne == "🎮 Testy i Nauka":
+if menu_glowne == "🏠 Strona Główna":
+    st.markdown("<div class='main-header'>Witaj w Aplikacji Testowej</div>", unsafe_allow_html=True)
+    st.write("Wybierz odpowiednią sekcję z paska bocznego po lewej stronie, aby rozpocząć pracę z aplikacją.")
     
-    # KROK 1: Wybór części bazy
+    col1, col2 = st.columns(2)
+    with col1:
+        st.info("### 🎮 Rozwiązywanie Testów\nWybierz część bazy, ustal tryb nauki lub spróbuj sił w symulacji egzaminu.")
+        st.success("### 🔍 Baza Pytań\nPrzeglądaj pytania razem z przypisanymi podstawami prawnymi oraz tekstami artykułów.")
+    with col2:
+        st.warning("### ➕ Dodawanie Pytań\nRozszerzaj bazę testową o własne pytania i odpowiedzi.")
+        st.error("### 🔑 Tryb Administratora\nPozwala edytować oraz usuwać dowolne pytania w bazie po podaniu hasła.")
+
+# ==============================================================================
+# WIDOK: TESTY I NAUKA
+# ==============================================================================
+elif menu_glowne == "🎮 Testy i Nauka":
     if st.session_state.wybrana_baza is None:
         st.markdown("<div class='main-header'>Wybierz część bazy pytań</div>", unsafe_allow_html=True)
         for nazwa_bazy in st.session_state.bazy.keys():
@@ -171,7 +175,6 @@ if menu_glowne == "🎮 Testy i Nauka":
                 st.session_state.wybrana_baza = nazwa_bazy
                 st.rerun()
 
-    # KROK 2: Wybór trybu rozwiązywania
     elif st.session_state.aktywny_tryb is None:
         baza_pytania = st.session_state.bazy[st.session_state.wybrana_baza]
         st.markdown(f"**Wybrana baza:** {st.session_state.wybrana_baza}")
@@ -195,10 +198,8 @@ if menu_glowne == "🎮 Testy i Nauka":
             powrot_do_wyboru()
             st.rerun()
 
-    # KROK 3: Ekran rozwiązywania pytań
     else:
         st.markdown(f"<div class='main-header'>{st.session_state.aktywny_tryb} - {st.session_state.wybrana_baza}</div>", unsafe_allow_html=True)
-        
         lista = st.session_state.pytania_sesji
         idx = st.session_state.indeks
 
@@ -213,7 +214,6 @@ if menu_glowne == "🎮 Testy i Nauka":
             st.markdown(f"**Pytanie {idx + 1} z {len(lista)}** (ID: {p['id']})")
             st.markdown(f"<div class='question-box'><h3>{p['pytanie']}</h3></div>", unsafe_allow_html=True)
 
-            # --- TRYBY NAUKI (Z WYŚWIETLANIEM PODSTAWY PRAWNEJ) ---
             if "Nauki" in st.session_state.aktywny_tryb:
                 with st.form(key=f"form_nauka_{idx}"):
                     wybrane = []
@@ -235,7 +235,6 @@ if menu_glowne == "🎮 Testy i Nauka":
                     else:
                         st.error(f"❌ Błąd! Poprawne odpowiedzi to: {', '.join(p['poprawne'])}")
 
-                    # Sekcja podstawy prawnej i treści artykułu
                     podstawa = p.get("podstawa_prawna", "Brak zdefiniowanej podstawy prawnej")
                     artykul = p.get("tresc_artykulu", "Brak opisu treści artykułu")
                     
@@ -247,7 +246,6 @@ if menu_glowne == "🎮 Testy i Nauka":
                     </div>
                     """, unsafe_allow_html=True)
 
-            # --- TRYB EGZAMINU ---
             else:
                 poprzednie_wybory = st.session_state.odpowiedzi_egzamin.get(idx, [])
                 wybrane = []
@@ -275,7 +273,6 @@ if menu_glowne == "🎮 Testy i Nauka":
                         st.session_state.indeks += 1
                         st.rerun()
 
-        # Ekran podsumowania
         else:
             st.balloons()
             st.success("🎉 Zakończyłeś test!")
@@ -295,7 +292,7 @@ if menu_glowne == "🎮 Testy i Nauka":
                 st.rerun()
 
 # ==============================================================================
-# WIDOK 2: DODAJ PYTANIE
+# WIDOK: DODAJ PYTANIE
 # ==============================================================================
 elif menu_glowne == "➕ Dodaj Pytanie":
     st.markdown("<div class='main-header'>Dodaj nowe pytanie do bazy</div>", unsafe_allow_html=True)
@@ -337,7 +334,7 @@ elif menu_glowne == "➕ Dodaj Pytanie":
                 st.error("Uzupełnij pola i wybierz co najmniej jedną poprawną odpowiedź!")
 
 # ==============================================================================
-# WIDOK 3: PRZEGLĄD BAZY
+# WIDOK: PRZEGLĄD BAZY
 # ==============================================================================
 elif menu_glowne == "🔍 Przegląd Bazy":
     st.markdown("<div class='main-header'>Przegląd Bazy Pytań</div>", unsafe_allow_html=True)
@@ -353,3 +350,104 @@ elif menu_glowne == "🔍 Przegląd Bazy":
                 st.caption(f"Podstawa: {item['podstawa_prawna']}")
             if "tresc_artykulu" in item:
                 st.info(f"Artykuł: {item['tresc_artykulu']}")
+
+# ==============================================================================
+# WIDOK: PANEL ADMINISTRATORA (EDYCJA I USUWANIE)
+# ==============================================================================
+elif menu_glowne == "🔑 Panel Administratora":
+    st.markdown("<div class='main-header'>🔑 Panel Administratora</div>", unsafe_allow_html=True)
+
+    if not st.session_state.admin_logged_in:
+        with st.form("admin_login_form"):
+            pass_input = st.text_input("Podaj hasło administratora:", type="password")
+            btn_login = st.form_submit_button("Zaloguj się")
+            if btn_login:
+                if pass_input == ADMIN_PASSWORD:
+                    st.session_state.admin_logged_in = True
+                    st.success("Pomyślnie zalogowano do Panelu Administratora!")
+                    st.rerun()
+                else:
+                    st.error("Niepoprawne hasło!")
+    else:
+        if st.button("🔒 Wyloguj z Panelu Admina"):
+            st.session_state.admin_logged_in = False
+            st.rerun()
+
+        st.markdown("---")
+        st.subheader("Edycja oraz zarządzanie pytaniami w bazie")
+
+        wybrana_baza_admin = st.selectbox("Wybierz część bazy do edycji:", list(st.session_state.bazy.keys()), key="admin_baza_select")
+        lista_pytan = st.session_state.bazy[wybrana_baza_admin]
+
+        if not lista_pytan:
+            st.warning("Wybrana baza nie posiada żadnych pytań.")
+        else:
+            opcje_pytan = [f"ID {p['id']}: {p['pytanie'][:60]}..." for p in lista_pytan]
+            wybrane_pytanie_str = st.selectbox("Wybierz pytanie do edycji/usunięcia:", opcje_pytan)
+            
+            # Pobranie wybranego pytania
+            pytanie_idx = opcje_pytan.index(wybrane_pytanie_str)
+            p = lista_pytan[pytanie_idx]
+
+            col_del, col_edit = st.columns([1, 4])
+            
+            with col_del:
+                st.write("**Usuwanie**")
+                if st.button("🗑️ Usuń pytanie", type="primary"):
+                    st.session_state.bazy[wybrana_baza_admin].pop(pytanie_idx)
+                    st.success("Pytanie zostało pomyślnie usunięte z bazy!")
+                    st.rerun()
+
+            st.markdown("---")
+            st.write("### Formularz edycji pytania")
+
+            with st.form(key=f"edit_form_{p['id']}"):
+                nowa_tresc = st.text_area("Treść pytania:", value=p["pytanie"])
+                
+                ans_a = st.text_input("Odpowiedź A:", value=p["odpowiedzi"].get("A", ""))
+                ans_b = st.text_input("Odpowiedź B:", value=p["odpowiedzi"].get("B", ""))
+                ans_c = st.text_input("Odpowiedź C:", value=p["odpowiedzi"].get("C", ""))
+
+                pop_a = st.checkbox("Odpowiedź A jest poprawne", value=("A" in p["poprawne"]))
+                pop_b = st.checkbox("Odpowiedź B jest poprawne", value=("B" in p["poprawne"]))
+                pop_c = st.checkbox("Odpowiedź C jest poprawne", value=("C" in p["poprawne"]))
+
+                podstawa = st.text_input("Podstawa prawna:", value=p.get("podstawa_prawna", ""))
+                artykul = st.text_area("Treść artykułu:", value=p.get("tresc_artykulu", ""))
+
+                if st.form_submit_button("💾 Zapisz zmiany w pytaniu"):
+                    nowe_poprawne = []
+                    if pop_a: nowe_poprawne.append("A")
+                    if pop_b: nowe_poprawne.append("B")
+                    if pop_c: nowe_poprawne.append("C")
+
+                    if nowa_tresc and ans_a and ans_b and ans_c and nowe_poprawne:
+                        # Aktualizacja danych obiektu
+                        p["pytanie"] = nowa_tresc
+                        p["odpowiedzi"] = {"A": ans_a, "B": ans_b, "C": ans_c}
+                        p["poprawne"] = nowe_poprawne
+                        p["podstawa_prawna"] = podstawa
+                        p["tresc_artykulu"] = artykul
+
+                        st.success("Zmiany zostały pomyślnie zapisane!")
+                        st.rerun()
+                    else:
+                        st.error("Pola pytania/odpowiedzi nie mogą być puste, oraz co najmniej jedna odpowiedź musi być zaznaczona jako poprawna!")
+
+# ==============================================================================
+# WIDOK: USTAWIENIA I ZMIANA MOTYWU
+# ==============================================================================
+elif menu_glowne == "⚙️ Ustawienia / Motyw":
+    st.markdown("<div class='main-header'>Ustawienia i Personalizacja</div>", unsafe_allow_html=True)
+    
+    st.subheader("🎨 Wybór motywu wizualnego")
+    nowy_motyw = st.radio(
+        "Wybierz preferowany motyw:",
+        ["Ciemny", "Jasny", "Zgodny z ustawieniami systemowymi"],
+        index=["Ciemny", "Jasny", "Zgodny z ustawieniami systemowymi"].index(st.session_state.theme)
+    )
+
+    if nowy_motyw != st.session_state.theme:
+        st.session_state.theme = nowy_motyw
+        st.success(f"Zmieniono motyw na: {nowy_motyw}")
+        st.rerun()

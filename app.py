@@ -3290,14 +3290,14 @@ elif menu_glowne == "🎮 Testy i Nauka":
         
         if st.button("🚀 Uruchom Egzamin z CAŁEJ BAZY (50 pytań / 30 min)", use_container_width=True, type="primary"):
             start_sesji("Tryb Egzaminu z CAŁEJ BAZY (50 pytań / 30 min)", limit_pytan=50, z_calej_bazy=True)
-            st.rerun()
+            st.rerurn()
             
         st.markdown("---")
         st.write("Lub wybierz pojedynczą część bazy danych:")
         for nazwa_bazy in st.session_state.bazy.keys():
             if st.button(f"📁 {nazwa_bazy}", use_container_width=True):
                 st.session_state.wybrana_baza = nazwa_bazy
-                st.rerun()
+                st.rerurn()
 
     elif st.session_state.aktywny_tryb is None:
         baza_pytania = st.session_state.bazy[st.session_state.wybrana_baza]
@@ -3323,17 +3323,39 @@ elif menu_glowne == "🎮 Testy i Nauka":
             st.rerun()
 
     else:
-        # Obsługa licznika czasu dla egzaminu z całej bazy
+        # Płynny licznik czasu w tle dla egzaminu z całej bazy
         if st.session_state.czas_konca is not None and not st.session_state.test_zakonczony:
-            pozostaly_czas = int(st.session_state.czas_konca - time.time())
-            if pozostaly_czas <= 0:
+            pozostaly_czas_ms = int((st.session_state.czas_konca - time.time()) * 1000)
+            if pozostaly_czas_ms <= 0:
                 st.session_state.test_zakonczony = True
-                st.warning("⏱️ Czas minął! Egzamin został automatycznie zakończony.")
                 st.rerun()
             else:
-                minuty = pozostaly_czas // 60
-                sekundy = pozostaly_czas % 60
-                st.markdown(f"### ⏱️ Pozostały czas egzaminu: **{minuty:02d}:{sekundy:02d}**")
+                timer_html = f"""
+                <div style="font-size: 20px; font-weight: bold; color: #ff4b4b; background-color: #1f2937; padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: center;">
+                    ⏱️ Pozostały czas egzaminu: <span id="time">--:--</span>
+                </div>
+                <script>
+                    function startTimer(duration, display) {{
+                        var timer = duration, minutes, seconds;
+                        setInterval(function () {{
+                            minutes = parseInt(timer / 60, 10);
+                            seconds = parseInt(timer % 60, 10);
+                            minutes = minutes < 10 ? "0" + minutes : minutes;
+                            seconds = seconds < 10 ? "0" + seconds : seconds;
+                            display.textContent = minutes + ":" + seconds;
+                            if (--timer < 0) {{
+                                window.location.reload();
+                            }}
+                        }}, 1000);
+                    }}
+                    window.onload = function () {{
+                        var remaining = {pozostaly_czas_ms // 1000};
+                        var display = document.querySelector('#time');
+                        startTimer(remaining, display);
+                    }};
+                </script>
+                """
+                components.html(timer_html, height=70)
 
         st.markdown(f"<div class='main-header'>{st.session_state.aktywny_tryb}</div>", unsafe_allow_html=True)
         lista = st.session_state.pytania_sesji

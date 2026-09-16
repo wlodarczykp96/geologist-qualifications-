@@ -4548,11 +4548,21 @@ if 'theme' not in st.session_state:
 if 'admin_logged_in' not in st.session_state:
     st.session_state.admin_logged_in = False
 
-if 'wybrany_uzytkownik' not in st.session_state:
-    st.session_state.wybrany_uzytkownik = "Użytkownik 1"
+USERS_PIN = {
+    "Piotrek": "1671",
+    "Edyta": "3135",
+    "Gość": None
+}
+
+if 'zalogowany_uzytkownik' not in st.session_state:
+    st.session_state.zalogowany_uzytkownik = None
 
 if 'statystyki' not in st.session_state:
-    st.session_state.statystyki = {}  # { user: [ { 'data': 'YYYY-MM-DD', 'tryb': ..., 'baza': ..., 'zdane': True/False, 'wynik': 'X/Y' } ] }
+    st.session_state.statystyki = {
+        "Piotrek": [],
+        "Edyta": [],
+        "Gość": []
+    }
 
 if 'wybrana_baza' not in st.session_state:
     st.session_state.wybrana_baza = None
@@ -4571,71 +4581,135 @@ if 'czas_konca' not in st.session_state:
 if 'test_zakonczony' not in st.session_state:
     st.session_state.test_zakonczony = False
 
-# Konfiguracja układu strony
 st.set_page_config(
     page_title="Aplikacja Testowa - Prawo Geologiczne i Górnicze",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Stylizacja CSS z pełnym nadpisaniem elementów Streamlit
+# ==============================================================================
+# POPRAWIONA STYLIZACJA CSS (NAPRAWA URZĄDZEŃ MOBILNYCH I WIDOCZNOŚCI TEKSTU)
+# ==============================================================================
 if st.session_state.theme == "Jasny":
     st.markdown("""
     <style>
-        html, body, .stApp, header[data-testid="stHeader"] { background-color: #f8f9fa !important; color: #212529 !important; }
-        section[data-testid="stSidebar"] { background-color: #e9ecef !important; }
-        section[data-testid="stSidebar"] * { color: #212529 !important; }
-        input, textarea, select, div[role="combobox"], div[data-baseweb="select"] {
-            background-color: #ffffff !important; color: #212529 !important; border: 1px solid #ced4da !important;
+        /* Tło aplikacji i paska bocznego */
+        html, body, .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"] { 
+            background-color: #f8f9fa !important; 
+            color: #111827 !important; 
         }
-        div[data-baseweb="select"] * { background-color: #ffffff !important; color: #212529 !important; }
+        [data-testid="stSidebar"] { 
+            background-color: #e9ecef !important; 
+        }
+        
+        /* Globalne wymuszenie koloru tekstu dla wszystkich elementów */
+        * {
+            color: #111827 !important;
+        }
+        
+        /* Formularze i pola wprowadzania danych */
+        input, textarea, select, div[role="combobox"], div[data-baseweb="select"], [data-baseweb="base-input"] {
+            background-color: #ffffff !important; 
+            color: #111827 !important; 
+            border: 1px solid #ced4da !important;
+        }
+        div[data-baseweb="select"] * { 
+            background-color: #ffffff !important; 
+            color: #111827 !important; 
+        }
+        
+        /* Przyciski */
         .stButton>button, .stFormSubmitButton>button {
-            background-color: #ffffff !important; color: #212529 !important; border: 1px solid #ced4da !important; width: 100% !important;
+            background-color: #ffffff !important; 
+            color: #111827 !important; 
+            border: 1px solid #ced4da !important; 
+            width: 100% !important;
         }
-        .stButton>button:hover, .stFormSubmitButton>button:hover { background-color: #e2e6ea !important; border-color: #adb5bd !important; }
-        label, .stRadio p, .stCheckbox p, p, h1, h2, h3, h4, h5, h6, span { color: #212529 !important; }
+        .stButton>button:hover, .stFormSubmitButton>button:hover { 
+            background-color: #e2e6ea !important; 
+            border-color: #adb5bd !important; 
+        }
+        
+        /* Etykiety i teksty specjalne */
         .main-header { font-size: 22px; font-weight: bold; color: #0d6efd !important; border-bottom: 2px solid #dee2e6; padding-bottom: 5px; margin-bottom: 15px; }
-        .question-box { background-color: #ffffff; padding: 15px; border-radius: 6px; border: 1px solid #ced4da; margin-bottom: 15px; color: #212529; }
-        .legal-box { background-color: #e7f1ff; padding: 15px; border-radius: 6px; border: 1px solid #b6d4fe; margin-top: 15px; margin-bottom: 15px; color: #084298; }
+        .question-box { background-color: #ffffff !important; padding: 15px; border-radius: 6px; border: 1px solid #ced4da; margin-bottom: 15px; }
+        .question-box * { color: #111827 !important; }
+        .legal-box { background-color: #e7f1ff !important; padding: 15px; border-radius: 6px; border: 1px solid #b6d4fe; margin-top: 15px; margin-bottom: 15px; }
+        .legal-box * { color: #084298 !important; }
+        
+        /* Karty nagłówkowe */
         .card-blue, .card-yellow, .card-green, .card-red {
             padding: 20px; border-radius: 8px; height: 180px; display: flex; flex-direction: column; justify-content: flex-start; margin-bottom: 20px; box-sizing: border-box;
         }
-        .card-blue { background-color: #cfe2ff; color: #084298; border: 1px solid #b6d4fe; }
-        .card-yellow { background-color: #ffe5d0; color: #7c2d12; border: 1px solid #ffbb99; }
-        .card-green { background-color: #d1e7dd; color: #0f5132; border: 1px solid #badbcc; }
-        .card-red { background-color: #f8d7da; color: #842029; border: 1px solid #f5c2c7; }
+        .card-blue { background-color: #cfe2ff !important; border: 1px solid #b6d4fe; }
+        .card-blue * { color: #084298 !important; }
+        .card-yellow { background-color: #ffe5d0 !important; border: 1px solid #ffbb99; }
+        .card-yellow * { color: #7c2d12 !important; }
+        .card-green { background-color: #d1e7dd !important; border: 1px solid #badbcc; }
+        .card-green * { color: #0f5132 !important; }
+        .card-red { background-color: #f8d7da !important; border: 1px solid #f5c2c7; }
+        .card-red * { color: #842029 !important; }
     </style>
     """, unsafe_allow_html=True)
 else:
     st.markdown("""
     <style>
-        html, body, .stApp, header[data-testid="stHeader"] { background-color: #0e1117 !important; color: #ffffff !important; }
-        section[data-testid="stSidebar"] { background-color: #161b22 !important; }
-        section[data-testid="stSidebar"] * { color: #ffffff !important; }
-        input, textarea, select, div[role="combobox"], div[data-baseweb="select"] {
-            background-color: #21262d !important; color: #ffffff !important; border: 1px solid #30363d !important;
+        /* Tło aplikacji i paska bocznego */
+        html, body, .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"] { 
+            background-color: #0e1117 !important; 
+            color: #ffffff !important; 
         }
-        div[data-baseweb="select"] * { background-color: #21262d !important; color: #ffffff !important; }
-        .stButton>button, .stFormSubmitButton>button { width: 100% !important; }
-        label, .stRadio p, .stCheckbox p, p, h1, h2, h3, h4, h5, h6, span { color: #ffffff !important; }
+        [data-testid="stSidebar"] { 
+            background-color: #161b22 !important; 
+        }
+        
+        /* Globalne wymuszenie koloru tekstu dla wszystkich elementów */
+        * {
+            color: #ffffff !important;
+        }
+        
+        /* Formularze i pola wprowadzania danych */
+        input, textarea, select, div[role="combobox"], div[data-baseweb="select"], [data-baseweb="base-input"] {
+            background-color: #21262d !important; 
+            color: #ffffff !important; 
+            border: 1px solid #30363d !important;
+        }
+        div[data-baseweb="select"] * { 
+            background-color: #21262d !important; 
+            color: #ffffff !important; 
+        }
+        
+        /* Przyciski */
+        .stButton>button, .stFormSubmitButton>button { 
+            width: 100% !important; 
+        }
+        
+        /* Etykiety i teksty specjalne */
         .main-header { font-size: 22px; font-weight: bold; color: #58a6ff !important; border-bottom: 2px solid #30363d; padding-bottom: 5px; margin-bottom: 15px; }
-        .question-box { background-color: #161b22; padding: 15px; border-radius: 6px; border: 1px solid #30363d; margin-bottom: 15px; color: #ffffff; }
-        .legal-box { background-color: #0d1117; padding: 15px; border-radius: 6px; border: 1px solid #238636; margin-top: 15px; margin-bottom: 15px; color: #e6edf3; }
+        .question-box { background-color: #161b22 !important; padding: 15px; border-radius: 6px; border: 1px solid #30363d; margin-bottom: 15px; }
+        .question-box * { color: #ffffff !important; }
+        .legal-box { background-color: #0d1117 !important; padding: 15px; border-radius: 6px; border: 1px solid #238636; margin-top: 15px; margin-bottom: 15px; }
+        .legal-box * { color: #e6edf3 !important; }
+        
+        /* Karty nagłówkowe */
         .card-blue, .card-yellow, .card-green, .card-red {
             padding: 20px; border-radius: 8px; height: 180px; display: flex; flex-direction: column; justify-content: flex-start; margin-bottom: 20px; box-sizing: border-box;
         }
-        .card-blue { background-color: #1f364d; color: #58a6ff; border: 1px solid #30363d; }
-        .card-yellow { background-color: #452800; color: #ffbc54; border: 1px solid #633800; }
-        .card-green { background-color: #1b3a2b; color: #3fb950; border: 1px solid #238636; }
-        .card-red { background-color: #421e22; color: #f85149; border: 1px solid #da3633; }
+        .card-blue { background-color: #1f364d !important; border: 1px solid #30363d; }
+        .card-blue * { color: #58a6ff !important; }
+        .card-yellow { background-color: #452800 !important; border: 1px solid #633800; }
+        .card-yellow * { color: #ffbc54 !important; }
+        .card-green { background-color: #1b3a2b !important; border: 1px solid #238636; }
+        .card-green * { color: #3fb950 !important; }
+        .card-red { background-color: #421e22 !important; border: 1px solid #da3633; }
+        .card-red * { color: #f85149 !important; }
     </style>
     """, unsafe_allow_html=True)
 
-# Funkcja pomocnicza: odrzuca pytania z 3 poprawnymi odpowiedziami (zostawia 1 lub 2 poprawne)
+# Funkcje pomocnicze
 def przefiltruj_pytania(lista_pytan):
     return [p for p in lista_pytan if len(p.get("poprawne", [])) in [1, 2]]
 
-# Pomocnicze funkcje sesyjne
 def start_sesji(tryb, limit_pytan=None, z_calej_bazy=False):
     st.session_state.aktywny_tryb = tryb
     st.session_state.indeks = 0
@@ -4652,7 +4726,7 @@ def start_sesji(tryb, limit_pytan=None, z_calej_bazy=False):
         if limit_pytan:
             pula = pula[:limit_pytan]
         st.session_state.pytania_sesji = pula
-        st.session_state.czas_konca = time.time() + (30 * 60) # 30 minut
+        st.session_state.czas_konca = time.time() + (30 * 60)
     else:
         pula = list(st.session_state.bazy[st.session_state.wybrana_baza])
         pula = przefiltruj_pytania(pula)
@@ -4673,7 +4747,7 @@ def powrot_do_wyboru():
 
 def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
     procent = (punkty / max_punkty) * 100 if max_punkty > 0 else 0
-    zdane = procent >= 75.0  # Próg zaliczenia np. 75%
+    zdane = procent >= 75.0
     
     wpis = {
         'data': datetime.date.today().strftime("%Y-%m-%d"),
@@ -4689,11 +4763,38 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
     st.session_state.statystyki[user].append(wpis)
 
 # ==============================================================================
-# MENU GŁÓWNE W PASKU BOCZNYM
+# LOGOWANIE
 # ==============================================================================
-st.sidebar.title("👤 Użytkownik")
-user_list = ["Użytkownik 1", "Użytkownik 2", "Użytkownik 3", "Gość"]
-st.session_state.wybrany_uzytkownik = st.sidebar.selectbox("Aktywny profil:", user_list, index=user_list.index(st.session_state.wybrany_uzytkownik))
+if st.session_state.zalogowany_uzytkownik is None:
+    st.markdown("<div class='main-header'>🔒 Logowanie do Aplikacji Testowej</div>", unsafe_allow_html=True)
+    
+    col_login, _ = st.columns([1, 1])
+    with col_login:
+        wybrany_user = st.selectbox("Wybierz użytkownika:", list(USERS_PIN.keys()))
+        wymaga_pin = USERS_PIN[wybrany_user] is not None
+        
+        if wymaga_pin:
+            podany_pin = st.text_input("Podaj swój PIN:", type="password")
+        else:
+            st.info("Konto Gościa nie wymaga podawania PIN-u.")
+            podany_pin = None
+
+        if st.button("Zaloguj się", type="primary"):
+            if not wymaga_pin or podany_pin == USERS_PIN[wybrany_user]:
+                st.session_state.zalogowany_uzytkownik = wybrany_user
+                st.success(f"Pomyślnie zalogowano jako {wybrany_user}!")
+                st.rerun()
+            else:
+                st.error("Błędny PIN! Spróbuj ponownie.")
+    st.stop()
+
+# ==============================================================================
+# MENU BOCZNE
+# ==============================================================================
+st.sidebar.title(f"👤 Zalogowany: {st.session_state.zalogowany_uzytkownik}")
+if st.sidebar.button("🚪 Wyloguj"):
+    st.session_state.zalogowany_uzytkownik = None
+    st.rerun()
 
 st.sidebar.markdown("---")
 st.sidebar.title("📌 Menu Główne")
@@ -4710,14 +4811,13 @@ menu_glowne = st.sidebar.radio(
 )
 
 # ==============================================================================
-# WIDOK: STRONA GŁÓWNA & STATYSTYKI
+# STRONA GŁÓWNA
 # ==============================================================================
 if menu_glowne == "🏠 Strona Główna":
     st.markdown("<div class='main-header'>Witaj w Aplikacji Testowej</div>", unsafe_allow_html=True)
-    st.write(f"Zalogowany profil: **{st.session_state.wybrany_uzytkownik}**")
+    st.write(f"Zalogowany profil: **{st.session_state.zalogowany_uzytkownik}**")
     
-    # STATYSTYKI UŻYTKOWNIKA
-    user_stats = st.session_state.statystyki.get(st.session_state.wybrany_uzytkownik, [])
+    user_stats = st.session_state.statystyki.get(st.session_state.zalogowany_uzytkownik, [])
     dzisiaj_str = datetime.date.today().strftime("%Y-%m-%d")
     
     egz_dzisiaj = [s for s in user_stats if s['data'] == dzisiaj_str]
@@ -4734,9 +4834,26 @@ if menu_glowne == "🏠 Strona Główna":
     
     col_stat1, col_stat2, col_stat3, col_stat4 = st.columns(4)
     col_stat1.metric("Egzaminy dzisiaj", len(egz_dzisiaj))
-    col_stat2.metric("Łącznie podejsć", len(user_stats))
+    col_stat2.metric("Łącznie podejść", len(user_stats))
     col_stat3.metric("Całościowe (Pozytywne / Negatywne)", f"{calosc_pozytywne} / {calosc_negatywne}")
     col_stat4.metric("Z części (Pozytywne / Negatywne)", f"{czesc_pozytywne} / {czesc_negatywne}")
+
+    if user_stats:
+        st.write("### 📈 Wykresy Wyników Egzaminów")
+        col_chart1, col_chart2 = st.columns(2)
+        
+        with col_chart1:
+            st.markdown("**Rozkład wyników (Zdane vs Niezdane)**")
+            wszystkie_zdane = sum(1 for s in user_stats if s['zdane'])
+            wszystkie_niezdane = len(user_stats) - wszystkie_zdane
+            st.bar_chart({"Wyniki": {"Pozytywne": wszystkie_zdane, "Negatywne": wszystkie_niezdane}})
+            
+        with col_chart2:
+            st.markdown("**Procentowe wyniki w kolejnych próbach (%)**")
+            procenty = [s['procent'] for s in user_stats]
+            st.line_chart(procenty)
+    else:
+        st.info("Brak zarejestrowanych wyników egzaminów. Rozwiąż egzamin, aby zobaczyć swoje statystyki!")
 
     st.markdown("---")
     
@@ -4769,7 +4886,7 @@ if menu_glowne == "🏠 Strona Główna":
         """, unsafe_allow_html=True)
 
 # ==============================================================================
-# WIDOK: TESTY I NAUKA
+# TESTY I NAUKA
 # ==============================================================================
 elif menu_glowne == "🎮 Testy i Nauka":
     if st.session_state.wybrana_baza is None and st.session_state.aktywny_tryb is None:
@@ -4811,7 +4928,6 @@ elif menu_glowne == "🎮 Testy i Nauka":
             st.rerun()
 
     else:
-        # Pasek czasu dla egzaminu działający w tle
         if st.session_state.czas_konca is not None and not st.session_state.test_zakonczony:
             pozostaly_czas_ms = int((st.session_state.czas_konca - time.time()) * 1000)
             if pozostaly_czas_ms <= 0:
@@ -4929,9 +5045,8 @@ elif menu_glowne == "🎮 Testy i Nauka":
                 procent = (punkty / len(lista)) * 100 if len(lista) > 0 else 0
                 st.markdown(f"### Twój Wynik Egzaminu: **{punkty} / {len(lista)}** ({procent:.1f}%)")
                 
-                # Zapis statystyk przy zakończeniu egzaminu
                 zapisz_wynik_egzaminu(
-                    st.session_state.wybrany_uzytkownik,
+                    st.session_state.zalogowany_uzytkownik,
                     st.session_state.aktywny_tryb,
                     st.session_state.wybrana_baza,
                     punkty,
@@ -4943,7 +5058,7 @@ elif menu_glowne == "🎮 Testy i Nauka":
                 st.rerun()
 
 # ==============================================================================
-# WIDOK: DODAJ PYTANIE
+# DODAJ PYTANIE
 # ==============================================================================
 elif menu_glowne == "➕ Dodaj Pytanie":
     st.markdown("<div class='main-header'>Dodaj nowe pytanie do bazy</div>", unsafe_allow_html=True)
@@ -4985,7 +5100,7 @@ elif menu_glowne == "➕ Dodaj Pytanie":
                 st.error("Uzupełnij pola i wybierz co najmniej jedną poprawną odpowiedź!")
 
 # ==============================================================================
-# WIDOK: PRZEGLĄD BAZY
+# PRZEGLĄD BAZY
 # ==============================================================================
 elif menu_glowne == "🔍 Przegląd Bazy":
     st.markdown("<div class='main-header'>Przegląd Bazy Pytań</div>", unsafe_allow_html=True)
@@ -5003,7 +5118,7 @@ elif menu_glowne == "🔍 Przegląd Bazy":
                 st.info(f"Artykuł: {item['tresc_artykulu']}")
 
 # ==============================================================================
-# WIDOK: PANEL ADMINISTRATORA
+# PANEL ADMINISTRATORA
 # ==============================================================================
 elif menu_glowne == "🔑 Panel Administratora":
     st.markdown("<div class='main-header'>🔑 Panel Administratora</div>", unsafe_allow_html=True)
@@ -5013,7 +5128,7 @@ elif menu_glowne == "🔑 Panel Administratora":
             pass_input = st.text_input("Podaj hasło administratora:", type="password")
             btn_login = st.form_submit_button("Zaloguj się")
             if btn_login:
-                if pass_input == "admin123":  # Zmień hasło jeśli potrzebujesz
+                if pass_input == "admin123":
                     st.session_state.admin_logged_in = True
                     st.success("Pomyślnie zalogowano do Panelu Administratora!")
                     st.rerun()
@@ -5025,8 +5140,31 @@ elif menu_glowne == "🔑 Panel Administratora":
             st.rerun()
 
         st.markdown("---")
-        st.subheader("Edycja oraz zarządzanie pytaniami w bazie")
+        st.subheader("📊 Podgląd Wyników i Statystyk Wszystkich Użytkowników")
+        
+        for u_name in USERS_PIN.keys():
+            st.markdown(f"### Użytkownik: **{u_name}**")
+            u_stats = st.session_state.statystyki.get(u_name, [])
+            
+            if u_stats:
+                u_zdane = sum(1 for s in u_stats if s['zdane'])
+                u_niezdane = len(u_stats) - u_zdane
+                
+                c1, c2, c3 = st.columns(3)
+                c1.metric("Podejścia ogółem", len(u_stats))
+                c2.metric("Egzaminy ZDANE", u_zdane)
+                c3.metric("Egzaminy NIEZDANE", u_niezdane)
+                
+                col_chart1, col_chart2 = st.columns(2)
+                with col_chart1:
+                    st.bar_chart({"Wyniki": {"Pozytywne": u_zdane, "Negatywne": u_niezdane}})
+                with col_chart2:
+                    st.line_chart([s['procent'] for s in u_stats])
+            else:
+                st.info(f"Brak zapisanych wyników dla użytkownika {u_name}.")
+            st.markdown("---")
 
+        st.subheader("✏️ Edycja oraz zarządzanie pytaniami w bazie")
         wybrana_baza_admin = st.selectbox("Wybierz część bazy do edycji:", list(st.session_state.bazy.keys()), key="admin_baza_select")
         lista_pytan = st.session_state.bazy[wybrana_baza_admin]
 
@@ -5082,7 +5220,7 @@ elif menu_glowne == "🔑 Panel Administratora":
                         st.error("Pola pytania/odpowiedzi nie mogą być puste, oraz co najmniej jedna odpowiedź musi być zaznaczona jako poprawna!")
 
 # ==============================================================================
-# WIDOK: USTAWIENIA I ZMIANA MOTYWU
+# USTAWIENIA I MOTYW
 # ==============================================================================
 elif menu_glowne == "⚙️ Ustawienia / Motyw":
     st.markdown("<div class='main-header'>Ustawienia i Personalizacja</div>", unsafe_allow_html=True)

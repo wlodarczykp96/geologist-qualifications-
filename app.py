@@ -4543,7 +4543,7 @@ if 'bazy' not in st.session_state:
 # 1. KONFIGURACJA STRONY
 # ==============================================================================
 st.set_page_config(
-    page_title="Aplikacja - Prawo Geologiczne i Górnicze",
+    page_title="Aplikacja - Prawo Górnicze i Geologiczne",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -4619,7 +4619,7 @@ def aktualizuj_pamiec_sesji(user=None, theme=None):
         st.query_params["theme"] = theme
 
 # ==============================================================================
-# 3. GLOBALNY MOTYW CSS
+# 3. GLOBALNY MOTYW CSS (NAPRAWIENIE WIDOCZNOŚCI WYCIĄGANEJ LISTY)
 # ==============================================================================
 if st.session_state.theme == "Jasny":
     bg_main = "#f8f9fa"
@@ -4669,6 +4669,26 @@ st.markdown(f"""
     p, span, label, div, h1, h2, h3, h4, h5, h6, 
     [data-testid="stCheckbox"] p, [data-testid="stRadio"] p, [data-testid="stWidgetLabel"] p, [data-testid="stMarkdownContainer"] p {{
         color: var(--text-main) !important;
+    }}
+
+    /* Stylizacja i widoczność dla wyciąganej listy (st.selectbox / BaseWeb) */
+    div[data-baseweb="select"] > div {{
+        background-color: var(--box-bg) !important;
+        color: var(--box-text) !important;
+        border-color: var(--border-color) !important;
+    }}
+
+    div[data-baseweb="popover"], div[data-baseweb="menu"], ul[role="listbox"] {{
+        background-color: var(--box-bg) !important;
+    }}
+
+    li[role="option"] {{
+        background-color: var(--box-bg) !important;
+        color: var(--box-text) !important;
+    }}
+
+    li[role="option"]:hover {{
+        background-color: rgba(255, 75, 75, 0.2) !important;
     }}
 
     /* Przyciski */
@@ -4814,16 +4834,16 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
     st.session_state.statystyki[user].append(wpis)
 
 # ==============================================================================
-# 5. EKRAN LOGOWANIA (WYBÓR Z LISTY)
+# 5. EKRAN LOGOWANIA (WYCIĄGANA LISTA SELEKCYJNA)
 # ==============================================================================
 if st.session_state.zalogowany_uzytkownik is None:
-    st.markdown("<div class='main-header'>🔒 Logowanie do PGiG </div>", unsafe_allow_html=True)
+    st.markdown("<div class='main-header'>🔒 Aplikacja - Prawo Górnicze i Geologiczne</div>", unsafe_allow_html=True)
     
     col_login, _ = st.columns([1, 1])
     with col_login:
         st.markdown("<div class='login-container'>", unsafe_allow_html=True)
-        wybrany_user = st.radio(
-            "Wybierz profil z listy:",
+        wybrany_user = st.selectbox(
+            "Wybierz użytkownika:",
             options=list(USERS_PIN.keys()),
             key="login_user_select"
         )
@@ -4884,7 +4904,7 @@ menu_glowne = st.sidebar.radio(
 # 7. STRONA GŁÓWNA
 # ==============================================================================
 if menu_glowne == "🏠 Strona Główna":
-    st.markdown("<div class='main-header'>Witaj w Aplikacji PGiG </div>", unsafe_allow_html=True)
+    st.markdown("<div class='main-header'>Aplikacja - Prawo Górnicze i Geologiczne</div>", unsafe_allow_html=True)
     st.write(f"Zalogowany profil: **{st.session_state.zalogowany_uzytkownik}**")
     
     user_stats = st.session_state.statystyki.get(st.session_state.zalogowany_uzytkownik, [])
@@ -4956,7 +4976,7 @@ if menu_glowne == "🏠 Strona Główna":
         """, unsafe_allow_html=True)
 
 # ==============================================================================
-# 8. TESTY I NAUKA (WIDOK DANYCH O BAZIE I TYPACH PYTAŃ)
+# 8. TESTY I NAUKA
 # ==============================================================================
 elif menu_glowne == "🎮 Testy i Nauka":
     if st.session_state.wybrana_baza is None and st.session_state.aktywny_tryb is None:

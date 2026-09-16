@@ -4619,7 +4619,7 @@ def aktualizuj_pamiec_sesji(user=None, theme=None):
         st.query_params["theme"] = theme
 
 # ==============================================================================
-# 3. GLOBALNY MOTYW CSS (PRZYWRÓCENIE KONTRASTU W DROPDOWNIE)
+# 3. GLOBALNY MOTYW CSS
 # ==============================================================================
 if st.session_state.theme == "Jasny":
     bg_main = "#f8f9fa"
@@ -4667,16 +4667,11 @@ st.markdown(f"""
     }}
 
     p, span, label, div, h1, h2, h3, h4, h5, h6, 
-    [data-testid="stCheckbox"] p, [data-testid="stWidgetLabel"] p, [data-testid="stMarkdownContainer"] p {{
+    [data-testid="stCheckbox"] p, [data-testid="stRadio"] p, [data-testid="stWidgetLabel"] p, [data-testid="stMarkdownContainer"] p {{
         color: var(--text-main) !important;
     }}
 
-    /* Globalna czyszczenie tła dla wszystkich rozwijanych nakładek (Popovers) */
-    div[data-baseweb="popover"] *, div[data-baseweb="menu"] *, ul[role="listbox"] * {{
-        background-color: var(--box-bg) !important;
-        color: var(--box-text) !important;
-    }}
-
+    /* Przyciski */
     div.stButton > button {{
         background-color: var(--btn-bg) !important;
         color: var(--btn-text) !important;
@@ -4701,6 +4696,7 @@ st.markdown(f"""
         color: #ffffff !important;
     }}
 
+    /* Inputy tekstu */
     input, textarea {{
         background-color: var(--bg-sec) !important;
         color: var(--text-main) !important;
@@ -4711,6 +4707,14 @@ st.markdown(f"""
         background-color: var(--bg-sec) !important;
         border: 1px solid var(--border-color) !important;
         border-radius: 6px !important;
+    }}
+
+    .login-container {{
+        background-color: var(--bg-sec);
+        padding: 24px;
+        border-radius: 10px;
+        border: 1px solid var(--border-color);
+        margin-top: 10px;
     }}
 
     .question-box {{
@@ -4810,23 +4814,29 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
     st.session_state.statystyki[user].append(wpis)
 
 # ==============================================================================
-# 5. LOGOWANIE (PRZEŁĄCZONE NA ST.RADIO DLA BEZPROBLEMOWEGO WIDOKU)
+# 5. EKRAN LOGOWANIA (WYBÓR Z LISTY)
 # ==============================================================================
 if st.session_state.zalogowany_uzytkownik is None:
-    st.markdown("<div class='main-header'>🔒 Logowanie do Aplikacji Testowej</div>", unsafe_allow_html=True)
+    st.markdown("<div class='main-header'>🔒 Logowanie do PGiG </div>", unsafe_allow_html=True)
     
     col_login, _ = st.columns([1, 1])
     with col_login:
-        wybrany_user = st.radio("Wybierz użytkownika:", list(USERS_PIN.keys()), horizontal=True)
+        st.markdown("<div class='login-container'>", unsafe_allow_html=True)
+        wybrany_user = st.radio(
+            "Wybierz profil z listy:",
+            options=list(USERS_PIN.keys()),
+            key="login_user_select"
+        )
+        
         wymaga_pin = USERS_PIN[wybrany_user] is not None
         
         if wymaga_pin:
-            podany_pin = st.text_input("Podaj swój PIN:", type="password")
+            podany_pin = st.text_input("Podaj swój PIN:", type="password", key="login_pin_input")
         else:
             st.info("Konto Gościa nie wymaga podawania PIN-u.")
             podany_pin = None
 
-        if st.button("Zaloguj się", type="primary"):
+        if st.button("Zaloguj się", type="primary", use_container_width=True):
             if not wymaga_pin or podany_pin == USERS_PIN[wybrany_user]:
                 st.session_state.zalogowany_uzytkownik = wybrany_user
                 aktualizuj_pamiec_sesji(user=wybrany_user)
@@ -4834,11 +4844,12 @@ if st.session_state.zalogowany_uzytkownik is None:
                 st.rerun()
             else:
                 st.error("Błędny PIN! Spróbuj ponownie.")
-                
+        st.markdown("</div>", unsafe_allow_html=True)
+
         st.markdown("---")
         opcje_motywu = ["Ciemny", "Jasny"]
         idx = opcje_motywu.index(st.session_state.theme) if st.session_state.theme in opcje_motywu else 0
-        zmien_motyw = st.radio("Motyw ekranu:", opcje_motywu, index=idx, key="login_theme_radio")
+        zmien_motyw = st.radio("Motyw ekranu:", opcje_motywu, index=idx, key="login_theme_radio", horizontal=True)
         if zmien_motyw != st.session_state.theme:
             st.session_state.theme = zmien_motyw
             aktualizuj_pamiec_sesji(theme=zmien_motyw)
@@ -4873,7 +4884,7 @@ menu_glowne = st.sidebar.radio(
 # 7. STRONA GŁÓWNA
 # ==============================================================================
 if menu_glowne == "🏠 Strona Główna":
-    st.markdown("<div class='main-header'>Witaj w Aplikacji Testowej</div>", unsafe_allow_html=True)
+    st.markdown("<div class='main-header'>Witaj w Aplikacji PGiG </div>", unsafe_allow_html=True)
     st.write(f"Zalogowany profil: **{st.session_state.zalogowany_uzytkownik}**")
     
     user_stats = st.session_state.statystyki.get(st.session_state.zalogowany_uzytkownik, [])
@@ -4945,7 +4956,7 @@ if menu_glowne == "🏠 Strona Główna":
         """, unsafe_allow_html=True)
 
 # ==============================================================================
-# 8. TESTY I NAUKA
+# 8. TESTY I NAUKA (WIDOK DANYCH O BAZIE I TYPACH PYTAŃ)
 # ==============================================================================
 elif menu_glowne == "🎮 Testy i Nauka":
     if st.session_state.wybrana_baza is None and st.session_state.aktywny_tryb is None:
@@ -4964,9 +4975,16 @@ elif menu_glowne == "🎮 Testy i Nauka":
                 st.rerun()
 
     elif st.session_state.aktywny_tryb is None:
-        baza_pytania_przefiltrowane = przefiltruj_pytania(st.session_state.bazy[st.session_state.wybrana_baza])
+        baza_pytania_raw = st.session_state.bazy[st.session_state.wybrana_baza]
+        baza_pytania_przefiltrowane = przefiltruj_pytania(baza_pytania_raw)
+        
+        pytania_jednokrotne = [p for p in baza_pytania_przefiltrowane if len(p.get("poprawne", [])) == 1]
+        pytania_wielokrotne = [p for p in baza_pytania_przefiltrowane if len(p.get("poprawne", [])) == 2]
+
         st.markdown(f"**Wybrana baza:** {st.session_state.wybrana_baza}")
-        st.markdown(f"**Liczba pytań (z 1 lub 2 poprawnymi odp.): {len(baza_pytania_przefiltrowane)}**")
+        st.markdown(f"**Liczba pytań w bazie:** {len(baza_pytania_przefiltrowane)}")
+        st.markdown(f"- Pytania jednokrotnego wyboru (1 poprawna odp.): **{len(pytania_jednokrotne)}**")
+        st.markdown(f"- Pytania wielokrotnego wyboru (2 poprawne odp.): **{len(pytania_wielokrotne)}**")
         st.write("")
 
         if st.button("Tryb Nauki (Kolejno + Podpowiedzi)", use_container_width=True):
@@ -5121,7 +5139,7 @@ elif menu_glowne == "🎮 Testy i Nauka":
 # ==============================================================================
 elif menu_glowne == "➕ Dodaj Pytanie":
     st.markdown("<div class='main-header'>Dodaj nowe pytanie do bazy</div>", unsafe_allow_html=True)
-    baza_docelowa = st.radio("Wybierz bazę:", list(st.session_state.bazy.keys()))
+    baza_docelowa = st.radio("Wybierz bazę:", list(st.session_state.bazy.keys()), horizontal=True)
 
     with st.form("form_dodaj"):
         tresc = st.text_area("Treść pytania:")

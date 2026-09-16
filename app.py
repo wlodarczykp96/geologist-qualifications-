@@ -4540,10 +4540,19 @@ if 'bazy' not in st.session_state:
     ]
 }
 # ==============================================================================
-# INICJALIZACJA STANU SESJI I MOTYWÓW
+# KONFIGURACJA STRONY
+# ==============================================================================
+st.set_page_config(
+    page_title="Aplikacja Prawo Geologiczne i Górnicze",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# ==============================================================================
+# INICJALIZACJA STANU SESJI
 # ==============================================================================
 if 'theme' not in st.session_state:
-    st.session_state.theme = "Ciemny"
+    st.session_state.theme = "Auto"
 
 if 'admin_logged_in' not in st.session_state:
     st.session_state.admin_logged_in = False
@@ -4581,132 +4590,117 @@ if 'czas_konca' not in st.session_state:
 if 'test_zakonczony' not in st.session_state:
     st.session_state.test_zakonczony = False
 
-st.set_page_config(
-    page_title="Aplikacja Testowa - Prawo Geologiczne i Górnicze",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+# ==============================================================================
+# UNIWERSALNA STYLIZACJA CSS (DZIAŁA PRZED LOGOWANIEM I ADAPTUJE SIĘ DYNAMICZNIE)
+# ==============================================================================
+css_base = """
+<style>
+    /* Elastyczne dopasowanie do systemowego lub wybranego koloru tekstu */
+    html, body, [data-testid="stAppViewContainer"] {
+        color: var(--text-color) !important;
+    }
+    
+    /* Naprawa widoczności w checkboxach i formularzach mobilnych */
+    [data-testid="stCheckbox"] label, [data-testid="stWidgetLabel"] p {
+        color: var(--text-color) !important;
+    }
 
-# ==============================================================================
-# POPRAWIONA STYLIZACJA CSS (NAPRAWA URZĄDZEŃ MOBILNYCH I WIDOCZNOŚCI TEKSTU)
-# ==============================================================================
+    /* Dopasowanie formularzy i inputów */
+    input, textarea, select {
+        color: var(--text-color) !important;
+        background-color: var(--secondary-background-color) !important;
+    }
+
+    /* Boks z pytaniem */
+    .question-box {
+        background-color: var(--secondary-background-color);
+        padding: 18px;
+        border-radius: 8px;
+        border: 1px solid rgba(128, 128, 128, 0.2);
+        margin-bottom: 15px;
+        color: var(--text-color) !important;
+    }
+    .question-box h3, .question-box p {
+        color: var(--text-color) !important;
+    }
+
+    /* Boks prawny */
+    .legal-box {
+        background-color: rgba(13, 110, 253, 0.1);
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 4px solid #0d6efd;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        color: var(--text-color) !important;
+    }
+    .legal-box * {
+        color: var(--text-color) !important;
+    }
+
+    /* Nagłówek główny */
+    .main-header {
+        font-size: 22px;
+        font-weight: bold;
+        color: var(--text-color) !important;
+        border-bottom: 2px solid rgba(128, 128, 128, 0.2);
+        padding-bottom: 8px;
+        margin-bottom: 15px;
+    }
+
+    /* Karty na stronie głównej */
+    .card-blue, .card-yellow, .card-green, .card-red {
+        padding: 20px;
+        border-radius: 8px;
+        height: 160px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+    }
+    .card-blue { background-color: rgba(13, 110, 253, 0.15); border: 1px solid rgba(13, 110, 253, 0.3); }
+    .card-yellow { background-color: rgba(255, 193, 7, 0.15); border: 1px solid rgba(255, 193, 7, 0.3); }
+    .card-green { background-color: rgba(25, 135, 84, 0.15); border: 1px solid rgba(25, 135, 84, 0.3); }
+    .card-red { background-color: rgba(220, 53, 69, 0.15); border: 1px solid rgba(220, 53, 69, 0.3); }
+
+    .card-blue *, .card-yellow *, .card-green *, .card-red * {
+        color: var(--text-color) !important;
+    }
+</style>
+"""
+
+# Dynamiczne sterowanie motywem Jasny / Ciemny
 if st.session_state.theme == "Jasny":
-    st.markdown("""
+    css_override = """
     <style>
-        /* Tło aplikacji i paska bocznego */
-        html, body, .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"] { 
-            background-color: #f8f9fa !important; 
-            color: #111827 !important; 
+        :root {
+            --background-color: #ffffff;
+            --secondary-background-color: #f8f9fa;
+            --text-color: #111827;
         }
-        [data-testid="stSidebar"] { 
-            background-color: #e9ecef !important; 
-        }
-        
-        /* Globalne wymuszenie koloru tekstu dla wszystkich elementów */
-        * {
-            color: #111827 !important;
-        }
-        
-        /* Formularze i pola wprowadzania danych */
-        input, textarea, select, div[role="combobox"], div[data-baseweb="select"], [data-baseweb="base-input"] {
-            background-color: #ffffff !important; 
-            color: #111827 !important; 
-            border: 1px solid #ced4da !important;
-        }
-        div[data-baseweb="select"] * { 
-            background-color: #ffffff !important; 
-            color: #111827 !important; 
-        }
-        
-        /* Przyciski */
-        .stButton>button, .stFormSubmitButton>button {
-            background-color: #ffffff !important; 
-            color: #111827 !important; 
-            border: 1px solid #ced4da !important; 
-            width: 100% !important;
-        }
-        .stButton>button:hover, .stFormSubmitButton>button:hover { 
-            background-color: #e2e6ea !important; 
-            border-color: #adb5bd !important; 
-        }
-        
-        /* Etykiety i teksty specjalne */
-        .main-header { font-size: 22px; font-weight: bold; color: #0d6efd !important; border-bottom: 2px solid #dee2e6; padding-bottom: 5px; margin-bottom: 15px; }
-        .question-box { background-color: #ffffff !important; padding: 15px; border-radius: 6px; border: 1px solid #ced4da; margin-bottom: 15px; }
-        .question-box * { color: #111827 !important; }
-        .legal-box { background-color: #e7f1ff !important; padding: 15px; border-radius: 6px; border: 1px solid #b6d4fe; margin-top: 15px; margin-bottom: 15px; }
-        .legal-box * { color: #084298 !important; }
-        
-        /* Karty nagłówkowe */
-        .card-blue, .card-yellow, .card-green, .card-red {
-            padding: 20px; border-radius: 8px; height: 180px; display: flex; flex-direction: column; justify-content: flex-start; margin-bottom: 20px; box-sizing: border-box;
-        }
-        .card-blue { background-color: #cfe2ff !important; border: 1px solid #b6d4fe; }
-        .card-blue * { color: #084298 !important; }
-        .card-yellow { background-color: #ffe5d0 !important; border: 1px solid #ffbb99; }
-        .card-yellow * { color: #7c2d12 !important; }
-        .card-green { background-color: #d1e7dd !important; border: 1px solid #badbcc; }
-        .card-green * { color: #0f5132 !important; }
-        .card-red { background-color: #f8d7da !important; border: 1px solid #f5c2c7; }
-        .card-red * { color: #842029 !important; }
+        .stApp { background-color: #ffffff !important; color: #111827 !important; }
     </style>
-    """, unsafe_allow_html=True)
+    """
+elif st.session_state.theme == "Ciemny":
+    css_override = """
+    <style>
+        :root {
+            --background-color: #0e1117;
+            --secondary-background-color: #161b22;
+            --text-color: #ffffff;
+        }
+        .stApp { background-color: #0e1117 !important; color: #ffffff !important; }
+    </style>
+    """
 else:
-    st.markdown("""
-    <style>
-        /* Tło aplikacji i paska bocznego */
-        html, body, .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"] { 
-            background-color: #0e1117 !important; 
-            color: #ffffff !important; 
-        }
-        [data-testid="stSidebar"] { 
-            background-color: #161b22 !important; 
-        }
-        
-        /* Globalne wymuszenie koloru tekstu dla wszystkich elementów */
-        * {
-            color: #ffffff !important;
-        }
-        
-        /* Formularze i pola wprowadzania danych */
-        input, textarea, select, div[role="combobox"], div[data-baseweb="select"], [data-baseweb="base-input"] {
-            background-color: #21262d !important; 
-            color: #ffffff !important; 
-            border: 1px solid #30363d !important;
-        }
-        div[data-baseweb="select"] * { 
-            background-color: #21262d !important; 
-            color: #ffffff !important; 
-        }
-        
-        /* Przyciski */
-        .stButton>button, .stFormSubmitButton>button { 
-            width: 100% !important; 
-        }
-        
-        /* Etykiety i teksty specjalne */
-        .main-header { font-size: 22px; font-weight: bold; color: #58a6ff !important; border-bottom: 2px solid #30363d; padding-bottom: 5px; margin-bottom: 15px; }
-        .question-box { background-color: #161b22 !important; padding: 15px; border-radius: 6px; border: 1px solid #30363d; margin-bottom: 15px; }
-        .question-box * { color: #ffffff !important; }
-        .legal-box { background-color: #0d1117 !important; padding: 15px; border-radius: 6px; border: 1px solid #238636; margin-top: 15px; margin-bottom: 15px; }
-        .legal-box * { color: #e6edf3 !important; }
-        
-        /* Karty nagłówkowe */
-        .card-blue, .card-yellow, .card-green, .card-red {
-            padding: 20px; border-radius: 8px; height: 180px; display: flex; flex-direction: column; justify-content: flex-start; margin-bottom: 20px; box-sizing: border-box;
-        }
-        .card-blue { background-color: #1f364d !important; border: 1px solid #30363d; }
-        .card-blue * { color: #58a6ff !important; }
-        .card-yellow { background-color: #452800 !important; border: 1px solid #633800; }
-        .card-yellow * { color: #ffbc54 !important; }
-        .card-green { background-color: #1b3a2b !important; border: 1px solid #238636; }
-        .card-green * { color: #3fb950 !important; }
-        .card-red { background-color: #421e22 !important; border: 1px solid #da3633; }
-        .card-red * { color: #f85149 !important; }
-    </style>
-    """, unsafe_allow_html=True)
+    css_override = ""
 
-# Funkcje pomocnicze
+st.markdown(css_base + css_override, unsafe_allow_html=True)
+
+# ==============================================================================
+# FUNKCJE POMOCNICZE
+# ==============================================================================
 def przefiltruj_pytania(lista_pytan):
     return [p for p in lista_pytan if len(p.get("poprawne", [])) in [1, 2]]
 
@@ -4763,7 +4757,7 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
     st.session_state.statystyki[user].append(wpis)
 
 # ==============================================================================
-# LOGOWANIE
+# LOGOWANIE (Styl nakładany przed zatrzymaniem st.stop())
 # ==============================================================================
 if st.session_state.zalogowany_uzytkownik is None:
     st.markdown("<div class='main-header'>🔒 Logowanie do Aplikacji Testowej</div>", unsafe_allow_html=True)
@@ -4935,7 +4929,7 @@ elif menu_glowne == "🎮 Testy i Nauka":
                 st.rerun()
             else:
                 timer_html = """
-                <div style="font-size: 18px; font-weight: bold; color: #ff4b4b; background-color: #1f2937; padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: center;">
+                <div style="font-size: 18px; font-weight: bold; color: #ff4b4b; background-color: var(--secondary-background-color); padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: center; border: 1px solid rgba(128,128,128,0.2);">
                     ⏱️ Pozostały czas egzaminu: <span id="countdown">--:--</span>
                 </div>
                 <script>
@@ -5226,13 +5220,23 @@ elif menu_glowne == "⚙️ Ustawienia / Motyw":
     st.markdown("<div class='main-header'>Ustawienia i Personalizacja</div>", unsafe_allow_html=True)
     
     st.subheader("🎨 Wybór motywu wizualnego")
-    nowy_motyw = st.radio(
+    st.write("Wybierz **Auto**, aby motyw dopasowywał się dynamicznie do systemu telefonu/przeglądarki w czasie rzeczywistym.")
+    
+    opcje_motywu = ["Auto (Systemowy)", "Ciemny", "Jasny"]
+    mapa_motywow = {"Auto (Systemowy)": "Auto", "Ciemny": "Ciemny", "Jasny": "Jasny"}
+    mapa_odwrotna = {"Auto": "Auto (Systemowy)", "Ciemny": "Ciemny", "Jasny": "Jasny"}
+
+    wybrany_index = opcje_motywu.index(mapa_odwrotna.get(st.session_state.theme, "Auto (Systemowy)"))
+
+    nowy_motyw_str = st.radio(
         "Wybierz preferowany motyw:",
-        ["Ciemny", "Jasny"],
-        index=0 if st.session_state.theme == "Ciemny" else 1
+        opcje_motywu,
+        index=wybrany_index
     )
+
+    nowy_motyw = mapa_motywow[nowy_motyw_str]
 
     if nowy_motyw != st.session_state.theme:
         st.session_state.theme = nowy_motyw
-        st.success(f"Zmieniono motyw na: {nowy_motyw}")
+        st.success(f"Zmieniono tryb na: {nowy_motyw_str}")
         st.rerun()

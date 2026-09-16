@@ -4543,7 +4543,7 @@ if 'bazy' not in st.session_state:
 # KONFIGURACJA STRONY
 # ==============================================================================
 st.set_page_config(
-    page_title="Aplikacja Testowa - Prawo Geologiczne i Górnicze",
+    page_title="Aplikacja - Prawo Geologiczne i Górnicze",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -4552,7 +4552,7 @@ st.set_page_config(
 # INICJALIZACJA STANU SESJI
 # ==============================================================================
 if 'theme' not in st.session_state:
-    st.session_state.theme = "Auto"
+    st.session_state.theme = "Ciemny"  # Domyślnie ciemny
 
 if 'admin_logged_in' not in st.session_state:
     st.session_state.admin_logged_in = False
@@ -4607,51 +4607,28 @@ if 'bazy' not in st.session_state:
     }
 
 # ==============================================================================
-# DYNAMICZNA STYLIZACJA CSS (WSPARCIE DLA AUTO I URZĄDZEŃ MOBILNYCH)
+# DYNAMICZNA STYLIZACJA CSS (BEZPOŚREDNIA REAKCJA NA SESSION_STATE)
 # ==============================================================================
 if st.session_state.theme == "Jasny":
-    dynamic_vars = """
-        :root {
-            --bg-main: #ffffff;
-            --bg-sec: #f8f9fa;
-            --text-main: #111827;
-            --border-color: rgba(0, 0, 0, 0.15);
-        }
-    """
-elif st.session_state.theme == "Ciemny":
-    dynamic_vars = """
-        :root {
-            --bg-main: #0e1117;
-            --bg-sec: #161b22;
-            --text-main: #ffffff;
-            --border-color: rgba(255, 255, 255, 0.15);
-        }
-    """
-else:  # Tryb Auto (Systemowy)
-    dynamic_vars = """
-        @media (prefers-color-scheme: light) {
-            :root {
-                --bg-main: #ffffff;
-                --bg-sec: #f8f9fa;
-                --text-main: #111827;
-                --border-color: rgba(0, 0, 0, 0.15);
-            }
-        }
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-main: #0e1117;
-                --bg-sec: #161b22;
-                --text-main: #ffffff;
-                --border-color: rgba(255, 255, 255, 0.15);
-            }
-        }
-    """
+    bg_main = "#ffffff"
+    bg_sec = "#f8f9fa"
+    text_main = "#111827"
+    border_color = "rgba(0, 0, 0, 0.15)"
+else: # Ciemny / Auto
+    bg_main = "#0e1117"
+    bg_sec = "#161b22"
+    text_main = "#ffffff"
+    border_color = "rgba(255, 255, 255, 0.15)"
 
 st.markdown(f"""
 <style>
-    {dynamic_vars}
+    :root {{
+        --bg-main: {bg_main};
+        --bg-sec: {bg_sec};
+        --text-main: {text_main};
+        --border-color: {border_color};
+    }}
 
-    /* Płynne dopasowanie tła i tekstu bez blokujących !important */
     html, body, .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {{
         background-color: var(--bg-main) !important;
         color: var(--text-main) !important;
@@ -4661,7 +4638,6 @@ st.markdown(f"""
         background-color: var(--bg-sec) !important;
     }}
 
-    /* Globalny tekst w widgetach, etykietach i formularzach */
     p, span, label, div, h1, h2, h3, h4, h5, h6, 
     [data-testid="stCheckbox"] p, [data-testid="stWidgetLabel"] p {{
         color: var(--text-main) !important;
@@ -4673,7 +4649,6 @@ st.markdown(f"""
         border-color: var(--border-color) !important;
     }}
 
-    /* Karty i sekcje */
     .question-box {{
         background-color: var(--bg-sec) !important;
         padding: 18px;
@@ -5234,23 +5209,17 @@ elif menu_glowne == "⚙️ Ustawienia / Motyw":
     st.markdown("<div class='main-header'>Ustawienia i Personalizacja</div>", unsafe_allow_html=True)
     
     st.subheader("🎨 Wybór motywu wizualnego")
-    st.write("Wybierz **Auto**, aby motyw dopasowywał się dynamicznie do systemu telefonu/przeglądarki w czasie rzeczywistym.")
     
-    opcje_motywu = ["Auto (Systemowy)", "Ciemny", "Jasny"]
-    mapa_motywow = {"Auto (Systemowy)": "Auto", "Ciemny": "Ciemny", "Jasny": "Jasny"}
-    mapa_odwrotna = {"Auto": "Auto (Systemowy)", "Ciemny": "Ciemny", "Jasny": "Jasny"}
+    opcje_motywu = ["Ciemny", "Jasny"]
+    wybrany_index = opcje_motywu.index(st.session_state.theme) if st.session_state.theme in opcje_motywu else 0
 
-    wybrany_index = opcje_motywu.index(mapa_odwrotna.get(st.session_state.theme, "Auto (Systemowy)"))
-
-    nowy_motyw_str = st.radio(
+    nowy_motyw = st.radio(
         "Wybierz preferowany motyw:",
         opcje_motywu,
         index=wybrany_index
     )
 
-    nowy_motyw = mapa_motywow[nowy_motyw_str]
-
     if nowy_motyw != st.session_state.theme:
         st.session_state.theme = nowy_motyw
-        st.success(f"Zmieniono tryb na: {nowy_motyw_str}")
+        st.success(f"Zmieniono tryb na: {nowy_motyw}")
         st.rerun()

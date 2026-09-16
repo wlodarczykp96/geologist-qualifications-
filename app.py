@@ -4549,22 +4549,24 @@ st.set_page_config(
 )
 
 # ==============================================================================
-# 2. INICJALIZACJA STANU SESJI
+# 2. MECHANIZM TRWAŁEJ SESJI
 # ==============================================================================
-if 'theme' not in st.session_state:
-    st.session_state.theme = "Ciemny"
-
-if 'admin_logged_in' not in st.session_state:
-    st.session_state.admin_logged_in = False
-
 USERS_PIN = {
     "Piotrek": "1671",
     "Edyta": "3135",
     "Gość": None
 }
 
+query_params = st.query_params
+
 if 'zalogowany_uzytkownik' not in st.session_state:
-    st.session_state.zalogowany_uzytkownik = None
+    st.session_state.zalogowany_uzytkownik = query_params.get("user", None)
+
+if 'theme' not in st.session_state:
+    st.session_state.theme = query_params.get("theme", "Ciemny")
+
+if 'admin_logged_in' not in st.session_state:
+    st.session_state.admin_logged_in = False
 
 if 'statystyki' not in st.session_state:
     st.session_state.statystyki = {
@@ -4605,8 +4607,19 @@ if 'bazy' not in st.session_state:
         "Dział II - Koncesje": []
     }
 
+def aktualizuj_pamiec_sesji(user=None, theme=None):
+    if user is not None:
+        if user is False:
+            if "user" in st.query_params:
+                del st.query_params["user"]
+        else:
+            st.query_params["user"] = user
+
+    if theme is not None:
+        st.query_params["theme"] = theme
+
 # ==============================================================================
-# 3. GLOBALNY MOTYW CSS (ZAWIERA PEŁNE NAPRAWY PRZYCISKÓW I KONTRASTU)
+# 3. GLOBALNY MOTYW CSS (Z NAPRAWIONYM DROPDOWNEM / SELECTBOX)
 # ==============================================================================
 if st.session_state.theme == "Jasny":
     bg_main = "#f8f9fa"
@@ -4616,6 +4629,9 @@ if st.session_state.theme == "Jasny":
     btn_bg = "#ffffff"
     btn_text = "#111827"
     btn_border = "#cccccc"
+    dropdown_bg = "#ffffff"
+    dropdown_text = "#111827"
+    dropdown_hover = "#f3f4f6"
 else:
     bg_main = "#0e1117"
     bg_sec = "#161b22"
@@ -4624,6 +4640,9 @@ else:
     btn_bg = "#21262d"
     btn_text = "#ffffff"
     btn_border = "#363b42"
+    dropdown_bg = "#161b22"
+    dropdown_text = "#ffffff"
+    dropdown_hover = "#262c36"
 
 st.markdown(f"""
 <style>
@@ -4635,27 +4654,27 @@ st.markdown(f"""
         --btn-bg: {btn_bg};
         --btn-text: {btn_text};
         --btn-border: {btn_border};
+        --dropdown-bg: {dropdown_bg};
+        --dropdown-text: {dropdown_text};
+        --dropdown-hover: {dropdown_hover};
     }}
 
-    /* Tło aplikacji */
     html, body, .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {{
         background-color: var(--bg-main) !important;
         color: var(--text-main) !important;
     }}
     
-    /* Sidebar */
     [data-testid="stSidebar"], [data-testid="stSidebar"] > div:first-child {{
         background-color: var(--bg-sec) !important;
         border-right: 1px solid var(--border-color) !important;
     }}
 
-    /* Teksty, nagłówki, etykiety */
     p, span, label, div, h1, h2, h3, h4, h5, h6, 
     [data-testid="stCheckbox"] p, [data-testid="stWidgetLabel"] p, [data-testid="stMarkdownContainer"] p {{
         color: var(--text-main) !important;
     }}
 
-    /* Stylowanie standardowych przycisków */
+    /* Przyciski */
     div.stButton > button {{
         background-color: var(--btn-bg) !important;
         color: var(--btn-text) !important;
@@ -4669,7 +4688,6 @@ st.markdown(f"""
         color: #ff4b4b !important;
     }}
 
-    /* Naprawa przycisku st.button z typem 'primary' */
     div.stButton > button[kind="primary"] {{
         background-color: #ff4b4b !important;
         color: #ffffff !important;
@@ -4681,21 +4699,40 @@ st.markdown(f"""
         color: #ffffff !important;
     }}
 
-    /* Pola wyboru, selectbox, radio */
-    input, textarea, select, [data-baseweb="select"] > div {{
+    /* NAPRAWA ROZWIJANYCH LIST (SELECTBOX / BASEWEB) */
+    div[data-baseweb="select"] > div {{
+        background-color: var(--dropdown-bg) !important;
+        color: var(--dropdown-text) !important;
+        border-color: var(--border-color) !important;
+    }}
+
+    /* Style dla otwartej listy rozwijanej (Popover) */
+    div[data-baseweb="popover"], 
+    div[data-baseweb="menu"], 
+    ul[role="listbox"], 
+    li[role="option"] {{
+        background-color: var(--dropdown-bg) !important;
+        color: var(--dropdown-text) !important;
+    }}
+
+    li[role="option"]:hover, li[aria-selected="true"] {{
+        background-color: var(--dropdown-hover) !important;
+        color: var(--dropdown-text) !important;
+    }}
+
+    /* Inputy tekstu */
+    input, textarea {{
         background-color: var(--bg-sec) !important;
         color: var(--text-main) !important;
         border-color: var(--border-color) !important;
     }}
 
-    /* Expander / Akordiony */
     [data-testid="stExpander"] {{
         background-color: var(--bg-sec) !important;
         border: 1px solid var(--border-color) !important;
         border-radius: 6px !important;
     }}
 
-    /* Kontenery testowe */
     .question-box {{
         background-color: var(--bg-sec) !important;
         padding: 18px;
@@ -4812,6 +4849,7 @@ if st.session_state.zalogowany_uzytkownik is None:
         if st.button("Zaloguj się", type="primary"):
             if not wymaga_pin or podany_pin == USERS_PIN[wybrany_user]:
                 st.session_state.zalogowany_uzytkownik = wybrany_user
+                aktualizuj_pamiec_sesji(user=wybrany_user)
                 st.success(f"Pomyślnie zalogowano jako {wybrany_user}!")
                 st.rerun()
             else:
@@ -4823,6 +4861,7 @@ if st.session_state.zalogowany_uzytkownik is None:
         zmien_motyw = st.radio("Motyw ekranu:", opcje_motywu, index=idx, key="login_theme_radio")
         if zmien_motyw != st.session_state.theme:
             st.session_state.theme = zmien_motyw
+            aktualizuj_pamiec_sesji(theme=zmien_motyw)
             st.rerun()
 
     st.stop()
@@ -4833,6 +4872,7 @@ if st.session_state.zalogowany_uzytkownik is None:
 st.sidebar.title(f"👤 Zalogowany: {st.session_state.zalogowany_uzytkownik}")
 if st.sidebar.button("🚪 Wyloguj"):
     st.session_state.zalogowany_uzytkownik = None
+    aktualizuj_pamiec_sesji(user=False)
     st.rerun()
 
 st.sidebar.markdown("---")
@@ -5278,5 +5318,6 @@ elif menu_glowne == "⚙️ Ustawienia / Motyw":
 
     if nowy_motyw != st.session_state.theme:
         st.session_state.theme = nowy_motyw
+        aktualizuj_pamiec_sesji(theme=nowy_motyw)
         st.success(f"Zmieniono tryb na: {nowy_motyw}")
         st.rerun()

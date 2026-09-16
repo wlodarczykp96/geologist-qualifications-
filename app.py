@@ -4671,7 +4671,6 @@ st.markdown(f"""
         color: var(--text-main) !important;
     }}
 
-    /* Stylizacja wyciąganej listy (st.selectbox) */
     div[data-baseweb="select"] > div {{
         background-color: var(--box-bg) !important;
         color: var(--box-text) !important;
@@ -4691,7 +4690,6 @@ st.markdown(f"""
         background-color: rgba(255, 75, 75, 0.2) !important;
     }}
 
-    /* Przyciski */
     div.stButton > button {{
         background-color: var(--btn-bg) !important;
         color: var(--btn-text) !important;
@@ -4716,7 +4714,6 @@ st.markdown(f"""
         color: #ffffff !important;
     }}
 
-    /* Inputy tekstu */
     input, textarea {{
         background-color: var(--bg-sec) !important;
         color: var(--text-main) !important;
@@ -4770,34 +4767,36 @@ st.markdown(f"""
 # ==============================================================================
 # 4. FUNKCJE POMOCNICZE
 # ==============================================================================
-def przefiltruj_pytania(lista_pytan):
-    return [p for p in lista_pytan if len(p.get("poprawne", [])) in [1, 2]]
+def pobierz_pytania_z_bazy(nazwa_bazy, tylko_1_lub_2=False):
+    if nazwa_bazy == "Cała baza (wszystkie pytania)":
+        pula = []
+        for b in st.session_state.bazy.values():
+            pula.extend(b)
+    else:
+        pula = list(st.session_state.bazy.get(nazwa_bazy, []))
+    
+    if tylko_1_lub_2:
+        return [p for p in pula if len(p.get("poprawne", [])) in [1, 2]]
+    return pula
 
-def start_sesji(tryb, limit_pytan=None, z_calej_bazy=False):
+def start_sesji(tryb, baza_nazwa, limit_pytan=None, tylko_1_lub_2=False):
     st.session_state.aktywny_tryb = tryb
     st.session_state.indeks = 0
     st.session_state.sprawdzono_odpowiedz = False
     st.session_state.odpowiedzi_egzamin = {}
     st.session_state.test_zakonczony = False
     
-    if z_calej_bazy:
-        pula = []
-        for baza in st.session_state.bazy.values():
-            pula.extend(baza)
-        pula = przefiltruj_pytania(pula)
+    pula = pobierz_pytania_z_bazy(baza_nazwa, tylko_1_lub_2=tylko_1_lub_2)
+    
+    if "Losowo" in tryb or "Egzamin" in tryb:
         random.shuffle(pula)
-        if limit_pytan:
-            pula = pula[:limit_pytan]
-        st.session_state.pytania_sesji = pula
+    if limit_pytan:
+        pula = pula[:limit_pytan]
+        
+    st.session_state.pytania_sesji = pula
+    if "30 min" in tryb:
         st.session_state.czas_konca = time.time() + (30 * 60)
     else:
-        pula = list(st.session_state.bazy[st.session_state.wybrana_baza])
-        pula = przefiltruj_pytania(pula)
-        if "Losowo" in tryb or "Egzamin" in tryb:
-            random.shuffle(pula)
-        if limit_pytan:
-            pula = pula[:limit_pytan]
-        st.session_state.pytania_sesji = pula
         st.session_state.czas_konca = None
 
 def powrot_do_wyboru():
@@ -4815,7 +4814,7 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
     wpis = {
         'data': datetime.date.today().strftime("%Y-%m-%d"),
         'tryb': tryb,
-        'baza': baza if baza else "Cała baza",
+        'baza': baza if baza else "Wszystkie",
         'zdane': zdane,
         'wynik_str': f"{punkty}/{max_punkty}",
         'procent': procent
@@ -4901,8 +4900,8 @@ if menu_glowne == "🏠 Strona Główna":
     dzisiaj_str = datetime.date.today().strftime("%Y-%m-%d")
     
     egz_dzisiaj = [s for s in user_stats if s['data'] == dzisiaj_str]
-    egz_calosc = [s for s in user_stats if s['baza'] == "Cała baza"]
-    egz_czesc = [s for s in user_stats if s['baza'] != "Cała baza"]
+    egz_calosc = [s for s in user_stats if s['baza'] == "Wszystkie"]
+    egz_czesc = [s for s in user_stats if s['baza'] != "Wszystkie"]
     
     calosc_pozytywne = sum(1 for s in egz_calosc if s['zdane'])
     calosc_negatywne = len(egz_calosc) - calosc_pozytywne
@@ -4971,43 +4970,67 @@ if menu_glowne == "🏠 Strona Główna":
 elif menu_glowne == "🎮 Testy i Nauka":
     if st.session_state.wybrana_baza is None and st.session_state.aktywny_tryb is None:
         st.markdown("<div class='main-header'>Wybierz tryb testowy lub bazę pytań</div>", unsafe_allow_html=True)
-        st.caption("ℹ️ Wszystkie tryby pobierają wyłącznie pytania posiadające 1 lub 2 poprawne odpowiedzi.")
         
-        if st.button("🚀 Uruchom Egzamin z CAŁEJ BAZY (50 pytań / 30 min)", use_container_width=True, type="primary"):
-            start_sesji("Tryb Egzaminu z CAŁEJ BAZY (50 pytań / 30 min)", limit_pytan=50, z_calej_bazy=True)
+        st.subheader("📚 Pełne Bazy")
+        if st.button("🚀 Uruchom Egzamin z CAŁEJ BAZY (Wszystkie pytania | 50 pytań / 30 min)", use_container_width=True, type="primary"):
+            st.session_state.wybrana_baza = "Cała baza (wszystkie pytania)"
+            start_sesji("Tryb Egzaminu z CAŁEJ BAZY (50 pytań / 30 min)", "Cała baza (wszystkie pytania)", limit_pytan=50, tylko_1_lub_2=False)
             st.rerun()
-            
+
+        if st.button("🎯 Uruchom Egzamin – TYLKO pytania z 1 lub 2 poprawnymi (50 pytań / 30 min)", use_container_width=True):
+            st.session_state.wybrana_baza = "Cała baza (tylko 1 lub 2 poprawne)"
+            start_sesji("Tryb Egzaminu (1 lub 2 poprawne / 30 min)", "Cała baza (wszystkie pytania)", limit_pytan=50, tylko_1_lub_2=True)
+            st.rerun()
+
         st.markdown("---")
-        st.write("Lub wybierz pojedynczą część bazy danych:")
+        st.subheader("📁 Wybierz Dział Bazy")
         for nazwa_bazy in st.session_state.bazy.keys():
             if st.button(f"📁 {nazwa_bazy}", use_container_width=True):
                 st.session_state.wybrana_baza = nazwa_bazy
                 st.rerun()
 
     elif st.session_state.aktywny_tryb is None:
-        baza_pytania_raw = st.session_state.bazy[st.session_state.wybrana_baza]
-        baza_pytania_przefiltrowane = przefiltruj_pytania(baza_pytania_raw)
+        nazwa_bary = st.session_state.wybrana_baza
+        wszystkie = pobierz_pytania_z_bazy(nazwa_bary, tylko_1_lub_2=False)
+        przefiltrowane = pobierz_pytania_z_bazy(nazwa_bary, tylko_1_lub_2=True)
         
-        pytania_jednokrotne = [p for p in baza_pytania_przefiltrowane if len(p.get("poprawne", [])) == 1]
-        pytania_wielokrotne = [p for p in baza_pytania_przefiltrowane if len(p.get("poprawne", [])) == 2]
+        jednokrotne = [p for p in przefiltrowane if len(p.get("poprawne", [])) == 1]
+        wielokrotne = [p for p in przefiltrowane if len(p.get("poprawne", [])) == 2]
 
-        st.markdown(f"**Wybrana baza:** {st.session_state.wybrana_baza}")
-        st.markdown(f"**Liczba pytań w bazie:** {len(baza_pytania_przefiltrowane)}")
-        st.markdown(f"- Pytania jednokrotnego wyboru (1 poprawna odp.): **{len(pytania_jednokrotne)}**")
-        st.markdown(f"- Pytania wielokrotnego wyboru (2 poprawne odp.): **{len(pytania_wielokrotne)}**")
+        st.markdown(f"**Wybrana baza:** {nazwa_bary}")
+        st.markdown(f"- Wszystkie pytania w bazie: **{len(wszystkie)}**")
+        st.markdown(f"- Pytania z 1 lub 2 poprawnymi odpowiedziami: **{len(przefiltrowane)}**")
+        st.markdown(f"  • Jednokrotnego wyboru (1 poprawna): **{len(jednokrotne)}**")
+        st.markdown(f"  • Wielokrotnego wyboru (2 poprawne): **{len(wielokrotne)}**")
         st.write("")
 
-        if st.button("Tryb Nauki (Kolejno + Podpowiedzi)", use_container_width=True):
-            start_sesji("Tryb Nauki (Kolejno + Podpowiedzi)", limit_pytan=None)
-            st.rerun()
+        st.subheader("Wybierz wariant testu:")
+        
+        col_w1, col_w2 = st.columns(2)
+        
+        with col_w1:
+            st.markdown("### 🌐 Wszystkie Pytania")
+            if st.button("Tryb Nauki (Kolejno)", key="n_w_k", use_container_width=True):
+                start_sesji("Tryb Nauki (Wszystkie – Kolejno)", nazwa_bary, limit_pytan=None, tylko_1_lub_2=False)
+                st.rerun()
+            if st.button("Tryb Nauki (Losowo – 30 pytań)", key="n_w_l", use_container_width=True):
+                start_sesji("Tryb Nauki (Wszystkie – Losowo 30)", nazwa_bary, limit_pytan=30, tylko_1_lub_2=False)
+                st.rerun()
+            if st.button("Tryb Egzaminu (Losowo – 35 pytań)", key="e_w_l", use_container_width=True):
+                start_sesji("Tryb Egzaminu (Wszystkie – Losowo 35)", nazwa_bary, limit_pytan=35, tylko_1_lub_2=False)
+                st.rerun()
 
-        if st.button("Tryb Nauki (Losowo – 30 pytań + Podpowiedzi)", use_container_width=True):
-            start_sesji("Tryb Nauki (Losowo – 30 pytań + Podpowiedzi)", limit_pytan=30)
-            st.rerun()
-
-        if st.button("Tryb Egzaminu (Losowo – 35 pytań, wynik na końcu)", use_container_width=True):
-            start_sesji("Tryb Egzaminu (Losowo – 35 pytań)", limit_pytan=35)
-            st.rerun()
+        with col_w2:
+            st.markdown("### 🎯 Tylko 1 lub 2 Poprawne")
+            if st.button("Tryb Nauki (Kolejno)", key="n_f_k", use_container_width=True):
+                start_sesji("Tryb Nauki (1 lub 2 – Kolejno)", nazwa_bary, limit_pytan=None, tylko_1_lub_2=True)
+                st.rerun()
+            if st.button("Tryb Nauki (Losowo – 30 pytań)", key="n_f_l", use_container_width=True):
+                start_sesji("Tryb Nauki (1 lub 2 – Losowo 30)", nazwa_bary, limit_pytan=30, tylko_1_lub_2=True)
+                st.rerun()
+            if st.button("Tryb Egzaminu (Losowo – 35 pytań)", key="e_f_l", use_container_width=True):
+                start_sesji("Tryb Egzaminu (1 lub 2 – Losowo 35)", nazwa_bary, limit_pytan=35, tylko_1_lub_2=True)
+                st.rerun()
 
         st.write("")
         if st.button("← Powrót do wyboru baz", use_container_width=True):
@@ -5191,9 +5214,20 @@ elif menu_glowne == "➕ Dodaj Pytanie":
 # ==============================================================================
 elif menu_glowne == "🔍 Przegląd Bazy":
     st.markdown("<div class='main-header'>Przegląd Bazy Pytań</div>", unsafe_allow_html=True)
-    wybrana = st.radio("Wybierz część:", list(st.session_state.bazy.keys()), horizontal=True)
     
-    for item in st.session_state.bazy[wybrana]:
+    opcje_przegladu = ["Cała baza (wszystkie pytania)", "Cała baza (tylko 1 lub 2 poprawne)"] + list(st.session_state.bazy.keys())
+    wybrana = st.radio("Wybierz bazę do przeglądu:", opcje_przegladu, horizontal=True)
+    
+    if wybrana == "Cała baza (wszystkie pytania)":
+        lista_do_wyswietlenia = pobierz_pytania_z_bazy("Cała baza (wszystkie pytania)", tylko_1_lub_2=False)
+    elif wybrana == "Cała baza (tylko 1 lub 2 poprawne)":
+        lista_do_wyswietlenia = pobierz_pytania_z_bazy("Cała baza (wszystkie pytania)", tylko_1_lub_2=True)
+    else:
+        lista_do_wyswietlenia = st.session_state.bazy[wybrana]
+        
+    st.caption(f"Wyświetlono pytań: {len(lista_do_wyswietlenia)}")
+
+    for item in lista_do_wyswietlenia:
         with st.expander(f"ID {item['id']}: {item['pytanie'][:80]}..."):
             st.write(f"**Pytanie:** {item['pytanie']}")
             for k, v in item["odpowiedzi"].items():

@@ -4543,7 +4543,7 @@ if 'bazy' not in st.session_state:
 # 1. KONFIGURACJA STRONY
 # ==============================================================================
 st.set_page_config(
-    page_title="Aplikacja Testowa - Prawo Geologiczne i Górnicze",
+    page_title="Aplikacja - Prawo Geologiczne i Górnicze",
     layout="wide",
     initial_sidebar_state="expanded"
 )

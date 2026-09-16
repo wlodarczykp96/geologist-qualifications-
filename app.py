@@ -4540,19 +4540,10 @@ if 'bazy' not in st.session_state:
     ]
 }
 # ==============================================================================
-# KONFIGURACJA STRONY
-# ==============================================================================
-st.set_page_config(
-    page_title="Aplikacja - Prawo Geologiczne i Górnicze",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
-
-# ==============================================================================
 # 1. KONFIGURACJA STRONY
 # ==============================================================================
 st.set_page_config(
-    page_title="Aplikacja - Prawo Geologiczne i Górnicze",
+    page_title="Aplikacja Testowa - Prawo Geologiczne i Górnicze",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -4615,18 +4606,24 @@ if 'bazy' not in st.session_state:
     }
 
 # ==============================================================================
-# 3. GLOBALNY MOTYW CSS (PRZED JAKIMKOLWIEK RENDEROWANIEM CZY ST.STOP)
+# 3. GLOBALNY MOTYW CSS (ZAWIERA PEŁNE NAPRAWY PRZYCISKÓW I KONTRASTU)
 # ==============================================================================
 if st.session_state.theme == "Jasny":
-    bg_main = "#ffffff"
-    bg_sec = "#f8f9fa"
+    bg_main = "#f8f9fa"
+    bg_sec = "#ffffff"
     text_main = "#111827"
-    border_color = "rgba(0, 0, 0, 0.15)"
+    border_color = "#d1d5db"
+    btn_bg = "#ffffff"
+    btn_text = "#111827"
+    btn_border = "#cccccc"
 else:
     bg_main = "#0e1117"
     bg_sec = "#161b22"
     text_main = "#ffffff"
     border_color = "rgba(255, 255, 255, 0.15)"
+    btn_bg = "#21262d"
+    btn_text = "#ffffff"
+    btn_border = "#363b42"
 
 st.markdown(f"""
 <style>
@@ -4635,33 +4632,70 @@ st.markdown(f"""
         --bg-sec: {bg_sec};
         --text-main: {text_main};
         --border-color: {border_color};
+        --btn-bg: {btn_bg};
+        --btn-text: {btn_text};
+        --btn-border: {btn_border};
     }}
 
-    /* Globalne tło aplikacji i nagłówków */
+    /* Tło aplikacji */
     html, body, .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {{
         background-color: var(--bg-main) !important;
         color: var(--text-main) !important;
     }}
     
-    /* Panel boczny */
+    /* Sidebar */
     [data-testid="stSidebar"], [data-testid="stSidebar"] > div:first-child {{
         background-color: var(--bg-sec) !important;
+        border-right: 1px solid var(--border-color) !important;
     }}
 
-    /* Stylowanie tekstów i etykiet */
+    /* Teksty, nagłówki, etykiety */
     p, span, label, div, h1, h2, h3, h4, h5, h6, 
     [data-testid="stCheckbox"] p, [data-testid="stWidgetLabel"] p, [data-testid="stMarkdownContainer"] p {{
         color: var(--text-main) !important;
     }}
 
-    /* Stylowanie pól wejściowych, Selectboxów i Radio buttons */
-    input, textarea, select, [data-baseweb="select"] {{
+    /* Stylowanie standardowych przycisków */
+    div.stButton > button {{
+        background-color: var(--btn-bg) !important;
+        color: var(--btn-text) !important;
+        border: 1px solid var(--btn-border) !important;
+        border-radius: 6px !important;
+        transition: all 0.2s ease-in-out !important;
+    }}
+
+    div.stButton > button:hover {{
+        border-color: #ff4b4b !important;
+        color: #ff4b4b !important;
+    }}
+
+    /* Naprawa przycisku st.button z typem 'primary' */
+    div.stButton > button[kind="primary"] {{
+        background-color: #ff4b4b !important;
+        color: #ffffff !important;
+        border: none !important;
+    }}
+
+    div.stButton > button[kind="primary"]:hover {{
+        background-color: #e03e3e !important;
+        color: #ffffff !important;
+    }}
+
+    /* Pola wyboru, selectbox, radio */
+    input, textarea, select, [data-baseweb="select"] > div {{
         background-color: var(--bg-sec) !important;
         color: var(--text-main) !important;
         border-color: var(--border-color) !important;
     }}
 
-    /* Kontenery customowe */
+    /* Expander / Akordiony */
+    [data-testid="stExpander"] {{
+        background-color: var(--bg-sec) !important;
+        border: 1px solid var(--border-color) !important;
+        border-radius: 6px !important;
+    }}
+
+    /* Kontenery testowe */
     .question-box {{
         background-color: var(--bg-sec) !important;
         padding: 18px;
@@ -4693,10 +4727,10 @@ st.markdown(f"""
         height: 160px;
         margin-bottom: 15px;
     }}
-    .card-blue {{ background-color: rgba(13, 110, 253, 0.15); border: 1px solid rgba(13, 110, 253, 0.3); }}
-    .card-yellow {{ background-color: rgba(255, 193, 7, 0.15); border: 1px solid rgba(255, 193, 7, 0.3); }}
-    .card-green {{ background-color: rgba(25, 135, 84, 0.15); border: 1px solid rgba(25, 135, 84, 0.3); }}
-    .card-red {{ background-color: rgba(220, 53, 69, 0.15); border: 1px solid rgba(220, 53, 69, 0.3); }}
+    .card-blue {{ background-color: rgba(13, 110, 253, 0.12); border: 1px solid rgba(13, 110, 253, 0.3); }}
+    .card-yellow {{ background-color: rgba(255, 193, 7, 0.12); border: 1px solid rgba(255, 193, 7, 0.3); }}
+    .card-green {{ background-color: rgba(25, 135, 84, 0.12); border: 1px solid rgba(25, 135, 84, 0.3); }}
+    .card-red {{ background-color: rgba(220, 53, 69, 0.12); border: 1px solid rgba(220, 53, 69, 0.3); }}
 </style>
 """, unsafe_allow_html=True)
 
@@ -4784,7 +4818,6 @@ if st.session_state.zalogowany_uzytkownik is None:
                 st.error("Błędny PIN! Spróbuj ponownie.")
                 
         st.markdown("---")
-        # Przełącznik motywu dostępny przed zalogowaniem
         opcje_motywu = ["Ciemny", "Jasny"]
         idx = opcje_motywu.index(st.session_state.theme) if st.session_state.theme in opcje_motywu else 0
         zmien_motyw = st.radio("Motyw ekranu:", opcje_motywu, index=idx, key="login_theme_radio")

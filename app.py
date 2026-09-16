@@ -4543,7 +4543,7 @@ if 'bazy' not in st.session_state:
 # KONFIGURACJA STRONY
 # ==============================================================================
 st.set_page_config(
-    page_title="Aplikacja Prawo Geologiczne i Górnicze",
+    page_title="Aplikacja Testowa - Prawo Geologiczne i Górnicze",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -4590,140 +4590,127 @@ if 'czas_konca' not in st.session_state:
 if 'test_zakonczony' not in st.session_state:
     st.session_state.test_zakonczony = False
 
+# Przykładowa baza danych w pamięci (jeśli nie istnieje)
+if 'bazy' not in st.session_state:
+    st.session_state.bazy = {
+        "Dział I - Przepisy ogólne": [
+            {
+                "id": 1,
+                "pytanie": "Kto jest właścicielem kopalin podstawowych określonych w ustawie?",
+                "odpowiedzi": {"A": "Skarb Państwa", "B": "Gmina właściwa miejscowo", "C": "Właściciel gruntu"},
+                "poprawne": ["A"],
+                "podstawa_prawna": "Art. 10 ust. 1 Ustawy - Prawo geologiczne i górnicze",
+                "tresc_artykulu": "Złoża kopalin... stanowią własność Skarbu Państwa."
+            }
+        ],
+        "Dział II - Koncesje": []
+    }
+
 # ==============================================================================
-# UNIWERSALNA STYLIZACJA CSS (DZIAŁA PRZED LOGOWANIEM I ADAPTUJE SIĘ DYNAMICZNIE)
+# DYNAMICZNA STYLIZACJA CSS (WSPARCIE DLA AUTO I URZĄDZEŃ MOBILNYCH)
 # ==============================================================================
-css_base = """
-<style>
-    /* 1. Domyślne motywy w oparciu o preferences systemowe urządzenia */
-    @media (prefers-color-scheme: light) {
+if st.session_state.theme == "Jasny":
+    dynamic_vars = """
         :root {
             --bg-main: #ffffff;
             --bg-sec: #f8f9fa;
             --text-main: #111827;
             --border-color: rgba(0, 0, 0, 0.15);
         }
-    }
-
-    @media (prefers-color-scheme: dark) {
+    """
+elif st.session_state.theme == "Ciemny":
+    dynamic_vars = """
         :root {
             --bg-main: #0e1117;
             --bg-sec: #161b22;
             --text-main: #ffffff;
             --border-color: rgba(255, 255, 255, 0.15);
         }
-    }
+    """
+else:  # Tryb Auto (Systemowy)
+    dynamic_vars = """
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg-main: #ffffff;
+                --bg-sec: #f8f9fa;
+                --text-main: #111827;
+                --border-color: rgba(0, 0, 0, 0.15);
+            }
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-main: #0e1117;
+                --bg-sec: #161b22;
+                --text-main: #ffffff;
+                --border-color: rgba(255, 255, 255, 0.15);
+            }
+        }
+    """
 
-    /* 2. Globalna aplikacja - płynna zmiana kolorów bez !important */
-    html, body, .stApp, [data-testid="stAppViewContainer"] {
-        background-color: var(--bg-main);
-        color: var(--text-main);
-    }
+st.markdown(f"""
+<style>
+    {dynamic_vars}
 
-    /* 3. Naprawa tekstu w formularzach i checkboxach mobilnych */
-    [data-testid="stCheckbox"] p, 
-    [data-testid="stWidgetLabel"] p, 
-    label, p, span, h1, h2, h3, h4, h5, h6 {
+    /* Płynne dopasowanie tła i tekstu bez blokujących !important */
+    html, body, .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {{
+        background-color: var(--bg-main) !important;
         color: var(--text-main) !important;
-    }
+    }}
+    
+    [data-testid="stSidebar"] {{
+        background-color: var(--bg-sec) !important;
+    }}
 
-    input, textarea, select, [data-baseweb="select"] {
+    /* Globalny tekst w widgetach, etykietach i formularzach */
+    p, span, label, div, h1, h2, h3, h4, h5, h6, 
+    [data-testid="stCheckbox"] p, [data-testid="stWidgetLabel"] p {{
+        color: var(--text-main) !important;
+    }}
+
+    input, textarea, select, [data-baseweb="select"] {{
         background-color: var(--bg-sec) !important;
         color: var(--text-main) !important;
-    }
+        border-color: var(--border-color) !important;
+    }}
 
-    /* Customowe komponenty bazy */
-    .question-box {
-        background-color: var(--bg-sec);
+    /* Karty i sekcje */
+    .question-box {{
+        background-color: var(--bg-sec) !important;
         padding: 18px;
         border-radius: 8px;
         border: 1px solid var(--border-color);
         margin-bottom: 15px;
-    }
+    }}
 
-    .legal-box {
-        background-color: rgba(13, 110, 253, 0.1);
+    .legal-box {{
+        background-color: var(--bg-sec) !important;
         padding: 15px;
         border-radius: 8px;
         border-left: 4px solid #0d6efd;
         margin: 15px 0;
-    }
+        border: 1px solid var(--border-color);
+    }}
 
-    .main-header {
+    .main-header {{
         font-size: 22px;
         font-weight: bold;
         border-bottom: 2px solid var(--border-color);
         padding-bottom: 8px;
         margin-bottom: 15px;
-    }
+    }}
 
-    .card-blue, .card-yellow, .card-green, .card-red {
+    .card-blue, .card-yellow, .card-green, .card-red {{
         padding: 20px;
         border-radius: 8px;
         height: 160px;
         margin-bottom: 15px;
-    }
-    .card-blue { background-color: rgba(13, 110, 253, 0.15); border: 1px solid rgba(13, 110, 253, 0.3); }
-    .card-yellow { background-color: rgba(255, 193, 7, 0.15); border: 1px solid rgba(255, 193, 7, 0.3); }
-    .card-green { background-color: rgba(25, 135, 84, 0.15); border: 1px solid rgba(25, 135, 84, 0.3); }
-    .card-red { background-color: rgba(220, 53, 69, 0.15); border: 1px solid rgba(220, 53, 69, 0.3); }
+    }}
+    .card-blue {{ background-color: rgba(13, 110, 253, 0.15); border: 1px solid rgba(13, 110, 253, 0.3); }}
+    .card-yellow {{ background-color: rgba(255, 193, 7, 0.15); border: 1px solid rgba(255, 193, 7, 0.3); }}
+    .card-green {{ background-color: rgba(25, 135, 84, 0.15); border: 1px solid rgba(25, 135, 84, 0.3); }}
+    .card-red {{ background-color: rgba(220, 53, 69, 0.15); border: 1px solid rgba(220, 53, 69, 0.3); }}
 </style>
-"""
-
-# Ręczne nadpisanie (działa tylko, gdy w panelu nie jest wybrane "Auto")
-css_override = ""
-if st.session_state.theme == "Jasny":
-    css_override = """
-    <style>
-        :root {
-            --bg-main: #ffffff !important;
-            --bg-sec: #f8f9fa !important;
-            --text-main: #111827 !important;
-            --border-color: rgba(0, 0, 0, 0.15) !important;
-        }
-    </style>
-    """
-elif st.session_state.theme == "Ciemny":
-    css_override = """
-    <style>
-        :root {
-            --bg-main: #0e1117 !important;
-            --bg-sec: #161b22 !important;
-            --text-main: #ffffff !important;
-            --border-color: rgba(255, 255, 255, 0.15) !important;
-        }
-    </style>
-    """
-
-st.markdown(css_base + css_override, unsafe_allow_html=True)
-
-# Dynamiczne sterowanie motywem Jasny / Ciemny
-if st.session_state.theme == "Jasny":
-    css_override = """
-    <style>
-        :root {
-            --background-color: #ffffff;
-            --secondary-background-color: #f8f9fa;
-            --text-color: #111827;
-        }
-        .stApp { background-color: #ffffff !important; color: #111827 !important; }
-    </style>
-    """
-elif st.session_state.theme == "Ciemny":
-    css_override = """
-    <style>
-        :root {
-            --background-color: #0e1117;
-            --secondary-background-color: #161b22;
-            --text-color: #ffffff;
-        }
-        .stApp { background-color: #0e1117 !important; color: #ffffff !important; }
-    </style>
-    """
-else:
-    css_override = ""
-
-st.markdown(css_base + css_override, unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
 # ==============================================================================
 # FUNKCJE POMOCNICZE
@@ -4784,7 +4771,7 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
     st.session_state.statystyki[user].append(wpis)
 
 # ==============================================================================
-# LOGOWANIE (Styl nakładany przed zatrzymaniem st.stop())
+# LOGOWANIE
 # ==============================================================================
 if st.session_state.zalogowany_uzytkownik is None:
     st.markdown("<div class='main-header'>🔒 Logowanie do Aplikacji Testowej</div>", unsafe_allow_html=True)
@@ -4956,7 +4943,7 @@ elif menu_glowne == "🎮 Testy i Nauka":
                 st.rerun()
             else:
                 timer_html = """
-                <div style="font-size: 18px; font-weight: bold; color: #ff4b4b; background-color: var(--secondary-background-color); padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: center; border: 1px solid rgba(128,128,128,0.2);">
+                <div style="font-size: 18px; font-weight: bold; color: #ff4b4b; background-color: var(--bg-sec); padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: center; border: 1px solid var(--border-color);">
                     ⏱️ Pozostały czas egzaminu: <span id="countdown">--:--</span>
                 </div>
                 <script>

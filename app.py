@@ -11,7 +11,7 @@ ADMIN_PASSWORD = "admin123"
 # ==============================================================================
 # INICJALIZACJA STANUSESSION I MOTYWÓW
 # ==============================================================================
-from bazy_danych import BAZY_PYTAN
+from baza_danych import BAZY_PYTAN
 
 if 'bazy' not in st.session_state:
     st.session_state.bazy = BAZY_PYTAN

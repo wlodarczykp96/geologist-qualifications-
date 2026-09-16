@@ -4619,7 +4619,7 @@ def aktualizuj_pamiec_sesji(user=None, theme=None):
         st.query_params["theme"] = theme
 
 # ==============================================================================
-# 3. GLOBALNY MOTYW CSS (NAPRAWIENIE WIDOCZNOŚCI WYCIĄGANEJ LISTY)
+# 3. GLOBALNY MOTYW CSS
 # ==============================================================================
 if st.session_state.theme == "Jasny":
     bg_main = "#f8f9fa"
@@ -4671,7 +4671,7 @@ st.markdown(f"""
         color: var(--text-main) !important;
     }}
 
-    /* Stylizacja i widoczność dla wyciąganej listy (st.selectbox / BaseWeb) */
+    /* Stylizacja wyciąganej listy (st.selectbox) */
     div[data-baseweb="select"] > div {{
         background-color: var(--box-bg) !important;
         color: var(--box-text) !important;
@@ -4727,14 +4727,6 @@ st.markdown(f"""
         background-color: var(--bg-sec) !important;
         border: 1px solid var(--border-color) !important;
         border-radius: 6px !important;
-    }}
-
-    .login-container {{
-        background-color: var(--bg-sec);
-        padding: 24px;
-        border-radius: 10px;
-        border: 1px solid var(--border-color);
-        margin-top: 10px;
     }}
 
     .question-box {{
@@ -4834,14 +4826,13 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
     st.session_state.statystyki[user].append(wpis)
 
 # ==============================================================================
-# 5. EKRAN LOGOWANIA (WYCIĄGANA LISTA SELEKCYJNA)
+# 5. EKRAN LOGOWANIA
 # ==============================================================================
 if st.session_state.zalogowany_uzytkownik is None:
     st.markdown("<div class='main-header'>🔒 Aplikacja - Prawo Górnicze i Geologiczne</div>", unsafe_allow_html=True)
     
     col_login, _ = st.columns([1, 1])
     with col_login:
-        st.markdown("<div class='login-container'>", unsafe_allow_html=True)
         wybrany_user = st.selectbox(
             "Wybierz użytkownika:",
             options=list(USERS_PIN.keys()),
@@ -4864,7 +4855,6 @@ if st.session_state.zalogowany_uzytkownik is None:
                 st.rerun()
             else:
                 st.error("Błędny PIN! Spróbuj ponownie.")
-        st.markdown("</div>", unsafe_allow_html=True)
 
         st.markdown("---")
         opcje_motywu = ["Ciemny", "Jasny"]

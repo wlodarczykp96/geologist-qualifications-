@@ -1,3 +1,9 @@
+
+import streamlit as st
+import random
+import time
+import datetime
+# --- BAZA PYTAN W TYM SAMYM PLIKU ---
 BAZY_PYTAN = {
 "BAZA PYTAŃ - CZĘŚĆ 1 (Hydrogeologia i geologia inżynierska [...])": [
        { "id": 1,

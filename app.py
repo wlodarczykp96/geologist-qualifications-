@@ -4549,10 +4549,19 @@ st.set_page_config(
 )
 
 # ==============================================================================
-# INICJALIZACJA STANU SESJI
+# 1. KONFIGURACJA STRONY
+# ==============================================================================
+st.set_page_config(
+    page_title="Aplikacja - Prawo Geologiczne i Górnicze",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# ==============================================================================
+# 2. INICJALIZACJA STANU SESJI
 # ==============================================================================
 if 'theme' not in st.session_state:
-    st.session_state.theme = "Ciemny"  # Domyślnie ciemny
+    st.session_state.theme = "Ciemny"
 
 if 'admin_logged_in' not in st.session_state:
     st.session_state.admin_logged_in = False
@@ -4590,7 +4599,6 @@ if 'czas_konca' not in st.session_state:
 if 'test_zakonczony' not in st.session_state:
     st.session_state.test_zakonczony = False
 
-# Przykładowa baza danych w pamięci (jeśli nie istnieje)
 if 'bazy' not in st.session_state:
     st.session_state.bazy = {
         "Dział I - Przepisy ogólne": [
@@ -4607,14 +4615,14 @@ if 'bazy' not in st.session_state:
     }
 
 # ==============================================================================
-# DYNAMICZNA STYLIZACJA CSS (BEZPOŚREDNIA REAKCJA NA SESSION_STATE)
+# 3. GLOBALNY MOTYW CSS (PRZED JAKIMKOLWIEK RENDEROWANIEM CZY ST.STOP)
 # ==============================================================================
 if st.session_state.theme == "Jasny":
     bg_main = "#ffffff"
     bg_sec = "#f8f9fa"
     text_main = "#111827"
     border_color = "rgba(0, 0, 0, 0.15)"
-else: # Ciemny / Auto
+else:
     bg_main = "#0e1117"
     bg_sec = "#161b22"
     text_main = "#ffffff"
@@ -4629,26 +4637,31 @@ st.markdown(f"""
         --border-color: {border_color};
     }}
 
+    /* Globalne tło aplikacji i nagłówków */
     html, body, .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {{
         background-color: var(--bg-main) !important;
         color: var(--text-main) !important;
     }}
     
-    [data-testid="stSidebar"] {{
+    /* Panel boczny */
+    [data-testid="stSidebar"], [data-testid="stSidebar"] > div:first-child {{
         background-color: var(--bg-sec) !important;
     }}
 
+    /* Stylowanie tekstów i etykiet */
     p, span, label, div, h1, h2, h3, h4, h5, h6, 
-    [data-testid="stCheckbox"] p, [data-testid="stWidgetLabel"] p {{
+    [data-testid="stCheckbox"] p, [data-testid="stWidgetLabel"] p, [data-testid="stMarkdownContainer"] p {{
         color: var(--text-main) !important;
     }}
 
+    /* Stylowanie pól wejściowych, Selectboxów i Radio buttons */
     input, textarea, select, [data-baseweb="select"] {{
         background-color: var(--bg-sec) !important;
         color: var(--text-main) !important;
         border-color: var(--border-color) !important;
     }}
 
+    /* Kontenery customowe */
     .question-box {{
         background-color: var(--bg-sec) !important;
         padding: 18px;
@@ -4688,7 +4701,7 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # ==============================================================================
-# FUNKCJE POMOCNICZE
+# 4. FUNKCJE POMOCNICZE
 # ==============================================================================
 def przefiltruj_pytania(lista_pytan):
     return [p for p in lista_pytan if len(p.get("poprawne", [])) in [1, 2]]
@@ -4746,7 +4759,7 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
     st.session_state.statystyki[user].append(wpis)
 
 # ==============================================================================
-# LOGOWANIE
+# 5. LOGOWANIE
 # ==============================================================================
 if st.session_state.zalogowany_uzytkownik is None:
     st.markdown("<div class='main-header'>🔒 Logowanie do Aplikacji Testowej</div>", unsafe_allow_html=True)
@@ -4769,10 +4782,20 @@ if st.session_state.zalogowany_uzytkownik is None:
                 st.rerun()
             else:
                 st.error("Błędny PIN! Spróbuj ponownie.")
+                
+        st.markdown("---")
+        # Przełącznik motywu dostępny przed zalogowaniem
+        opcje_motywu = ["Ciemny", "Jasny"]
+        idx = opcje_motywu.index(st.session_state.theme) if st.session_state.theme in opcje_motywu else 0
+        zmien_motyw = st.radio("Motyw ekranu:", opcje_motywu, index=idx, key="login_theme_radio")
+        if zmien_motyw != st.session_state.theme:
+            st.session_state.theme = zmien_motyw
+            st.rerun()
+
     st.stop()
 
 # ==============================================================================
-# MENU BOCZNE
+# 6. MENU BOCZNE
 # ==============================================================================
 st.sidebar.title(f"👤 Zalogowany: {st.session_state.zalogowany_uzytkownik}")
 if st.sidebar.button("🚪 Wyloguj"):
@@ -4794,7 +4817,7 @@ menu_glowne = st.sidebar.radio(
 )
 
 # ==============================================================================
-# STRONA GŁÓWNA
+# 7. STRONA GŁÓWNA
 # ==============================================================================
 if menu_glowne == "🏠 Strona Główna":
     st.markdown("<div class='main-header'>Witaj w Aplikacji Testowej</div>", unsafe_allow_html=True)
@@ -4869,7 +4892,7 @@ if menu_glowne == "🏠 Strona Główna":
         """, unsafe_allow_html=True)
 
 # ==============================================================================
-# TESTY I NAUKA
+# 8. TESTY I NAUKA
 # ==============================================================================
 elif menu_glowne == "🎮 Testy i Nauka":
     if st.session_state.wybrana_baza is None and st.session_state.aktywny_tryb is None:
@@ -5041,7 +5064,7 @@ elif menu_glowne == "🎮 Testy i Nauka":
                 st.rerun()
 
 # ==============================================================================
-# DODAJ PYTANIE
+# 9. DODAJ PYTANIE
 # ==============================================================================
 elif menu_glowne == "➕ Dodaj Pytanie":
     st.markdown("<div class='main-header'>Dodaj nowe pytanie do bazy</div>", unsafe_allow_html=True)
@@ -5083,7 +5106,7 @@ elif menu_glowne == "➕ Dodaj Pytanie":
                 st.error("Uzupełnij pola i wybierz co najmniej jedną poprawną odpowiedź!")
 
 # ==============================================================================
-# PRZEGLĄD BAZY
+# 10. PRZEGLĄD BAZY
 # ==============================================================================
 elif menu_glowne == "🔍 Przegląd Bazy":
     st.markdown("<div class='main-header'>Przegląd Bazy Pytań</div>", unsafe_allow_html=True)
@@ -5101,7 +5124,7 @@ elif menu_glowne == "🔍 Przegląd Bazy":
                 st.info(f"Artykuł: {item['tresc_artykulu']}")
 
 # ==============================================================================
-# PANEL ADMINISTRATORA
+# 11. PANEL ADMINISTRATORA
 # ==============================================================================
 elif menu_glowne == "🔑 Panel Administratora":
     st.markdown("<div class='main-header'>🔑 Panel Administratora</div>", unsafe_allow_html=True)
@@ -5203,7 +5226,7 @@ elif menu_glowne == "🔑 Panel Administratora":
                         st.error("Pola pytania/odpowiedzi nie mogą być puste, oraz co najmniej jedna odpowiedź musi być zaznaczona jako poprawna!")
 
 # ==============================================================================
-# USTAWIENIA I MOTYW
+# 12. USTAWIENIA I MOTYW
 # ==============================================================================
 elif menu_glowne == "⚙️ Ustawienia / Motyw":
     st.markdown("<div class='main-header'>Ustawienia i Personalizacja</div>", unsafe_allow_html=True)
@@ -5216,7 +5239,8 @@ elif menu_glowne == "⚙️ Ustawienia / Motyw":
     nowy_motyw = st.radio(
         "Wybierz preferowany motyw:",
         opcje_motywu,
-        index=wybrany_index
+        index=wybrany_index,
+        key="settings_theme_radio"
     )
 
     if nowy_motyw != st.session_state.theme:

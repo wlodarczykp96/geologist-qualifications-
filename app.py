@@ -4619,7 +4619,7 @@ def aktualizuj_pamiec_sesji(user=None, theme=None):
         st.query_params["theme"] = theme
 
 # ==============================================================================
-# 3. GLOBALNY MOTYW CSS (Z NAPRAWIONYM DROPDOWNEM / SELECTBOX)
+# 3. GLOBALNY MOTYW CSS (PRZYWRÓCENIE KONTRASTU W DROPDOWNIE)
 # ==============================================================================
 if st.session_state.theme == "Jasny":
     bg_main = "#f8f9fa"
@@ -4629,9 +4629,8 @@ if st.session_state.theme == "Jasny":
     btn_bg = "#ffffff"
     btn_text = "#111827"
     btn_border = "#cccccc"
-    dropdown_bg = "#ffffff"
-    dropdown_text = "#111827"
-    dropdown_hover = "#f3f4f6"
+    box_bg = "#ffffff"
+    box_text = "#111827"
 else:
     bg_main = "#0e1117"
     bg_sec = "#161b22"
@@ -4640,9 +4639,8 @@ else:
     btn_bg = "#21262d"
     btn_text = "#ffffff"
     btn_border = "#363b42"
-    dropdown_bg = "#161b22"
-    dropdown_text = "#ffffff"
-    dropdown_hover = "#262c36"
+    box_bg = "#21262d"
+    box_text = "#ffffff"
 
 st.markdown(f"""
 <style>
@@ -4654,9 +4652,8 @@ st.markdown(f"""
         --btn-bg: {btn_bg};
         --btn-text: {btn_text};
         --btn-border: {btn_border};
-        --dropdown-bg: {dropdown_bg};
-        --dropdown-text: {dropdown_text};
-        --dropdown-hover: {dropdown_hover};
+        --box-bg: {box_bg};
+        --box-text: {box_text};
     }}
 
     html, body, .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {{
@@ -4674,7 +4671,12 @@ st.markdown(f"""
         color: var(--text-main) !important;
     }}
 
-    /* Przyciski */
+    /* Globalna czyszczenie tła dla wszystkich rozwijanych nakładek (Popovers) */
+    div[data-baseweb="popover"] *, div[data-baseweb="menu"] *, ul[role="listbox"] * {{
+        background-color: var(--box-bg) !important;
+        color: var(--box-text) !important;
+    }}
+
     div.stButton > button {{
         background-color: var(--btn-bg) !important;
         color: var(--btn-text) !important;
@@ -4699,28 +4701,6 @@ st.markdown(f"""
         color: #ffffff !important;
     }}
 
-    /* NAPRAWA ROZWIJANYCH LIST (SELECTBOX / BASEWEB) */
-    div[data-baseweb="select"] > div {{
-        background-color: var(--dropdown-bg) !important;
-        color: var(--dropdown-text) !important;
-        border-color: var(--border-color) !important;
-    }}
-
-    /* Style dla otwartej listy rozwijanej (Popover) */
-    div[data-baseweb="popover"], 
-    div[data-baseweb="menu"], 
-    ul[role="listbox"], 
-    li[role="option"] {{
-        background-color: var(--dropdown-bg) !important;
-        color: var(--dropdown-text) !important;
-    }}
-
-    li[role="option"]:hover, li[aria-selected="true"] {{
-        background-color: var(--dropdown-hover) !important;
-        color: var(--dropdown-text) !important;
-    }}
-
-    /* Inputy tekstu */
     input, textarea {{
         background-color: var(--bg-sec) !important;
         color: var(--text-main) !important;
@@ -4830,14 +4810,14 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
     st.session_state.statystyki[user].append(wpis)
 
 # ==============================================================================
-# 5. LOGOWANIE
+# 5. LOGOWANIE (PRZEŁĄCZONE NA ST.RADIO DLA BEZPROBLEMOWEGO WIDOKU)
 # ==============================================================================
 if st.session_state.zalogowany_uzytkownik is None:
     st.markdown("<div class='main-header'>🔒 Logowanie do Aplikacji Testowej</div>", unsafe_allow_html=True)
     
     col_login, _ = st.columns([1, 1])
     with col_login:
-        wybrany_user = st.selectbox("Wybierz użytkownika:", list(USERS_PIN.keys()))
+        wybrany_user = st.radio("Wybierz użytkownika:", list(USERS_PIN.keys()), horizontal=True)
         wymaga_pin = USERS_PIN[wybrany_user] is not None
         
         if wymaga_pin:
@@ -5141,7 +5121,7 @@ elif menu_glowne == "🎮 Testy i Nauka":
 # ==============================================================================
 elif menu_glowne == "➕ Dodaj Pytanie":
     st.markdown("<div class='main-header'>Dodaj nowe pytanie do bazy</div>", unsafe_allow_html=True)
-    baza_docelowa = st.selectbox("Wybierz bazę:", list(st.session_state.bazy.keys()))
+    baza_docelowa = st.radio("Wybierz bazę:", list(st.session_state.bazy.keys()))
 
     with st.form("form_dodaj"):
         tresc = st.text_area("Treść pytania:")
@@ -5183,7 +5163,7 @@ elif menu_glowne == "➕ Dodaj Pytanie":
 # ==============================================================================
 elif menu_glowne == "🔍 Przegląd Bazy":
     st.markdown("<div class='main-header'>Przegląd Bazy Pytań</div>", unsafe_allow_html=True)
-    wybrana = st.selectbox("Wybierz część:", list(st.session_state.bazy.keys()))
+    wybrana = st.radio("Wybierz część:", list(st.session_state.bazy.keys()), horizontal=True)
     
     for item in st.session_state.bazy[wybrana]:
         with st.expander(f"ID {item['id']}: {item['pytanie'][:80]}..."):
@@ -5244,14 +5224,14 @@ elif menu_glowne == "🔑 Panel Administratora":
             st.markdown("---")
 
         st.subheader("✏️ Edycja oraz zarządzanie pytaniami w bazie")
-        wybrana_baza_admin = st.selectbox("Wybierz część bazy do edycji:", list(st.session_state.bazy.keys()), key="admin_baza_select")
+        wybrana_baza_admin = st.radio("Wybierz część bazy do edycji:", list(st.session_state.bazy.keys()), key="admin_baza_select", horizontal=True)
         lista_pytan = st.session_state.bazy[wybrana_baza_admin]
 
         if not lista_pytan:
             st.warning("Wybrana baza nie posiada żadnych pytań.")
         else:
             opcje_pytan = [f"ID {p['id']}: {p['pytanie'][:60]}..." for p in lista_pytan]
-            wybrane_pytanie_str = st.selectbox("Wybierz pytanie do edycji/usunięcia:", opcje_pytan)
+            wybrane_pytanie_str = st.radio("Wybierz pytanie do edycji/usunięcia:", opcje_pytan)
             
             pytanie_idx = opcje_pytan.index(wybrane_pytanie_str)
             p = lista_pytan[pytanie_idx]

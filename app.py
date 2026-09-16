@@ -4595,80 +4595,107 @@ if 'test_zakonczony' not in st.session_state:
 # ==============================================================================
 css_base = """
 <style>
-    /* Elastyczne dopasowanie do systemowego lub wybranego koloru tekstu */
-    html, body, [data-testid="stAppViewContainer"] {
-        color: var(--text-color) !important;
-    }
-    
-    /* Naprawa widoczności w checkboxach i formularzach mobilnych */
-    [data-testid="stCheckbox"] label, [data-testid="stWidgetLabel"] p {
-        color: var(--text-color) !important;
-    }
-
-    /* Dopasowanie formularzy i inputów */
-    input, textarea, select {
-        color: var(--text-color) !important;
-        background-color: var(--secondary-background-color) !important;
+    /* 1. Domyślne motywy w oparciu o preferences systemowe urządzenia */
+    @media (prefers-color-scheme: light) {
+        :root {
+            --bg-main: #ffffff;
+            --bg-sec: #f8f9fa;
+            --text-main: #111827;
+            --border-color: rgba(0, 0, 0, 0.15);
+        }
     }
 
-    /* Boks z pytaniem */
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --bg-main: #0e1117;
+            --bg-sec: #161b22;
+            --text-main: #ffffff;
+            --border-color: rgba(255, 255, 255, 0.15);
+        }
+    }
+
+    /* 2. Globalna aplikacja - płynna zmiana kolorów bez !important */
+    html, body, .stApp, [data-testid="stAppViewContainer"] {
+        background-color: var(--bg-main);
+        color: var(--text-main);
+    }
+
+    /* 3. Naprawa tekstu w formularzach i checkboxach mobilnych */
+    [data-testid="stCheckbox"] p, 
+    [data-testid="stWidgetLabel"] p, 
+    label, p, span, h1, h2, h3, h4, h5, h6 {
+        color: var(--text-main) !important;
+    }
+
+    input, textarea, select, [data-baseweb="select"] {
+        background-color: var(--bg-sec) !important;
+        color: var(--text-main) !important;
+    }
+
+    /* Customowe komponenty bazy */
     .question-box {
-        background-color: var(--secondary-background-color);
+        background-color: var(--bg-sec);
         padding: 18px;
         border-radius: 8px;
-        border: 1px solid rgba(128, 128, 128, 0.2);
+        border: 1px solid var(--border-color);
         margin-bottom: 15px;
-        color: var(--text-color) !important;
-    }
-    .question-box h3, .question-box p {
-        color: var(--text-color) !important;
     }
 
-    /* Boks prawny */
     .legal-box {
         background-color: rgba(13, 110, 253, 0.1);
         padding: 15px;
         border-radius: 8px;
         border-left: 4px solid #0d6efd;
-        margin-top: 15px;
-        margin-bottom: 15px;
-        color: var(--text-color) !important;
-    }
-    .legal-box * {
-        color: var(--text-color) !important;
+        margin: 15px 0;
     }
 
-    /* Nagłówek główny */
     .main-header {
         font-size: 22px;
         font-weight: bold;
-        color: var(--text-color) !important;
-        border-bottom: 2px solid rgba(128, 128, 128, 0.2);
+        border-bottom: 2px solid var(--border-color);
         padding-bottom: 8px;
         margin-bottom: 15px;
     }
 
-    /* Karty na stronie głównej */
     .card-blue, .card-yellow, .card-green, .card-red {
         padding: 20px;
         border-radius: 8px;
         height: 160px;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
         margin-bottom: 15px;
-        box-sizing: border-box;
     }
     .card-blue { background-color: rgba(13, 110, 253, 0.15); border: 1px solid rgba(13, 110, 253, 0.3); }
     .card-yellow { background-color: rgba(255, 193, 7, 0.15); border: 1px solid rgba(255, 193, 7, 0.3); }
     .card-green { background-color: rgba(25, 135, 84, 0.15); border: 1px solid rgba(25, 135, 84, 0.3); }
     .card-red { background-color: rgba(220, 53, 69, 0.15); border: 1px solid rgba(220, 53, 69, 0.3); }
-
-    .card-blue *, .card-yellow *, .card-green *, .card-red * {
-        color: var(--text-color) !important;
-    }
 </style>
 """
+
+# Ręczne nadpisanie (działa tylko, gdy w panelu nie jest wybrane "Auto")
+css_override = ""
+if st.session_state.theme == "Jasny":
+    css_override = """
+    <style>
+        :root {
+            --bg-main: #ffffff !important;
+            --bg-sec: #f8f9fa !important;
+            --text-main: #111827 !important;
+            --border-color: rgba(0, 0, 0, 0.15) !important;
+        }
+    </style>
+    """
+elif st.session_state.theme == "Ciemny":
+    css_override = """
+    <style>
+        :root {
+            --bg-main: #0e1117 !important;
+            --bg-sec: #161b22 !important;
+            --text-main: #ffffff !important;
+            --border-color: rgba(255, 255, 255, 0.15) !important;
+        }
+    </style>
+    """
+
+st.markdown(css_base + css_override, unsafe_allow_html=True)
 
 # Dynamiczne sterowanie motywem Jasny / Ciemny
 if st.session_state.theme == "Jasny":

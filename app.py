@@ -55,7 +55,6 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
         
     st.session_state.statystyki[user].append(wpis)
     
-    # Wysyłanie do GitHub API
     try:
         if "GITHUB_TOKEN" not in st.secrets or "GITHUB_REPO" not in st.secrets:
             st.error("❌ Brak kluczy GITHUB_TOKEN lub GITHUB_REPO w Streamlit Secrets!")

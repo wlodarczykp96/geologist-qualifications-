@@ -683,13 +683,13 @@ elif menu_glowne == "🎮 Testy i Nauka":
                         1 for i, q in enumerate(lista)
                 if set(st.session_state.odpowiedzi_egzamin.get(i, [])) == set(q["poprawne"])
             )
-            
-                        zapisz_wynik_egzaminu(
-                        st.session_state.zalogowany_uzytkownik,
-                        st.session_state.aktywny_tryb,
-                        st.session_state.wybrana_baza,
-                        punkty,
-                        len(lista)
+                    zapisz_wynik_egzaminu(
+                    st.session_state.zalogowany_uzytkownik,
+                    st.session_state.aktywny_tryb,
+                    st.session_state.wybrana_baza,
+                    punkty,
+                    len(lista)
+)
                     )
         else:
             st.balloons()

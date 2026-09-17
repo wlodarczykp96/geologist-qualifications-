@@ -452,7 +452,7 @@ elif menu_glowne == "🎮 Testy i Nauka":
             start_sesji("Egzamin (Losowo – 50 pytań)", "Cała baza (wszystkie pytania)", limit_pytan=50, tylko_wielokrotne=False)
             st.rerun()
 
-        if st.button("🎯 UUruchom Egzamin WIELOKTOTNEGO WYBROU (1/2) (Wszystkie pytania | 50 pytań / 30 min)", use_container_width=True):
+        if st.button("🎯 Uruchom Egzamin WIELOKTOTNEGO WYBROU (1/2) (Wszystkie pytania | 50 pytań / 30 min)", use_container_width=True):
             st.session_state.wybrana_baza = "Cała baza (wszystkie pytania)"
             start_sesji("Egzamin (Losowo – 50 pytań)", "Cała baza (wszystkie pytania)", limit_pytan=50, tylko_wielokrotne=True)
             st.rerun()
@@ -479,11 +479,11 @@ elif menu_glowne == "🎮 Testy i Nauka":
         col_w1, col_w2 = st.columns(2)
         
         with col_w1:
-            st.markdown("### 🌐 Pytania z WIELOKROTYM WYBOREM (1/2/3)")
+            st.markdown("### 🌐 Pytania z WIELOKROTNYM WYBOREM (1/2/3)")
             if st.button("Tryb Nauki (Kolejno)", key="n_w_k", use_container_width=True):
                 start_sesji("Tryb Nauki (Wszystkie – Kolejno)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=False)
                 st.rerun()
-           if st.button("Tryb Nauki (Losowo – 30 pytań)", key="n_w_l", use_container_width=True):
+            if st.button("Tryb Nauki (Losowo – 30 pytań)", key="n_w_l", use_container_width=True):
                 start_sesji("Tryb Nauki (Losowo – 30 pytań)", nazwa_bary, limit_pytan=30, tylko_wielokrotne=False)
                 st.rerun()
             if st.button("Egzamin (Losowo – 30 pytań)", key="e_w_l", use_container_width=True):
@@ -491,14 +491,13 @@ elif menu_glowne == "🎮 Testy i Nauka":
                 st.rerun()
 
         with col_w2:
-            st.markdown("### 🎯 Pytania z WIELOKROTNYM WYBOREM (1/2))
+            st.markdown("### 🎯 Pytania z WIELOKROTNYM WYBOREM (1/2)")
             if st.button("Tryb Nauki (Kolejno)", key="n_f_k", use_container_width=True):
                 start_sesji("Tryb Nauki (Kolejno)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=True)
                 st.rerun()
-          if st.button("Tryb Nauki (Losowo – 30 pytań)", key="n_f_l", use_container_width=True):
+            if st.button("Tryb Nauki (Losowo – 30 pytań)", key="n_f_l", use_container_width=True):
                 start_sesji("Tryb Nauki (Losowo – 30 pytań)", nazwa_bary, limit_pytan=30, tylko_wielokrotne=True)
                 st.rerun()
-           
             if st.button("Egzaminu (Losowo – 30 pytań)", key="e_f_l", use_container_width=True):
                 start_sesji("Egzaminu (Losowo – 30 pytań)", nazwa_bary, limit_pytan=30, tylko_wielokrotne=True)
                 st.rerun()

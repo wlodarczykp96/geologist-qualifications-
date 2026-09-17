@@ -7,6 +7,26 @@ import streamlit.components.v1 as components
 # HASŁO ADMINISTRATORA
 # ==============================================================================
 ADMIN_PASSWORD = "admin123"
+PLIK_STATYSTYK = "statystyki.json"
+
+# ==============================================================================
+# FUNKCJE DO OBSŁUGI TRWAŁYCH STATYSTYK (JSON)
+# ==============================================================================
+def wczytaj_statystyki():
+    if os.path.exists(PLIK_STATYSTYK):
+        try:
+            with open(PLIK_STATYSTYK, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except:
+            pass
+    return {"Piotrek": [], "Edyta": [], "Gość": []}
+
+def zapisz_statystyki_do_pliku(stats):
+    try:
+        with open(PLIK_STATYSTYK, "w", encoding="utf-8") as f:
+            json.dump(stats, f, ensure_ascii=False, indent=4)
+    except:
+        pass
 
 # ==============================================================================
 # INICJALIZACJA STANUSESSION I MOTYWÓW
@@ -46,11 +66,7 @@ if 'admin_logged_in' not in st.session_state:
     st.session_state.admin_logged_in = False
 
 if 'statystyki' not in st.session_state:
-    st.session_state.statystyki = {
-        "Piotrek": [],
-        "Edyta": [],
-        "Gość": []
-    }
+    st.session_state.statystyki = wczytaj_statystyki()
 
 if 'wybrana_baza' not in st.session_state:
     st.session_state.wybrana_baza = None
@@ -70,19 +86,7 @@ if 'test_zakonczony' not in st.session_state:
     st.session_state.test_zakonczony = False
 
 if 'bazy' not in st.session_state:
-    st.session_state.bazy = {
-        "Dział I - Przepisy ogólne": [
-            {
-                "id": 1,
-                "pytanie": "Kto jest właścicielem kopalin podstawowych określonych w ustawie?",
-                "odpowiedzi": {"A": "Skarb Państwa", "B": "Gmina właściwa miejscowo", "C": "Właściciel gruntu"},
-                "poprawne": ["A"],
-                "podstawa_prawna": "Art. 10 ust. 1 Ustawy - Prawo geologiczne i górnicze",
-                "tresc_artykulu": "Złoża kopalin... stanowią własność Skarbu Państwa."
-            }
-        ],
-        "Dział II - Koncesje": []
-    }
+    st.session_state.bazy = BAZY_PYTAN
 
 def aktualizuj_pamiec_sesji(user=None, theme=None):
     if user is not None:
@@ -154,19 +158,6 @@ st.markdown(f"""
         border-color: var(--border-color) !important;
     }}
 
-    div[data-baseweb="popover"], div[data-baseweb="menu"], ul[role="listbox"] {{
-        background-color: var(--box-bg) !important;
-    }}
-
-    li[role="option"] {{
-        background-color: var(--box-bg) !important;
-        color: var(--box-text) !important;
-    }}
-
-    li[role="option"]:hover {{
-        background-color: rgba(255, 75, 75, 0.2) !important;
-    }}
-
     div.stButton > button {{
         background-color: var(--btn-bg) !important;
         color: var(--btn-text) !important;
@@ -211,15 +202,6 @@ st.markdown(f"""
         margin-bottom: 15px;
     }}
 
-    .legal-box {{
-        background-color: var(--bg-sec) !important;
-        padding: 15px;
-        border-radius: 8px;
-        border-left: 4px solid #0d6efd;
-        margin: 15px 0;
-        border: 1px solid var(--border-color);
-    }}
-
     .main-header {{
         font-size: 22px;
         font-weight: bold;
@@ -244,7 +226,7 @@ st.markdown(f"""
 # ==============================================================================
 # 4. FUNKCJE POMOCNICZE
 # ==============================================================================
-def pobierz_pytania_z_bazy(nazwa_bazy, tylko_1_lub_2=False):
+def pobierz_pytania_z_bazy(nazwa_bazy, tylko_wielokrotne=False):
     if nazwa_bazy == "Cała baza (wszystkie pytania)":
         pula = []
         for b in st.session_state.bazy.values():
@@ -252,18 +234,18 @@ def pobierz_pytania_z_bazy(nazwa_bazy, tylko_1_lub_2=False):
     else:
         pula = list(st.session_state.bazy.get(nazwa_bazy, []))
     
-    if tylko_1_lub_2:
-        return [p for p in pula if len(p.get("poprawne", [])) in [1, 2]]
+    if tylko_wielokrotne:
+        return [p for p in pula if len(p.get("poprawne", [])) > 1]
     return pula
 
-def start_sesji(tryb, baza_nazwa, limit_pytan=None, tylko_1_lub_2=False):
+def start_sesji(tryb, baza_nazwa, limit_pytan=None, tylko_wielokrotne=False):
     st.session_state.aktywny_tryb = tryb
     st.session_state.indeks = 0
     st.session_state.sprawdzono_odpowiedz = False
     st.session_state.odpowiedzi_egzamin = {}
     st.session_state.test_zakonczony = False
     
-    pula = pobierz_pytania_z_bazy(baza_nazwa, tylko_1_lub_2=tylko_1_lub_2)
+    pula = pobierz_pytania_z_bazy(baza_nazwa, tylko_wielokrotne=tylko_wielokrotne)
     
     if "Losowo" in tryb or "Egzamin" in tryb:
         random.shuffle(pula)
@@ -283,6 +265,7 @@ def powrot_do_wyboru():
     st.session_state.sprawdzono_odpowiedz = False
     st.session_state.test_zakonczony = False
     st.session_state.czas_konca = None
+    st.session_state.odpowiedzi_egzamin = {}
 
 def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
     procent = (punkty / max_punkty) * 100 if max_punkty > 0 else 0
@@ -299,7 +282,11 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
     
     if user not in st.session_state.statystyki:
         st.session_state.statystyki[user] = []
-    st.session_state.statystyki[user].append(wpis)
+        
+    # Zapobiegaj wielokrotnemu zapisywaniu dokładnie tego samego wyniku w jednej sesji
+    if not st.session_state.statystyki[user] or st.session_state.statystyki[user][-1] != wpis:
+        st.session_state.statystyki[user].append(wpis)
+        zapisz_statystyki_do_pliku(st.session_state.statystyki)
 
 # ==============================================================================
 # 5. EKRAN LOGOWANIA
@@ -504,42 +491,102 @@ elif menu_glowne == "🎮 Testy i Nauka":
             st.rerun()
 
         st.markdown("---")
+        
+        # Ekran trwania testu/nauki
         if idx < len(lista) and not st.session_state.test_zakonczony:
             p = lista[idx]
             st.markdown(f"**Pytanie {idx + 1} z {len(lista)}** (ID: {p['id']})")
             st.markdown(f"<div class='question-box'><h3>{p['pytanie']}</h3></div>", unsafe_allow_html=True)
 
+            domyslne_zaznaczenia = st.session_state.odpowiedzi_egzamin.get(idx, [])
+
             with st.form(key=f"form_pyt_{idx}"):
                 wybrane = []
                 for k, v in p["odpowiedzi"].items():
-                    if st.checkbox(f"**{k}**: {v}", key=f"cb_{idx}_{k}"):
+                    czy_zaznaczone = k in domyslne_zaznaczenia
+                    if st.checkbox(f"**{k}**: {v}", value=czy_zaznaczone, key=f"cb_{idx}_{k}"):
                         wybrane.append(k)
-                zatwierdz = st.form_submit_button("Zatwierdź / Sprawdź")
+                zatwierdz = st.form_submit_button("Zatwierdź odpowiedź")
 
             if zatwierdz:
+                st.session_state.odpowiedzi_egzamin[idx] = wybrane
                 st.session_state.sprawdzono_odpowiedz = True
 
             if st.session_state.sprawdzono_odpowiedz:
                 poprawne = set(p["poprawne"])
                 zaznaczone = set(wybrane)
                 if zaznaczone == poprawne:
-                    st.success("✅ Poprawna odpowiedź!")
+                    st.success("✅ Twoja odpowiedź jest poprawna!")
                 else:
-                    st.error(f"❌ Błąd! Poprawne odpowiedzi to: {', '.join(p['poprawne'])}")
+                    st.error(f"❌ Twoja odpowiedź jest błędna. Poprawne to: {', '.join(p['poprawne'])}")
 
-                st.info(f"Podstawa prawna: {p.get('podstawa_prawna', 'Brak')} \n\n {p.get('tresc_artykulu', '')}")
+                st.info(f"**Podstawa prawna:** {p.get('podstawa_prawna', 'Brak')} \n\n {p.get('tresc_artykulu', '')}")
 
-            if st.button("Następne pytanie ➡️"):
+            col_btn1, col_btn2 = st.columns(2)
+            with col_btn1:
+                if idx > 0:
+                    if st.button("⬅️ Poprzednie pytanie"):
+                        st.session_state.indeks -= 1
+                        st.session_state.sprawdzono_odpowiedz = (idx - 1) in st.session_state.odpowiedzi_egzamin
+                        st.rerun()
+            with col_btn2:
                 if idx < len(lista) - 1:
-                    st.session_state.indeks += 1
-                    st.session_state.sprawdzono_odpowiedz = False
-                    st.rerun()
+                    if st.button("Następne pytanie ➡️"):
+                        st.session_state.indeks += 1
+                        st.session_state.sprawdzono_odpowiedz = st.session_state.indeks in st.session_state.odpowiedzi_egzamin
+                        st.rerun()
                 else:
-                    st.session_state.test_zakonczony = True
-                    st.rerun()
+                    if st.button("🏁 Zakończ i zobacz wynik", type="primary"):
+                        st.session_state.test_zakonczony = True
+                        st.rerun()
+
+        # Ekran podsumowania po zakończeniu testu / egzaminu
         else:
-            st.success("🎉 Koniec testu!")
-            if st.button("Rozpocznij od nowa"):
+            st.markdown("<div class='main-header'>📋 Podsumowanie Wyników Testu</div>", unsafe_allow_html=True)
+            
+            punkty = 0
+            max_punkty = len(lista)
+            
+            for i, p in enumerate(lista):
+                odp_uzytkownika = set(st.session_state.odpowiedzi_egzamin.get(i, []))
+                poprawne_odpowiedzi = set(p["poprawne"])
+                if odp_uzytkownika == poprawne_odpowiedzi:
+                    punkty += 1
+
+            procent = (punkty / max_punkty) * 100 if max_punkty > 0 else 0
+            
+            col_m1, col_m2 = st.columns(2)
+            col_m1.metric("Wynik punktowy", f"{punkty} / {max_punkty}")
+            col_m2.metric("Skuteczność", f"{procent:.1f}%")
+            
+            # Zapis do trwałego pliku statystyk
+            zapisz_wynik_egzaminu(
+                user=st.session_state.zalogowany_uzytkownik,
+                tryb=st.session_state.aktywny_tryb,
+                baza=st.session_state.wybrana_baza,
+                punkty=punkty,
+                max_punkty=max_punkty
+            )
+
+            st.markdown("---")
+            st.subheader("🔍 Szczegółowy przegląd odpowiedzi:")
+
+            for i, p in enumerate(lista):
+                odp_uzytkownika = sorted(st.session_state.odpowiedzi_egzamin.get(i, []))
+                poprawne_odpowiedzi = sorted(p["poprawne"])
+                czy_ok = (set(odp_uzytkownika) == set(poprawne_odpowiedzi))
+                
+                status_ikonka = "✅" if czy_ok else "❌"
+                
+                with st.expander(f"{status_ikonka} Pytanie {i+1}: {p['pytanie']}"):
+                    st.write(f"**Twoja odpowiedź:** {', '.join(odp_uzytkownika) if odp_uzytkownika else 'Brak odpowiedzi'}")
+                    st.write(f"**Poprawna odpowiedź:** {', '.join(poprawne_odpowiedzi)}")
+                    st.markdown(f"**Podstawa prawna:** {p.get('podstawa_prawna', 'Brak')}")
+                    if p.get('tresc_artykulu'):
+                        st.markdown(f"> *{p.get('tresc_artykulu')}*")
+
+            st.write("")
+            if st.button("🔄 Rozpocznij nowy test", type="primary", use_container_width=True):
                 powrot_do_wyboru()
                 st.rerun()
 
@@ -591,13 +638,13 @@ elif menu_glowne == "➕ Dodaj Pytanie":
 elif menu_glowne == "🔍 Przegląd Bazy":
     st.markdown("<div class='main-header'>Przegląd Bazy Pytań</div>", unsafe_allow_html=True)
     
-    opcje_przegladu = ["Cała baza (wszystkie pytania)", "Cała baza (tylko 1 lub 2 poprawne)"] + list(st.session_state.bazy.keys())
+    opcje_przegladu = ["Cała baza (wszystkie pytania)", "Cała baza (tylko wielokrotne)"] + list(st.session_state.bazy.keys())
     wybrana = st.radio("Wybierz bazę do przeglądu:", opcje_przegladu, horizontal=True)
     
     if wybrana == "Cała baza (wszystkie pytania)":
-        lista_do_wyswietlenia = pobierz_pytania_z_bazy("Cała baza (wszystkie pytania)", tylko_1_lub_2=False)
-    elif wybrana == "Cała baza (tylko 1 lub 2 poprawne)":
-        lista_do_wyswietlenia = pobierz_pytania_z_bazy("Cała baza (wszystkie pytania)", tylko_1_lub_2=True)
+        lista_do_wyswietlenia = pobierz_pytania_z_bazy("Cała baza (wszystkie pytania)", tylko_wielokrotne=False)
+    elif wybrana == "Cała baza (tylko wielokrotne)":
+        lista_do_wyswietlenia = pobierz_pytania_z_bazy("Cała baza (wszystkie pytania)", tylko_wielokrotne=True)
     else:
         lista_do_wyswietlenia = st.session_state.bazy[wybrana]
         
@@ -625,7 +672,7 @@ elif menu_glowne == "🔑 Panel Administratora":
             pass_input = st.text_input("Podaj hasło administratora:", type="password")
             btn_login = st.form_submit_button("Zaloguj się")
             if btn_login:
-                if pass_input == "admin123":
+                if pass_input == ADMIN_PASSWORD:
                     st.session_state.admin_logged_in = True
                     st.success("Pomyślnie zalogowano do Panelu Administratora!")
                     st.rerun()

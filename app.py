@@ -33,9 +33,31 @@ def wczytaj_json(sciezka, domyslne):
             return domyslne
     return domyslne
 
-def zapisz_json(sciezka, dane):
-    with open(sciezka, "w", encoding="utf-8") as f:
-        json.dump(dane, f, ensure_ascii=False, indent=4)
+def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
+    # Zabezpieczenie przed wielokrotnym zapisem w tej samej sesji
+    if st.session_state.get("zapisano_ten_egzamin", False):
+        return
+
+    procent = (punkty / max_punkty) * 100 if max_punkty > 0 else 0
+    zdane = procent >= 75.0
+    
+    wpis = {
+        'data': datetime.date.today().strftime("%Y-%m-%d"),
+        'tryb': tryb,
+        'baza': baza if baza else "Wszystkie",
+        'zdane': zdane,
+        'wynik_str': f"{punkty}/{max_punkty}",
+        'procent': procent
+    }
+    
+    if user not in st.session_state.statystyki:
+        st.session_state.statystyki[user] = []
+    
+    st.session_state.statystyki[user].append(wpis)
+    zapisz_json(PLIK_STATYSTYK, st.session_state.statystyki)
+
+    st.session_state.zapisano_ten_egzamin = True
+    
 # ==============================================================================
 # 3. MECHANIZM TRWAŁEJ SESJI I INICJALIZACJA
 # ==============================================================================

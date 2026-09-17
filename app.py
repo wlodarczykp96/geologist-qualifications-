@@ -33,9 +33,9 @@ def wczytaj_json(sciezka, domyslne):
             return domyslne
     return domyslne
 
-def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
-    # Zabezpieczenie przed wielokrotnym zapisem w tej samej sesji
-    if st.session_state.get("zapisano_ten_egzamin", False):
+ef zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
+    # Zabezpieczenie przed zduplikowanym zapisem tego samego egzaminu
+    if st.session_state.get("ostatnio_zapisany_id") == st.session_state.get("id_obecnej_sesji"):
         return
 
     procent = (punkty / max_punkty) * 100 if max_punkty > 0 else 0
@@ -56,7 +56,7 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
     st.session_state.statystyki[user].append(wpis)
     zapisz_json(PLIK_STATYSTYK, st.session_state.statystyki)
 
-    st.session_state.zapisano_ten_egzamin = True
+    st.session_state.ostatnio_zapisany_id = st.session_state.get("id_obecnej_sesji")
     
 # ==============================================================================
 # 3. MECHANIZM TRWAŁEJ SESJI I INICJALIZACJA
@@ -274,16 +274,15 @@ def pobierz_pytania_z_bazy(nazwa_bazy, tylko_wielokrotne=False):
     return pula
 
 def start_sesji(tryb, baza_nazwa, limit_pytan=None, tylko_wielokrotne=False):
-    st.session_state.zapisano_ten_egzamin = False 
     st.session_state.aktywny_tryb = tryb
     st.session_state.indeks = 0
     st.session_state.sprawdzono_odpowiedz = False
     st.session_state.odpowiedzi_egzamin = {}
     st.session_state.test_zakonczony = False
+    st.session_state.id_obecnej_sesji = time.time()  # Unikalny identyfikator nowej sesji
     
     pula = pobierz_pytania_z_bazy(baza_nazwa, tylko_wielokrotne=tylko_wielokrotne)
     
-    # Mieszanie wywoła się dla każdego trybu z słowem "Losowo" lub "Egzamin"
     if "Losowo" in tryb or "Egzamin" in tryb:
         random.shuffle(pula)
     if limit_pytan:

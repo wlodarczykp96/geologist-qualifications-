@@ -608,6 +608,19 @@ elif menu_glowne == "🎮 Testy i Nauka":
                 else:
                     if st.button("🏁 Zakończ Test / Egzamin"):
                         st.session_state.test_zakonczony = True
+                        
+                        if "Egzamin" in st.session_state.aktywny_tryb:
+                            punkty = sum(
+                                1 for i, q in enumerate(lista) 
+                                if set(st.session_state.odpowiedzi_egzamin.get(i, [])) == set(q["poprawne"])
+                            )
+                            zapisz_wynik_egzaminu(
+                                st.session_state.zalogowany_uzytkownik,
+                                st.session_state.aktywny_tryb,
+                                st.session_state.wybrana_baza,
+                                punkty,
+                                len(lista)
+                            )
                         st.rerun()
         else:
             st.balloons()
@@ -641,15 +654,7 @@ elif menu_glowne == "🎮 Testy i Nauka":
                 col_res1.metric("Uzyskany wynik", f"{punkty} / {len(lista)}")
                 col_res2.metric("Skuteczność", f"{procent:.1f}%")
                 col_res3.metric("Status egzaminu", "POZYTYWNY (ZDANE)" if zdane else "NEGATYWNY (NIEZDANE)")
-
-                zapisz_wynik_egzaminu(
-                    st.session_state.zalogowany_uzytkownik,
-                    st.session_state.aktywny_tryb,
-                    st.session_state.wybrana_baza,
-                    punkty,
-                    len(lista)
-                )
-
+                
                 st.markdown("---")
                 st.subheader("📝 Szczegółowa Analiza Odpowiedzi")
                 

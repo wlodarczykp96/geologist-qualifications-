@@ -446,19 +446,19 @@ elif menu_glowne == "🎮 Testy i Nauka":
     if st.session_state.wybrana_baza is None and st.session_state.aktywny_tryb is None:
         st.markdown("<div class='main-header'>Wybierz tryb testowy lub bazę pytań</div>", unsafe_allow_html=True)
         
-        st.subheader("📚 Pełne Bazy")
-        if st.button("🚀 Uruchom Egzamin z CAŁEJ BAZY (Wszystkie pytania | 50 pytań / 30 min)", use_container_width=True, type="primary"):
+        st.subheader("📚 PEŁNE BAZY")
+        if st.button("🚀 Uruchom Egzamin WIELOKTOTNEGO WYBROU (1/2/3) (Wszystkie pytania | 50 pytań / 30 min)", use_container_width=True, type="primary"):
             st.session_state.wybrana_baza = "Cała baza (wszystkie pytania)"
-            start_sesji("Tryb Egzaminu z CAŁEJ BAZY (50 pytań / 30 min)", "Cała baza (wszystkie pytania)", limit_pytan=50, tylko_wielokrotne=False)
+            start_sesji("Egzamin (Losowo – 50 pytań)", "Cała baza (wszystkie pytania)", limit_pytan=50, tylko_wielokrotne=False)
             st.rerun()
 
-        if st.button("🎯 Uruchom Egzamin z pytań mających 1 lub 2 poprawne odpowiedzi", use_container_width=True):
+        if st.button("🎯 UUruchom Egzamin WIELOKTOTNEGO WYBROU (1/2) (Wszystkie pytania | 50 pytań / 30 min)", use_container_width=True):
             st.session_state.wybrana_baza = "Cała baza (wszystkie pytania)"
-            start_sesji("Tryb Egzaminu z pytań (1 lub 2 poprawne)", "Cała baza (wszystkie pytania)", limit_pytan=None, tylko_wielokrotne=True)
+            start_sesji("Egzamin (Losowo – 50 pytań)", "Cała baza (wszystkie pytania)", limit_pytan=50, tylko_wielokrotne=True)
             st.rerun()
 
         st.markdown("---")
-        st.subheader("📁 Wybierz Dział Bazy")
+        st.subheader("📁 Wybierz Rozdział Bazy")
         for nazwa_bazy in st.session_state.bazy.keys():
             if st.button(f"📁 {nazwa_bazy}", use_container_width=True):
                 st.session_state.wybrana_baza = nazwa_bazy
@@ -470,8 +470,8 @@ elif menu_glowne == "🎮 Testy i Nauka":
         wielokrotne = pobierz_pytania_z_bazy(nazwa_bary, tylko_wielokrotne=True)
 
         st.markdown(f"**Wybrana baza:** {nazwa_bary}")
-        st.markdown(f"* Wszystkie pytania w bazie: **{len(wszystkie)}**")
-        st.markdown(f"* Pytania z 1 lub 2 poprawnymi odpowiedziami: **{len(wielokrotne)}**")
+        st.markdown(f"* Wszystkie pytania WIELOKTORNEGO WYBORU (1/2/3): **{len(wszystkie)}**")
+        st.markdown(f"* Wszystkie pytania WIELOKTORNEGO WYBORU (1/2) **{len(wielokrotne)}**")
         st.write("")
 
         st.subheader("Wybierz wariant testu:")
@@ -479,29 +479,28 @@ elif menu_glowne == "🎮 Testy i Nauka":
         col_w1, col_w2 = st.columns(2)
         
         with col_w1:
-            st.markdown("### 🌐 Wszystkie Pytania (Niezależnie od liczby poprawnych)")
+            st.markdown("### 🌐 Pytania z WIELOKROTYM WYBOREM (1/2/3)")
             if st.button("Tryb Nauki (Kolejno)", key="n_w_k", use_container_width=True):
                 start_sesji("Tryb Nauki (Wszystkie – Kolejno)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=False)
                 st.rerun()
-            # ZMIANA: Usunięto limit 30 pytań, dodano losowanie wszystkich pytań
-            if st.button("Tryb Nauki (Wszystkie – Losowo)", key="n_w_l", use_container_width=True):
-                start_sesji("Tryb Nauki (Wszystkie – Losowo)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=False)
+           if st.button("Tryb Nauki (Losowo – 30 pytań)", key="n_w_l", use_container_width=True):
+                start_sesji("Tryb Nauki (Losowo – 30 pytań)", nazwa_bary, limit_pytan=30, tylko_wielokrotne=False)
                 st.rerun()
-            if st.button("Tryb Egzaminu (Wszystkie pytania z bazy)", key="e_w_l", use_container_width=True):
-                start_sesji("Tryb Egzaminu (Wszystkie pytania)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=False)
+            if st.button("Egzamin (Losowo – 30 pytań)", key="e_w_l", use_container_width=True):
+                start_sesji("Egzamin (Losowo – 30 pytań)", nazwa_bary, limit_pytan=30, tylko_wielokrotne=False)
                 st.rerun()
 
         with col_w2:
-            st.markdown("### 🎯 Pytania z 1 lub 2 Poprawnymi Odpowiedziami")
+            st.markdown("### 🎯 Pytania z WIELOKROTNYM WYBOREM (1/2))
             if st.button("Tryb Nauki (Kolejno)", key="n_f_k", use_container_width=True):
-                start_sesji("Tryb Nauki (1-2 poprawne – Kolejno)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=True)
+                start_sesji("Tryb Nauki (Kolejno)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=True)
                 st.rerun()
-            # ZMIANA: Usunięto limit 30 pytań również dla tej kolumny
-            if st.button("Tryb Nauki (1-2 poprawne – Losowo)", key="n_f_l", use_container_width=True):
-                start_sesji("Tryb Nauki (1-2 poprawne – Losowo)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=True)
+          if st.button("Tryb Nauki (Losowo – 30 pytań)", key="n_f_l", use_container_width=True):
+                start_sesji("Tryb Nauki (Losowo – 30 pytań)", nazwa_bary, limit_pytan=30, tylko_wielokrotne=True)
                 st.rerun()
-            if st.button("Tryb Egzaminu (Tylko pytania z 1 lub 2 poprawnymi)", key="e_f_l", use_container_width=True):
-                start_sesji("Tryb Egzaminu (1-2 poprawne)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=True)
+           
+            if st.button("Egzaminu (Losowo – 30 pytań)", key="e_f_l", use_container_width=True):
+                start_sesji("Egzaminu (Losowo – 30 pytań)", nazwa_bary, limit_pytan=30, tylko_wielokrotne=True)
                 st.rerun()
         st.write("")
         if st.button("← Powrót do wyboru baz", use_container_width=True):

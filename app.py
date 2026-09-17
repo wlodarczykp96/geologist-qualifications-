@@ -21,20 +21,6 @@ st.set_page_config(
 PLIK_STATYSTYK = "statystyki.json"
 PLIK_BAZY = "baza_danych.json"
 
-DOMYSLNA_BAZA = {
-    "Dział I - Przepisy ogólne": [
-        {
-            "id": 1,
-            "pytanie": "Kto jest właścicielem kopalin podstawowych określonych w ustawie?",
-            "odpowiedzi": {"A": "Skarb Państwa", "B": "Gmina właściwa miejscowo", "C": "Właściciel gruntu"},
-            "poprawne": ["A"],
-            "podstawa_prawna": "Art. 10 ust. 1 Ustawy - Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Złoża kopalin... stanowią własność Skarbu Państwa."
-        }
-    ],
-    "Dział II - Koncesje": []
-}
-
 def wczytaj_json(sciezka, domyslne):
     if os.path.exists(sciezka):
         try:

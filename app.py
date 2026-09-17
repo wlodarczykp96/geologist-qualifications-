@@ -226,9 +226,9 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # ==============================================================================
-# 4. FUNKCJE POMOCNICZE
+# 4. FUNKCJE POMOCNICZE (Filtrowanie dokładnie 2 poprawnych odpowiedzi)
 # ==============================================================================
-def pobierz_pytania_z_bazy(nazwa_bazy, tylko_wielokrotne=False):
+def pobierz_pytania_z_bazy(nazwa_bazy, tylko_dwukrotne=False):
     if nazwa_bazy == "Cała baza (wszystkie pytania)":
         pula = []
         for b in st.session_state.bazy.values():
@@ -236,18 +236,18 @@ def pobierz_pytania_z_bazy(nazwa_bazy, tylko_wielokrotne=False):
     else:
         pula = list(st.session_state.bazy.get(nazwa_bazy, []))
     
-    if tylko_wielokrotne:
-        return [p for p in pula if len(p.get("poprawne", [])) > 1]
+    if tylko_dwukrotne:
+        return [p for p in pula if len(p.get("poprawne", [])) == 2]
     return pula
 
-def start_sesji(tryb, baza_nazwa, limit_pytan=None, tylko_wielokrotne=False):
+def start_sesji(tryb, baza_nazwa, limit_pytan=None, tylko_dwukrotne=False):
     st.session_state.aktywny_tryb = tryb
     st.session_state.indeks = 0
     st.session_state.sprawdzono_odpowiedz = False
     st.session_state.odpowiedzi_egzamin = {}
     st.session_state.test_zakonczony = False
     
-    pula = pobierz_pytania_z_bazy(baza_nazwa, tylko_wielokrotne=tylko_wielokrotne)
+    pula = pobierz_pytania_z_bazy(baza_nazwa, tylko_dwukrotne=tylko_dwukrotne)
     
     if "Losowo" in tryb or "Egzamin" in tryb:
         random.shuffle(pula)
@@ -285,7 +285,6 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
     if user not in st.session_state.statystyki:
         st.session_state.statystyki[user] = []
         
-    # Zapobiegaj wielokrotnemu zapisywaniu dokładnie tego samego wyniku w jednej sesji
     if not st.session_state.statystyki[user] or st.session_state.statystyki[user][-1] != wpis:
         st.session_state.statystyki[user].append(wpis)
         zapisz_statystyki_do_pliku(st.session_state.statystyki)
@@ -439,7 +438,13 @@ elif menu_glowne == "🎮 Testy i Nauka":
         
         if st.button("🚀 Uruchom Egzamin z CAŁEJ BAZY (50 pytań / 30 min)", use_container_width=True, type="primary"):
             st.session_state.wybrana_baza = "Cała baza (wszystkie pytania)"
-            start_sesji("Tryb Egzaminu z CAŁEJ BAZY (50 pytań / 30 min)", "Cała baza (wszystkie pytania)", limit_pytan=50, tylko_wielokrotne=False)
+            start_sesji("Tryb Egzaminu z CAŁEJ BAZY (50 pytań / 30 min)", "Cała baza (wszystkie pytania)", limit_pytan=50, tylko_dwukrotne=False)
+            st.rerun()
+
+        # Przycisk uruchamiający egzamin tylko z pytaniami mającymi dokładnie 2 poprawne odpowiedzi
+        if st.button("🎯 Uruchom Egzamin z pytań mających dokładnie 2 poprawne odpowiedzi", use_container_width=True):
+            st.session_state.wybrana_baza = "Cała baza (wszystkie pytania)"
+            start_sesji("Tryb Egzaminu z pytań (dokładnie 2 poprawne)", "Cała baza (wszystkie pytania)", limit_pytan=None, tylko_dwukrotne=True)
             st.rerun()
 
         st.markdown("---")
@@ -450,12 +455,12 @@ elif menu_glowne == "🎮 Testy i Nauka":
 
     elif st.session_state.aktywny_tryb is None:
         nazwa_bary = st.session_state.wybrana_baza
-        wszystkie = pobierz_pytania_z_bazy(nazwa_bary, tylko_wielokrotne=False)
-        wielokrotne = pobierz_pytania_z_bazy(nazwa_bary, tylko_wielokrotne=True)
+        wszystkie = pobierz_pytania_z_bazy(nazwa_bary, tylko_dwukrotne=False)
+        dwukrotne = pobierz_pytania_z_bazy(nazwa_bary, tylko_dwukrotne=True)
 
         st.markdown(f"**Wybrana baza:** {nazwa_bary}")
         st.markdown(f"* Wszystkie pytania w bazie: **{len(wszystkie)}**")
-        st.markdown(f"* Pytania wielokrotnego wyboru: **{len(wielokrotne)}**")
+        st.markdown(f"* Pytania mające dokładnie 2 poprawne odpowiedzi: **{len(dwukrotne)}**")
         st.write("")
 
         col_w1, col_w2 = st.columns(2)
@@ -463,19 +468,19 @@ elif menu_glowne == "🎮 Testy i Nauka":
         with col_w1:
             st.markdown("### 🌐 Wszystkie Pytania")
             if st.button("Tryb Nauki (Kolejno)", key="n_w_k", use_container_width=True):
-                start_sesji("Tryb Nauki (Wszystkie – Kolejno)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=False)
+                start_sesji("Tryb Nauki (Wszystkie – Kolejno)", nazwa_bary, limit_pytan=None, tylko_dwukrotne=False)
                 st.rerun()
             if st.button("Tryb Egzaminu (Losowo – 35 pytań)", key="e_w_l", use_container_width=True):
-                start_sesji("Tryb Egzaminu (Wszystkie – Losowo 35)", nazwa_bary, limit_pytan=35, tylko_wielokrotne=False)
+                start_sesji("Tryb Egzaminu (Wszystkie – Losowo 35)", nazwa_bary, limit_pytan=35, tylko_dwukrotne=False)
                 st.rerun()
 
         with col_w2:
-            st.markdown("### 🎯 Pytania Wielokrotnego Wyboru")
+            st.markdown("### 🎯 Pytania z 2 poprawnymi odpowiedziami")
             if st.button("Tryb Nauki (Kolejno)", key="n_m_k", use_container_width=True):
-                start_sesji("Tryb Nauki (Wielokrotne – Kolejno)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=True)
+                start_sesji("Tryb Nauki (Dokładnie 2 poprawne – Kolejno)", nazwa_bary, limit_pytan=None, tylko_dwukrotne=True)
                 st.rerun()
             if st.button("Tryb Egzaminu (Losowo – 35 pytań)", key="e_m_l", use_container_width=True):
-                start_sesji("Tryb Egzaminu (Wielokrotne – Losowo 35)", nazwa_bary, limit_pytan=35, tylko_wielokrotne=True)
+                start_sesji("Tryb Egzaminu (Dokładnie 2 poprawne – Losowo 35)", nazwa_bary, limit_pytan=35, tylko_dwukrotne=True)
                 st.rerun()
 
         st.write("")
@@ -494,7 +499,6 @@ elif menu_glowne == "🎮 Testy i Nauka":
 
         st.markdown("---")
         
-        # Ekran trwania testu/nauki
         if idx < len(lista) and not st.session_state.test_zakonczony:
             p = lista[idx]
             st.markdown(f"**Pytanie {idx + 1} z {len(lista)}** (ID: {p['id']})")
@@ -542,7 +546,6 @@ elif menu_glowne == "🎮 Testy i Nauka":
                         st.session_state.test_zakonczony = True
                         st.rerun()
 
-        # Ekran podsumowania po zakończeniu testu / egzaminu
         else:
             st.markdown("<div class='main-header'>📋 Podsumowanie Wyników Testu</div>", unsafe_allow_html=True)
             
@@ -561,7 +564,6 @@ elif menu_glowne == "🎮 Testy i Nauka":
             col_m1.metric("Wynik punktowy", f"{punkty} / {max_punkty}")
             col_m2.metric("Skuteczność", f"{procent:.1f}%")
             
-            # Zapis do trwałego pliku statystyk
             zapisz_wynik_egzaminu(
                 user=st.session_state.zalogowany_uzytkownik,
                 tryb=st.session_state.aktywny_tryb,
@@ -640,13 +642,13 @@ elif menu_glowne == "➕ Dodaj Pytanie":
 elif menu_glowne == "🔍 Przegląd Bazy":
     st.markdown("<div class='main-header'>Przegląd Bazy Pytań</div>", unsafe_allow_html=True)
     
-    opcje_przegladu = ["Cała baza (wszystkie pytania)", "Cała baza (tylko wielokrotne)"] + list(st.session_state.bazy.keys())
+    opcje_przegladu = ["Cała baza (wszystkie pytania)", "Cała baza (tylko 2 poprawne odpowiedzi)"] + list(st.session_state.bazy.keys())
     wybrana = st.radio("Wybierz bazę do przeglądu:", opcje_przegladu, horizontal=True)
     
     if wybrana == "Cała baza (wszystkie pytania)":
-        lista_do_wyswietlenia = pobierz_pytania_z_bazy("Cała baza (wszystkie pytania)", tylko_wielokrotne=False)
-    elif wybrana == "Cała baza (tylko wielokrotne)":
-        lista_do_wyswietlenia = pobierz_pytania_z_bazy("Cała baza (wszystkie pytania)", tylko_wielokrotne=True)
+        lista_do_wyswietlenia = pobierz_pytania_z_bazy("Cała baza (wszystkie pytania)", tylko_dwukrotne=False)
+    elif wybrana == "Cała baza (tylko 2 poprawne odpowiedzi)":
+        lista_do_wyswietlenia = pobierz_pytania_z_bazy("Cała baza (wszystkie pytania)", tylko_dwukrotne=True)
     else:
         lista_do_wyswietlenia = st.session_state.bazy[wybrana]
         

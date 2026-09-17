@@ -78,8 +78,8 @@ def zapisz_json(sciezka, dane):
         st.success("✅ Zapisano i zsynchronizowano z GitHubem!")
 
     except Exception as e:
-        st.error(f"❌ Błąd synchronizacji z GitHub: {e}")\
-        
+        st.error(f"❌ Błąd synchronizacji z GitHub: {e}")
+
 def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
     st.info("🔄 Rozpoczynam próbę zapisu do GitHuba...")
     
@@ -123,6 +123,7 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
         st.success("✅ Zamieszczono nowy commit w repozytorium GitHub!")
     except Exception as e:
         st.error(f"❌ Błąd GitHub API: {e}")
+
 # ==============================================================================
 # 3. MECHANIZM TRWAŁEJ SESJI I INICJALIZACJA
 # ==============================================================================
@@ -142,12 +143,6 @@ if 'theme' not in st.session_state:
 
 if 'admin_logged_in' not in st.session_state:
     st.session_state.admin_logged_in = False
-
-if 'statystyki' not in st.session_state:
-    st.session_state.statystyki = wczytaj_json(PLIK_STATYSTYK, {"Piotrek": [], "Edyta": [], "Gość": []})
-
-if 'bazy' not in st.session_state:
-    st.session_state.bazy = wczytaj_json(PLIK_BAZY, DOMYSLNA_BAZA)
 
 if 'wybrana_baza' not in st.session_state:
     st.session_state.wybrana_baza = None
@@ -344,7 +339,7 @@ def start_sesji(tryb, baza_nazwa, limit_pytan=None, tylko_wielokrotne=False):
     st.session_state.sprawdzono_odpowiedz = False
     st.session_state.odpowiedzi_egzamin = {}
     st.session_state.test_zakonczony = False
-    st.session_state.id_obecnej_sesji = time.time()  # Unikalny identyfikator nowej sesji
+    st.session_state.id_obecnej_sesji = time.time()
     
     pula = pobierz_pytania_z_bazy(baza_nazwa, tylko_wielokrotne=tylko_wielokrotne)
     
@@ -673,26 +668,27 @@ elif menu_glowne == "🎮 Testy i Nauka":
                         st.session_state.indeks += 1
                         st.session_state.sprawdzono_odpowiedz = False
                         st.rerun()
-if st.button("🏁 Zakończ Test / Egzamin"):
-    st.session_state.test_zakonczony = True
 
-    if "Egzamin" in st.session_state.aktywny_tryb:
-        punkty = sum(
-            1 for i, q in enumerate(lista)
-            if set(st.session_state.odpowiedzi_egzamin.get(i, [])) == set(q["poprawne"])
-        )
+            if st.button("🏁 Zakończ Test / Egzamin"):
+                st.session_state.test_zakonczony = True
 
-        zapisz_wynik_egzaminu(
-            st.session_state.zalogowany_uzytkownik,
-            st.session_state.aktywny_tryb,
-            st.session_state.wybrana_baza,
-            punkty,
-            len(lista)
-        )
+                if "Egzamin" in st.session_state.aktywny_tryb:
+                    punkty = sum(
+                        1 for i, q in enumerate(lista)
+                        if set(st.session_state.odpowiedzi_egzamin.get(i, [])) == set(q["poprawne"])
+                    )
 
-    st.success("🎉 Egzamin zakończony! Wynik został zapisany.")
-    st.balloons()
-                     
+                    zapisz_wynik_egzaminu(
+                        st.session_state.zalogowany_uzytkownik,
+                        st.session_state.aktywny_tryb,
+                        st.session_state.wybrana_baza,
+                        punkty,
+                        len(lista)
+                    )
+
+                st.success("🎉 Egzamin zakończony! Wynik został zapisany.")
+                st.balloons()
+                st.rerun()
 
         else:
             st.balloons()
@@ -807,7 +803,7 @@ elif menu_glowne == "➕ Dodaj Pytanie":
                 if artykul: nowe_pytanie["tresc_artykulu"] = artykul
 
                 st.session_state.bazy[baza_docelowa].append(nowe_pytanie)
-                zapisz_json(PLIK_BAZY, st.session_state.bazy)
+                zapisz_json("baza_danych.json", st.session_state.bazy)
                 st.success(f"Dodano pytanie o ID {nowe_id} i zapisano baze na stałe!")
             else:
                 st.error("Uzupełnij pola i wybierz co najmniej jedną poprawną odpowiedź!")
@@ -906,7 +902,7 @@ elif menu_glowne == "🔑 Panel Administratora":
                 st.write("**Usuwanie**")
                 if st.button("🗑️ Usuń pytanie", type="primary"):
                     st.session_state.bazy[wybrana_baza_admin].pop(pytanie_idx)
-                    zapisz_json(PLIK_BAZY, st.session_state.bazy)
+                    zapisz_json("baza_danych.json", st.session_state.bazy)
                     st.success("Pytanie zostało pomyślnie usunięte z bazy!")
                     st.rerun()
 
@@ -939,7 +935,7 @@ elif menu_glowne == "🔑 Panel Administratora":
                         p["podstawa_prawna"] = podstawa
                         p["tresc_artykulu"] = artykul
 
-                        zapisz_json(PLIK_BAZY, st.session_state.bazy)
+                        zapisz_json("baza_danych.json", st.session_state.bazy)
                         st.success("Zmiany zostały pomyślnie zapisane!")
                         st.rerun()
                     else:

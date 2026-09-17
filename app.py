@@ -34,11 +34,6 @@ def wczytaj_json(sciezka, domyslne):
             return domyslne
     return domyslne
 
-Błąd wskazuje, że w linii 343 funkcja zapisz_wynik_egzaminu ciągle wywołuje zapisz_json, której brakuje w kodzie.
-
-Podmień całą funkcję zapisz_wynik_egzaminu (okolice linii 330–350) na poniższy kod, który sam zapisuje dane do GitHuba i nie potrzebuje wywoływania zapisz_json:
-
-Python
 def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
     # Zabezpieczenie przed podwójnym zapisem w tej samej sesji
     if st.session_state.get("ostatnio_zapisany_id") == st.session_state.get("id_obecnej_sesji"):

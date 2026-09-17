@@ -964,3 +964,9 @@ elif menu_glowne == "⚙️ Ustawienia / Motyw":
         aktualizuj_pamiec_sesji(theme=nowy_motyw)
         st.success(f"Zmieniono tryb na: {nowy_motyw}")
         st.rerun()
+
+st.divider()
+st.subheader("🧪 Test połączenia z GitHub API")
+if st.button("Uruchom test zapisu do GitHuba"):
+    testowe_dane = st.session_state.get("statystyki", {"Test": ["połączenie"]})
+    zapisz_json("statystyki.json", testowe_dane)

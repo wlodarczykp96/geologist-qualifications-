@@ -25,14 +25,15 @@ st.set_page_config(
 # ==============================================================================
 PLIK_STATYSTYK = "statystyki.json"
 
-def wczytaj_json(sciezka, domyslne):
-    if os.path.exists(sciezka):
-        try:
-            with open(sciezka, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except Exception:
-            return domyslne
-    return domyslne
+def wczytaj_statystyki():
+    try:
+        with open("statystyki.json", "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {"Piotrek": [], "Edyta": [], "Gość": []}
+
+if "statystyki" not in st.session_state:
+    st.session_state.statystyki = wczytaj_statystyki()
 
 def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
     # Zabezpieczenie przed podwójnym zapisem w tej samej sesji

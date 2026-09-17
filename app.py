@@ -322,25 +322,6 @@ def powrot_do_wyboru():
     st.session_state.test_zakonczony = False
     st.session_state.czas_konca = None
 
-def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
-    procent = (punkty / max_punkty) * 100 if max_punkty > 0 else 0
-    zdane = procent >= 75.0
-    
-    wpis = {
-        'data': datetime.date.today().strftime("%Y-%m-%d"),
-        'tryb': tryb,
-        'baza': baza if baza else "Wszystkie",
-        'zdane': zdane,
-        'wynik_str': f"{punkty}/{max_punkty}",
-        'procent': procent
-    }
-    
-    if user not in st.session_state.statystyki:
-        st.session_state.statystyki[user] = []
-    
-    st.session_state.statystyki[user].append(wpis)
-    zapisz_json(PLIK_STATYSTYK, st.session_state.statystyki)
-
 # ==============================================================================
 # 6. EKRAN LOGOWANIA
 # ==============================================================================

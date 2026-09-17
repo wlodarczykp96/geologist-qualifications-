@@ -673,29 +673,27 @@ elif menu_glowne == "🎮 Testy i Nauka":
                         st.session_state.indeks += 1
                         st.session_state.sprawdzono_odpowiedz = False
                         st.rerun()
-                else:
-                 if st.button("🏁 Zakończ Test / Egzamin"):
-                        st.session_state.test_zakonczony = True
-
 if st.button("🏁 Zakończ Test / Egzamin"):
     st.session_state.test_zakonczony = True
 
-        if "Egzamin" in st.session_state.aktywny_tryb:
-            punkty = sum(
-                1 for i, q in enumerate(lista)
-                if set(st.session_state.odpowiedzi_egzamin.get(i, [])) == set(q["poprawne"])
-            )
+    if "Egzamin" in st.session_state.aktywny_tryb:
+        punkty = sum(
+            1 for i, q in enumerate(lista)
+            if set(st.session_state.odpowiedzi_egzamin.get(i, [])) == set(q["poprawne"])
+        )
 
-            zapisz_wynik_egzaminu(
-                st.session_state.zalogowany_uzytkownik,
-                st.session_state.aktywny_tryb,
-                st.session_state.wybrana_baza,
-                punkty,
-                len(lista)
-            )
+        zapisz_wynik_egzaminu(
+            st.session_state.zalogowany_uzytkownik,
+            st.session_state.aktywny_tryb,
+            st.session_state.wybrana_baza,
+            punkty,
+            len(lista)
+        )
 
-        st.success("🎉 Egzamin zakończony! Wynik został zapisany.")
-        st.balloons()
+    st.success("🎉 Egzamin zakończony! Wynik został zapisany.")
+    st.balloons()
+                     
+
         else:
             st.balloons()
             st.success("🎉 Zakończyłeś test / egzamin!")

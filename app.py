@@ -283,7 +283,6 @@ def powrot_do_wyboru():
     st.session_state.sprawdzono_odpowiedz = False
     st.session_state.test_zakonczony = False
     st.session_state.czas_konca = None
-    st.session_state.odpowiedzi_egzamin = {}
 
 def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
     procent = (punkty / max_punkty) * 100 if max_punkty > 0 else 0
@@ -300,9 +299,7 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
     
     if user not in st.session_state.statystyki:
         st.session_state.statystyki[user] = []
-        
-    if not st.session_state.statystyki[user] or st.session_state.statystyki[user][-1] != wpis:
-        st.session_state.statystyki[user].append(wpis)
+    st.session_state.statystyki[user].append(wpis)
 
 # ==============================================================================
 # 5. EKRAN LOGOWANIA
@@ -453,12 +450,9 @@ elif menu_glowne == "🎮 Testy i Nauka":
         
         if st.button("🚀 Uruchom Egzamin z CAŁEJ BAZY (50 pytań / 30 min)", use_container_width=True, type="primary"):
             st.session_state.wybrana_baza = "Cała baza (wszystkie pytania)"
-            start_sesji("Tryb Egzaminu z CAŁEJ BAZY (50 pytań / 30 min)", "Cała baza (wszystkie pytania)", limit_pytan=50, tylko_1_lub_2=False)
+            start_sesji("Tryb Egzaminu z CAŁEJ BAZY (50 pytań / 30 min)", "Cała baza (wszystkie pytania)", limit_pytan=50, tylko_wielokrotne=False)
             st.rerun()
-        if st.button("🎯 Uruchom Egzamin z WIELOKROTNEGO WYBORU (50 pytań / 30 min)", use_container_width=True):
-            st.session_state.wybrana_baza = "Cała baza (wszystkie pytania)"
-            start_sesji("Tryb Egzaminu z pytań (1 lub 2 poprawne)", "Cała baza (wszystkie pytania)", limit_pytan=None, tylko_1_lub_2=True)
-            st.rerun()
+
         st.markdown("---")
         for nazwa_bazy in st.session_state.bazy.keys():
             if st.button(f"📁 {nazwa_bazy}", use_container_width=True):
@@ -467,11 +461,12 @@ elif menu_glowne == "🎮 Testy i Nauka":
 
     elif st.session_state.aktywny_tryb is None:
         nazwa_bary = st.session_state.wybrana_baza
-        wszystkie = pobierz_pytania_z_bazy(nazwa_bary, tylko_1_lub_2=False)
-        wielokrotne = pobierz_pytania_z_bazy(nazwa_bary, tylko_1_lub_2=True)
+        wszystkie = pobierz_pytania_z_bazy(nazwa_bary, tylko_wielokrotne=False)
+        wielokrotne = pobierz_pytania_z_bazy(nazwa_bary, tylko_wielokrotne=True)
 
         st.markdown(f"**Wybrana baza:** {nazwa_bary}")
         st.markdown(f"* Wszystkie pytania w bazie: **{len(wszystkie)}**")
+        st.markdown(f"* Pytania wielokrotnego wyboru: **{len(wielokrotne)}**")
         st.write("")
 
         col_w1, col_w2 = st.columns(2)
@@ -479,19 +474,19 @@ elif menu_glowne == "🎮 Testy i Nauka":
         with col_w1:
             st.markdown("### 🌐 Wszystkie Pytania")
             if st.button("Tryb Nauki (Kolejno)", key="n_w_k", use_container_width=True):
-                start_sesji("Tryb Nauki (Wszystkie) - Kolejno)", nazwa_bary, limit_pytan=None, tylko_1_lub_2=False)
+                start_sesji("Tryb Nauki (Wszystkie – Kolejno)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=False)
                 st.rerun()
             if st.button("Tryb Egzaminu (Losowo – 35 pytań)", key="e_w_l", use_container_width=True):
-                start_sesji("Tryb Egzaminu (Wszystkie – Losowo 35)", nazwa_bary, limit_pytan=35, tylko_1_lub_2=False)
+                start_sesji("Tryb Egzaminu (Wszystkie – Losowo 35)", nazwa_bary, limit_pytan=35, tylko_wielokrotne=False)
                 st.rerun()
 
         with col_w2:
-            st.markdown("### 🎯 Pytania z 1 lub 2 poprawnymi")
-            if st.button("Tryb Nauki", key="n_m_k", use_container_width=True):
-                start_sesji("Tryb Nauki (1-2 poprawne)", nazwa_bary, limit_pytan=None, tylko_1_lub_2=True)
+            st.markdown("### 🎯 Pytania Wielokrotnego Wyboru")
+            if st.button("Tryb Nauki (Kolejno)", key="n_m_k", use_container_width=True):
+                start_sesji("Tryb Nauki (Wielokrotne – Kolejno)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=True)
                 st.rerun()
-            if st.button("Tryb Egzaminu 3 (35 pytań)", key="e_m_l", use_container_width=True):
-                start_sesji("Tryb Egzaminu 2 (35 pytań)", nazwa_bary, limit_pytan=35, tylko_1_lub_2=True)
+            if st.button("Tryb Egzaminu (Losowo – 35 pytań)", key="e_m_l", use_container_width=True):
+                start_sesji("Tryb Egzaminu (Wielokrotne – Losowo 35)", nazwa_bary, limit_pytan=35, tylko_wielokrotne=True)
                 st.rerun()
 
         st.write("")
@@ -509,99 +504,42 @@ elif menu_glowne == "🎮 Testy i Nauka":
             st.rerun()
 
         st.markdown("---")
-        
         if idx < len(lista) and not st.session_state.test_zakonczony:
             p = lista[idx]
             st.markdown(f"**Pytanie {idx + 1} z {len(lista)}** (ID: {p['id']})")
             st.markdown(f"<div class='question-box'><h3>{p['pytanie']}</h3></div>", unsafe_allow_html=True)
 
-            domyslne_zaznaczenia = st.session_state.odpowiedzi_egzamin.get(idx, [])
-
             with st.form(key=f"form_pyt_{idx}"):
                 wybrane = []
                 for k, v in p["odpowiedzi"].items():
-                    czy_zaznaczone = k in domyslne_zaznaczenia
-                    if st.checkbox(f"**{k}**: {v}", value=czy_zaznaczone, key=f"cb_{idx}_{k}"):
+                    if st.checkbox(f"**{k}**: {v}", key=f"cb_{idx}_{k}"):
                         wybrane.append(k)
-                zatwierdz = st.form_submit_button("Zatwierdź odpowiedź")
+                zatwierdz = st.form_submit_button("Zatwierdź / Sprawdź")
 
             if zatwierdz:
-                st.session_state.odpowiedzi_egzamin[idx] = wybrane
                 st.session_state.sprawdzono_odpowiedz = True
 
             if st.session_state.sprawdzono_odpowiedz:
                 poprawne = set(p["poprawne"])
                 zaznaczone = set(wybrane)
                 if zaznaczone == poprawne:
-                    st.success("✅ Twoja odpowiedź jest poprawna!")
+                    st.success("✅ Poprawna odpowiedź!")
                 else:
-                    st.error(f"❌ Twoja odpowiedź jest błędna. Poprawne to: {', '.join(p['poprawne'])}")
+                    st.error(f"❌ Błąd! Poprawne odpowiedzi to: {', '.join(p['poprawne'])}")
 
                 st.info(f"Podstawa prawna: {p.get('podstawa_prawna', 'Brak')} \n\n {p.get('tresc_artykulu', '')}")
 
-            col_btn1, col_btn2 = st.columns(2)
-            with col_btn1:
-                if idx > 0:
-                    if st.button("⬅️ Poprzednie pytanie"):
-                        st.session_state.indeks -= 1
-                        st.session_state.sprawdzono_odpowiedz = (idx - 1) in st.session_state.odpowiedzi_egzamin
-                        st.rerun()
-            with col_btn2:
+            if st.button("Następne pytanie ➡️"):
                 if idx < len(lista) - 1:
-                    if st.button("Następne pytanie ➡️"):
-                        st.session_state.indeks += 1
-                        st.session_state.sprawdzono_odpowiedz = st.session_state.indeks in st.session_state.odpowiedzi_egzamin
-                        st.rerun()
+                    st.session_state.indeks += 1
+                    st.session_state.sprawdzono_odpowiedz = False
+                    st.rerun()
                 else:
-                    if st.button("🏁 Zakończ i zobacz wynik", type="primary"):
-                        st.session_state.test_zakonczony = True
-                        st.rerun()
-
+                    st.session_state.test_zakonczony = True
+                    st.rerun()
         else:
-            st.markdown("<div class='main-header'>📋 Podsumowanie Wyników Testu</div>", unsafe_allow_html=True)
-            
-            punkty = 0
-            max_punkty = len(lista)
-            
-            for i, p in enumerate(lista):
-                odp_uzytkownika = set(st.session_state.odpowiedzi_egzamin.get(i, []))
-                poprawne_odpowiedzi = set(p["poprawne"])
-                if odp_uzytkownika == poprawne_odpowiedzi:
-                    punkty += 1
-
-            procent = (punkty / max_punkty) * 100 if max_punkty > 0 else 0
-            
-            col_m1, col_m2 = st.columns(2)
-            col_m1.metric("Wynik punktowy", f"{punkty} / {max_punkty}")
-            col_m2.metric("Skuteczność", f"{procent:.1f}%")
-            
-            zapisz_wynik_egzaminu(
-                user=st.session_state.zalogowany_uzytkownik,
-                tryb=st.session_state.aktywny_tryb,
-                baza=st.session_state.wybrana_baza,
-                punkty=punkty,
-                max_punkty=max_punkty
-            )
-
-            st.markdown("---")
-            st.subheader("🔍 Szczegółowy przegląd odpowiedzi:")
-
-            for i, p in enumerate(lista):
-                odp_uzytkownika = sorted(st.session_state.odpowiedzi_egzamin.get(i, []))
-                poprawne_odpowiedzi = sorted(p["poprawne"])
-                czy_ok = (set(odp_uzytkownika) == set(poprawne_odpowiedzi))
-                
-                status_ikonka = "✅" if czy_ok else "❌"
-                
-                with st.expander(f"{status_ikonka} Pytanie {i+1}: {p['pytanie']}"):
-                    st.write(f"**Twoja odpowiedź:** {', '.join(odp_uzytkownika) if odp_uzytkownika else 'Brak odpowiedzi'}")
-                    st.write(f"**Poprawna odpowiedź:** {', '.join(poprawne_odpowiedzi)}")
-                    st.markdown(f"**Podstawa prawna:** {p.get('podstawa_prawna', 'Brak')}")
-                    if p.get('tresc_artykulu'):
-                        st.info(f"Artykuł: {p.get('tresc_artykulu')}")
-
-            st.write("")
-            if st.button("🔄 Rozpocznij nowy test", type="primary", use_container_width=True):
+            st.success("🎉 Koniec testu!")
+            if st.button("Rozpocznij od nowa"):
                 powrot_do_wyboru()
                 st.rerun()
 

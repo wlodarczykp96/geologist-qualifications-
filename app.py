@@ -274,6 +274,7 @@ def pobierz_pytania_z_bazy(nazwa_bazy, tylko_wielokrotne=False):
     return pula
 
 def start_sesji(tryb, baza_nazwa, limit_pytan=None, tylko_wielokrotne=False):
+    st.session_state.zapisano_ten_egzamin = False 
     st.session_state.aktywny_tryb = tryb
     st.session_state.indeks = 0
     st.session_state.sprawdzono_odpowiedz = False

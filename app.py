@@ -5,6 +5,7 @@ import datetime
 import json
 import os
 import streamlit.components.v1 as components
+from github import Github
 
 from baza_danych import BAZY_PYTAN
 
@@ -34,7 +35,6 @@ def wczytaj_json(sciezka, domyslne):
     return domyslne
 
 def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
-    # Zabezpieczenie przed zduplikowanym zapisem tego samego egzaminu
     if st.session_state.get("ostatnio_zapisany_id") == st.session_state.get("id_obecnej_sesji"):
         return
 
@@ -50,16 +50,34 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
         'procent': procent
     }
     
+    # 1. Zapis do session_state
     if user not in st.session_state.statystyki:
         st.session_state.statystyki[user] = []
-    
     st.session_state.statystyki[user].append(wpis)
     
-    # Bezpośredni zapis do pliku JSON bez wywoływania dodatkowych funkcji
-    with open("statystyki.json", "w", encoding="utf-8") as f:
-        json.dump(st.session_state.statystyki, f, ensure_ascii=False, indent=4)
-    
-    # Zapisujemy ID sesji, żeby ten konkretny test nie zapisał się drugi raz
+    # 2. Wysyłanie aktualizacji bezpośrednio do repozytorium GitHub
+    try:
+        token = st.secrets["GITHUB_TOKEN"]
+        repo_name = st.secrets["GITHUB_REPO"]
+        
+        g = Github(token)
+        repo = g.get_repo(repo_name)
+        
+        # Pobieramy plik z repozytorium
+        contents = repo.get_contents("statystyki.json")
+        nowa_tresc = json.dumps(st.session_state.statystyki, ensure_ascii=False, indent=4)
+        
+        # Robimy commit bezpośrednio na GitHubie
+        repo.update_file(
+            path=contents.path,
+            message=f"Auto-update statystyk: {user}",
+            content=nowa_tresc,
+            sha=contents.sha
+        )
+        st.toast("✅ Wynik zapisany trwale na GitHubie!")
+    except Exception as e:
+        st.warning(f"Zapisano lokalnie (błąd synch z GitHubem: {e})")
+        
     st.session_state.ostatnio_zapisany_id = st.session_state.get("id_obecnej_sesji")
 # ==============================================================================
 # 3. MECHANIZM TRWAŁEJ SESJI I INICJALIZACJA

@@ -35,7 +35,7 @@ def wczytaj_statystyki():
 if "statystyki" not in st.session_state:
     st.session_state.statystyki = wczytaj_statystyki()
 
-ef zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
+def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
     st.info("🔄 Rozpoczynam próbę zapisu do GitHuba...")
     
     procent = (punkty / max_punkty) * 100 if max_punkty > 0 else 0

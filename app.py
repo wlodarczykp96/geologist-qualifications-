@@ -479,7 +479,7 @@ elif menu_glowne == "🎮 Testy i Nauka":
         col_w1, col_w2 = st.columns(2)
         
         with col_w1:
-            st.markdown("### 🌐 Wielokrotny wybór (1/2/3)")
+            st.markdown("### 🌐 WIELOKROTNY WYBÓR (1/2/3)")
             if st.button("Tryb Nauki (Kolejno)", key="n_w_k", use_container_width=True):
                 start_sesji("Tryb Nauki (Wszystkie – Kolejno)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=False)
                 st.rerun()
@@ -491,7 +491,7 @@ elif menu_glowne == "🎮 Testy i Nauka":
                 st.rerun()
 
         with col_w2:
-            st.markdown("### 🎯 Wielokrotny wybór (1/2)")
+            st.markdown("### 🎯 WIELOKROTNY WYBÓR (1/2)")
             if st.button("Tryb Nauki (Kolejno)", key="n_f_k", use_container_width=True):
                 start_sesji("Tryb Nauki (Kolejno)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=True)
                 st.rerun()

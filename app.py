@@ -260,6 +260,7 @@ def start_sesji(tryb, baza_nazwa, limit_pytan=None, tylko_wielokrotne=False):
     
     pula = pobierz_pytania_z_bazy(baza_nazwa, tylko_wielokrotne=tylko_wielokrotne)
     
+    # Mieszanie wywoła się dla każdego trybu z słowem "Losowo" lub "Egzamin"
     if "Losowo" in tryb or "Egzamin" in tryb:
         random.shuffle(pula)
     if limit_pytan:
@@ -482,8 +483,9 @@ elif menu_glowne == "🎮 Testy i Nauka":
             if st.button("Tryb Nauki (Kolejno)", key="n_w_k", use_container_width=True):
                 start_sesji("Tryb Nauki (Wszystkie – Kolejno)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=False)
                 st.rerun()
-            if st.button("Tryb Nauki (Losowo – 30 pytań)", key="n_w_l", use_container_width=True):
-                start_sesji("Tryb Nauki (Wszystkie – Losowo 30)", nazwa_bary, limit_pytan=30, tylko_wielokrotne=False)
+            # ZMIANA: Usunięto limit 30 pytań, dodano losowanie wszystkich pytań
+            if st.button("Tryb Nauki (Wszystkie – Losowo)", key="n_w_l", use_container_width=True):
+                start_sesji("Tryb Nauki (Wszystkie – Losowo)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=False)
                 st.rerun()
             if st.button("Tryb Egzaminu (Wszystkie pytania z bazy)", key="e_w_l", use_container_width=True):
                 start_sesji("Tryb Egzaminu (Wszystkie pytania)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=False)
@@ -494,13 +496,13 @@ elif menu_glowne == "🎮 Testy i Nauka":
             if st.button("Tryb Nauki (Kolejno)", key="n_f_k", use_container_width=True):
                 start_sesji("Tryb Nauki (1-2 poprawne – Kolejno)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=True)
                 st.rerun()
-            if st.button("Tryb Nauki (Losowo – 30 pytań)", key="n_f_l", use_container_width=True):
-                start_sesji("Tryb Nauki (1-2 poprawne – Losowo 30)", nazwa_bary, limit_pytan=30, tylko_wielokrotne=True)
+            # ZMIANA: Usunięto limit 30 pytań również dla tej kolumny
+            if st.button("Tryb Nauki (1-2 poprawne – Losowo)", key="n_f_l", use_container_width=True):
+                start_sesji("Tryb Nauki (1-2 poprawne – Losowo)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=True)
                 st.rerun()
             if st.button("Tryb Egzaminu (Tylko pytania z 1 lub 2 poprawnymi)", key="e_f_l", use_container_width=True):
                 start_sesji("Tryb Egzaminu (1-2 poprawne)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=True)
                 st.rerun()
-
         st.write("")
         if st.button("← Powrót do wyboru baz", use_container_width=True):
             powrot_do_wyboru()

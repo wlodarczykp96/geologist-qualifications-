@@ -1,22 +1,5 @@
 {
-    "Piotrek": [
-        {
-            "data": "2026-09-17",
-            "tryb": "Egzamin (Losowo – 30 pytań)",
-            "baza": "BAZA PYTAŃ - CZĘŚĆ 1 (Hydrogeologia i geologia inżynierska [...])",
-            "zdane": false,
-            "wynik_str": "0/30",
-            "procent": 0.0
-        },
-        {
-            "data": "2026-09-17",
-            "tryb": "Egzamin (Losowo – 30 pytań)",
-            "baza": "BAZA PYTAŃ - CZĘŚĆ 1 (Hydrogeologia i geologia inżynierska [...])",
-            "zdane": false,
-            "wynik_str": "0/30",
-            "procent": 0.0
-        }
-    ],
+    "Piotrek": [],
     "Edyta": [],
     "Gość": []
 }

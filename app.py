@@ -460,7 +460,6 @@ elif menu_glowne == "🎮 Testy i Nauka":
 
         st.markdown(f"**Wybrana baza:** {nazwa_bary}")
         st.markdown(f"* Wszystkie pytania w bazie: **{len(wszystkie)}**")
-        st.markdown(f"* Pytania mające dokładnie 2 poprawne odpowiedzi: **{len(dwukrotne)}**")
         st.write("")
 
         col_w1, col_w2 = st.columns(2)
@@ -475,7 +474,7 @@ elif menu_glowne == "🎮 Testy i Nauka":
                 st.rerun()
 
         with col_w2:
-            st.markdown("### 🎯 Pytania z 2 poprawnymi odpowiedziami")
+            st.markdown("### 🎯 Pytania z wielokrotnym wyborem")
             if st.button("Tryb Nauki (Kolejno)", key="n_m_k", use_container_width=True):
                 start_sesji("Tryb Nauki (Dokładnie 2 poprawne – Kolejno)", nazwa_bary, limit_pytan=None, tylko_dwukrotne=True)
                 st.rerun()

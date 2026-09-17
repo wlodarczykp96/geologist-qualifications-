@@ -5,7 +5,7 @@ import datetime
 import streamlit.components.v1 as components
 
 # W app.py pobieramy dane z osobnego pliku bazy_danych.py:
-from bazy_danych import BAZY_PYTAN
+from baza_danych import BAZY_PYTAN
 
 # I inicjalizujemy je w sesji w ten sposób:
 if 'bazy' not in st.session_state:

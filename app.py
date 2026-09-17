@@ -2,6 +2,8 @@ import streamlit as st
 import random
 import time
 import datetime
+import json
+import os
 import streamlit.components.v1 as components
 
 # ==============================================================================
@@ -14,7 +16,40 @@ st.set_page_config(
 )
 
 # ==============================================================================
-# 2. MECHANIZM TRWAŁEJ SESJI
+# 2. OBSŁUGA TRWAŁEGO ZAPISU DANYCH (JSON)
+# ==============================================================================
+PLIK_STATYSTYK = "statystyki.json"
+PLIK_BAZY = "baza_danych.json"
+
+DOMYSLNA_BAZA = {
+    "Dział I - Przepisy ogólne": [
+        {
+            "id": 1,
+            "pytanie": "Kto jest właścicielem kopalin podstawowych określonych w ustawie?",
+            "odpowiedzi": {"A": "Skarb Państwa", "B": "Gmina właściwa miejscowo", "C": "Właściciel gruntu"},
+            "poprawne": ["A"],
+            "podstawa_prawna": "Art. 10 ust. 1 Ustawy - Prawo geologiczne i górnicze",
+            "tresc_artykulu": "Złoża kopalin... stanowią własność Skarbu Państwa."
+        }
+    ],
+    "Dział II - Koncesje": []
+}
+
+def wczytaj_json(sciezka, domyslne):
+    if os.path.exists(sciezka):
+        try:
+            with open(sciezka, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            return domyslne
+    return domyslne
+
+def zapisz_json(sciezka, dane):
+    with open(sciezka, "w", encoding="utf-8") as f:
+        json.dump(dane, f, ensure_ascii=False, indent=4)
+
+# ==============================================================================
+# 3. MECHANIZM TRWAŁEJ SESJI I INICJALIZACJA
 # ==============================================================================
 USERS_PIN = {
     "Piotrek": "1671",
@@ -34,11 +69,10 @@ if 'admin_logged_in' not in st.session_state:
     st.session_state.admin_logged_in = False
 
 if 'statystyki' not in st.session_state:
-    st.session_state.statystyki = {
-        "Piotrek": [],
-        "Edyta": [],
-        "Gość": []
-    }
+    st.session_state.statystyki = wczytaj_json(PLIK_STATYSTYK, {"Piotrek": [], "Edyta": [], "Gość": []})
+
+if 'bazy' not in st.session_state:
+    st.session_state.bazy = wczytaj_json(PLIK_BAZY, DOMYSLNA_BAZA)
 
 if 'wybrana_baza' not in st.session_state:
     st.session_state.wybrana_baza = None
@@ -57,21 +91,6 @@ if 'czas_konca' not in st.session_state:
 if 'test_zakonczony' not in st.session_state:
     st.session_state.test_zakonczony = False
 
-if 'bazy' not in st.session_state:
-    st.session_state.bazy = {
-        "Dział I - Przepisy ogólne": [
-            {
-                "id": 1,
-                "pytanie": "Kto jest właścicielem kopalin podstawowych określonych w ustawie?",
-                "odpowiedzi": {"A": "Skarb Państwa", "B": "Gmina właściwa miejscowo", "C": "Właściciel gruntu"},
-                "poprawne": ["A"],
-                "podstawa_prawna": "Art. 10 ust. 1 Ustawy - Prawo geologiczne i górnicze",
-                "tresc_artykulu": "Złoża kopalin... stanowią własność Skarbu Państwa."
-            }
-        ],
-        "Dział II - Koncesje": []
-    }
-
 def aktualizuj_pamiec_sesji(user=None, theme=None):
     if user is not None:
         if user is False:
@@ -84,7 +103,7 @@ def aktualizuj_pamiec_sesji(user=None, theme=None):
         st.query_params["theme"] = theme
 
 # ==============================================================================
-# 3. GLOBALNY MOTYW CSS
+# 4. GLOBALNY MOTYW CSS
 # ==============================================================================
 if st.session_state.theme == "Jasny":
     bg_main = "#f8f9fa"
@@ -230,7 +249,7 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 # ==============================================================================
-# 4. FUNKCJE POMOCNICZE
+# 5. FUNKCJE POMOCNICZE
 # ==============================================================================
 def pobierz_pytania_z_bazy(nazwa_bazy, tylko_wielokrotne=False):
     if nazwa_bazy == "Cała baza (wszystkie pytania)":
@@ -287,10 +306,12 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
     
     if user not in st.session_state.statystyki:
         st.session_state.statystyki[user] = []
+    
     st.session_state.statystyki[user].append(wpis)
+    zapisz_json(PLIK_STATYSTYK, st.session_state.statystyki)
 
 # ==============================================================================
-# 5. EKRAN LOGOWANIA
+# 6. EKRAN LOGOWANIA
 # ==============================================================================
 if st.session_state.zalogowany_uzytkownik is None:
     st.markdown("<div class='main-header'>🔒 Aplikacja - Prawo Górnicze i Geologiczne</div>", unsafe_allow_html=True)
@@ -332,7 +353,7 @@ if st.session_state.zalogowany_uzytkownik is None:
     st.stop()
 
 # ==============================================================================
-# 6. MENU BOCZNE
+# 7. MENU BOCZNE
 # ==============================================================================
 st.sidebar.title(f"👤 Zalogowany: {st.session_state.zalogowany_uzytkownik}")
 if st.sidebar.button("🚪 Wyloguj"):
@@ -355,7 +376,7 @@ menu_glowne = st.sidebar.radio(
 )
 
 # ==============================================================================
-# 7. STRONA GŁÓWNA
+# 8. STRONA GŁÓWNA
 # ==============================================================================
 if menu_glowne == "🏠 Strona Główna":
     st.markdown("<div class='main-header'>Aplikacja - Prawo Górnicze i Geologiczne</div>", unsafe_allow_html=True)
@@ -430,7 +451,7 @@ if menu_glowne == "🏠 Strona Główna":
         """, unsafe_allow_html=True)
 
 # ==============================================================================
-# 8. TESTY I NAUKA
+# 9. TESTY I NAUKA
 # ==============================================================================
 elif menu_glowne == "🎮 Testy i Nauka":
     if st.session_state.wybrana_baza is None and st.session_state.aktywny_tryb is None:
@@ -442,9 +463,9 @@ elif menu_glowne == "🎮 Testy i Nauka":
             start_sesji("Tryb Egzaminu z CAŁEJ BAZY (50 pytań / 30 min)", "Cała baza (wszystkie pytania)", limit_pytan=50, tylko_wielokrotne=False)
             st.rerun()
 
-        if st.button("🎯 Uruchom Egzamin – TYLKO pytania wielokrotnego wyboru (50 pytań / 30 min)", use_container_width=True):
-            st.session_state.wybrana_baza = "Cała baza (pytania wielokrotnego wyboru)"
-            start_sesji("Tryb Egzaminu (Wielokrotny wybór / 30 min)", "Cała baza (wszystkie pytania)", limit_pytan=50, tylko_wielokrotne=True)
+        if st.button("🎯 Uruchom Egzamin z pytań mających 1 lub 2 poprawne odpowiedzi", use_container_width=True):
+            st.session_state.wybrana_baza = "Cała baza (wszystkie pytania)"
+            start_sesji("Tryb Egzaminu z pytań (1 lub 2 poprawne)", "Cała baza (wszystkie pytania)", limit_pytan=None, tylko_wielokrotne=True)
             st.rerun()
 
         st.markdown("---")
@@ -461,7 +482,7 @@ elif menu_glowne == "🎮 Testy i Nauka":
 
         st.markdown(f"**Wybrana baza:** {nazwa_bary}")
         st.markdown(f"* Wszystkie pytania w bazie: **{len(wszystkie)}**")
-        st.markdown(f"* Pytania wielokrotnego wyboru: **{len(wielokrotne)}**")
+        st.markdown(f"* Pytania z 1 lub 2 poprawnymi odpowiedziami: **{len(wielokrotne)}**")
         st.write("")
 
         st.subheader("Wybierz wariant testu:")
@@ -469,27 +490,27 @@ elif menu_glowne == "🎮 Testy i Nauka":
         col_w1, col_w2 = st.columns(2)
         
         with col_w1:
-            st.markdown("### 🌐 Wszystkie Pytania")
+            st.markdown("### 🌐 Wszystkie Pytania (Niezależnie od liczby poprawnych)")
             if st.button("Tryb Nauki (Kolejno)", key="n_w_k", use_container_width=True):
                 start_sesji("Tryb Nauki (Wszystkie – Kolejno)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=False)
                 st.rerun()
             if st.button("Tryb Nauki (Losowo – 30 pytań)", key="n_w_l", use_container_width=True):
                 start_sesji("Tryb Nauki (Wszystkie – Losowo 30)", nazwa_bary, limit_pytan=30, tylko_wielokrotne=False)
                 st.rerun()
-            if st.button("Tryb Egzaminu (Losowo – 35 pytań)", key="e_w_l", use_container_width=True):
-                start_sesji("Tryb Egzaminu (Wszystkie – Losowo 35)", nazwa_bary, limit_pytan=35, tylko_wielokrotne=False)
+            if st.button("Tryb Egzaminu (Wszystkie pytania z bazy)", key="e_w_l", use_container_width=True):
+                start_sesji("Tryb Egzaminu (Wszystkie pytania)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=False)
                 st.rerun()
 
         with col_w2:
-            st.markdown("### 🎯 Pytania Wielokrotnego Wyboru")
+            st.markdown("### 🎯 Pytania z 1 lub 2 Poprawnymi Odpowiedziami")
             if st.button("Tryb Nauki (Kolejno)", key="n_f_k", use_container_width=True):
-                start_sesji("Tryb Nauki (Wielokrotne – Kolejno)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=True)
+                start_sesji("Tryb Nauki (1-2 poprawne – Kolejno)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=True)
                 st.rerun()
             if st.button("Tryb Nauki (Losowo – 30 pytań)", key="n_f_l", use_container_width=True):
-                start_sesji("Tryb Nauki (Wielokrotne – Losowo 30)", nazwa_bary, limit_pytan=30, tylko_wielokrotne=True)
+                start_sesji("Tryb Nauki (1-2 poprawne – Losowo 30)", nazwa_bary, limit_pytan=30, tylko_wielokrotne=True)
                 st.rerun()
-            if st.button("Tryb Egzaminu (Losowo – 35 pytań)", key="e_f_l", use_container_width=True):
-                start_sesji("Tryb Egzaminu (Wielokrotne – Losowo 35)", nazwa_bary, limit_pytan=35, tylko_wielokrotne=True)
+            if st.button("Tryb Egzaminu (Tylko pytania z 1 lub 2 poprawnymi)", key="e_f_l", use_container_width=True):
+                start_sesji("Tryb Egzaminu (1-2 poprawne)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=True)
                 st.rerun()
 
         st.write("")
@@ -606,15 +627,33 @@ elif menu_glowne == "🎮 Testy i Nauka":
             
             if "Egzamin" in st.session_state.aktywny_tryb:
                 punkty = 0
+                szczegoly_wynikow = []
                 for i, q in enumerate(lista):
                     user_ans = set(st.session_state.odpowiedzi_egzamin.get(i, []))
                     correct_ans = set(q["poprawne"])
-                    if user_ans == correct_ans:
+                    is_correct = (user_ans == correct_ans)
+                    if is_correct:
                         punkty += 1
+                    szczegoly_wynikow.append({
+                        "id": q["id"],
+                        "pytanie": q["pytanie"],
+                        "odpowiedzi": q["odpowiedzi"],
+                        "user_ans": sorted(list(user_ans)),
+                        "correct_ans": sorted(list(correct_ans)),
+                        "is_correct": is_correct,
+                        "podstawa": q.get("podstawa_prawna", "Brak"),
+                        "artykul": q.get("tresc_artykulu", "Brak")
+                    })
                 
                 procent = (punkty / len(lista)) * 100 if len(lista) > 0 else 0
-                st.markdown(f"### Twój Wynik Egzaminu: **{punkty} / {len(lista)}** ({procent:.1f}%)")
-                
+                zdane = procent >= 75.0
+
+                st.markdown("### 📊 Statystyki i Podsumowanie Egzaminu")
+                col_res1, col_res2, col_res3 = st.columns(3)
+                col_res1.metric("Uzyskany wynik", f"{punkty} / {len(lista)}")
+                col_res2.metric("Skuteczność", f"{procent:.1f}%")
+                col_res3.metric("Status egzaminu", "POZYTYWNY (ZDANE)" if zdane else "NEGATYWNY (NIEZDANE)")
+
                 zapisz_wynik_egzaminu(
                     st.session_state.zalogowany_uzytkownik,
                     st.session_state.aktywny_tryb,
@@ -623,12 +662,50 @@ elif menu_glowne == "🎮 Testy i Nauka":
                     len(lista)
                 )
 
+                st.markdown("---")
+                st.subheader("📝 Szczegółowa Analiza Odpowiedzi")
+                
+                filtr_odp = st.radio(
+                    "Filtruj pytania:",
+                    ["Wszystkie", "Tylko poprawne ✅", "Tylko błędne ❌"],
+                    horizontal=True,
+                    key="filtr_odp_egzamin"
+                )
+
+                for i, res in enumerate(szczegoly_wynikow):
+                    if filtr_odp == "Tylko poprawne ✅" and not res["is_correct"]:
+                        continue
+                    if filtr_odp == "Tylko błędne ❌" and res["is_correct"]:
+                        continue
+
+                    status_str = "✅ POPRAWNA" if res["is_correct"] else "❌ BŁĘDNA"
+                    u_ans_str = ", ".join(res["user_ans"]) if res["user_ans"] else "Brak odpowiedzi"
+                    c_ans_str = ", ".join(res["correct_ans"])
+
+                    with st.expander(f"Pytanie {i+1} [ID: {res['id']}] - {status_str} | Twoja odp: {u_ans_str} (Poprawna: {c_ans_str})"):
+                        st.markdown(f"**Treść pytania:** {res['pytanie']}")
+                        for k, v in res["odpowiedzi"].items():
+                            st.write(f"**{k}**: {v}")
+                        
+                        st.markdown("---")
+                        st.write(f"👉 **Twoja odpowiedź:** {u_ans_str}")
+                        st.write(f"✅ **Poprawna odpowiedź:** {c_ans_str}")
+                        
+                        if res["podstawa"] != "Brak" or res["artykul"] != "Brak":
+                            st.markdown(f"""
+                            <div class='legal-box'>
+                                <strong>📜 Podstawa prawna:</strong> {res['podstawa']}<br><br>
+                                <strong>📖 Treść artykułu:</strong><br>
+                                <em>{res['artykul']}</em>
+                            </div>
+                            """, unsafe_allow_html=True)
+
             if st.button("🔄 Rozpocznij ponownie"):
                 powrot_do_wyboru()
                 st.rerun()
 
 # ==============================================================================
-# 9. DODAJ PYTANIE
+# 10. DODAJ PYTANIE
 # ==============================================================================
 elif menu_glowne == "➕ Dodaj Pytanie":
     st.markdown("<div class='main-header'>Dodaj nowe pytanie do bazy</div>", unsafe_allow_html=True)
@@ -665,12 +742,13 @@ elif menu_glowne == "➕ Dodaj Pytanie":
                 if artykul: nowe_pytanie["tresc_artykulu"] = artykul
 
                 st.session_state.bazy[baza_docelowa].append(nowe_pytanie)
-                st.success(f"Dodano pytanie o ID {nowe_id}!")
+                zapisz_json(PLIK_BAZY, st.session_state.bazy)
+                st.success(f"Dodano pytanie o ID {nowe_id} i zapisano baze na stałe!")
             else:
                 st.error("Uzupełnij pola i wybierz co najmniej jedną poprawną odpowiedź!")
 
 # ==============================================================================
-# 10. PRZEGLĄD BAZY
+# 11. PRZEGLĄD BAZY
 # ==============================================================================
 elif menu_glowne == "🔍 Przegląd Bazy":
     st.markdown("<div class='main-header'>Przegląd Bazy Pytań</div>", unsafe_allow_html=True)
@@ -699,7 +777,7 @@ elif menu_glowne == "🔍 Przegląd Bazy":
                 st.info(f"Artykuł: {item['tresc_artykulu']}")
 
 # ==============================================================================
-# 11. PANEL ADMINISTRATORA
+# 12. PANEL ADMINISTRATORA
 # ==============================================================================
 elif menu_glowne == "🔑 Panel Administratora":
     st.markdown("<div class='main-header'>🔑 Panel Administratora</div>", unsafe_allow_html=True)
@@ -763,6 +841,7 @@ elif menu_glowne == "🔑 Panel Administratora":
                 st.write("**Usuwanie**")
                 if st.button("🗑️ Usuń pytanie", type="primary"):
                     st.session_state.bazy[wybrana_baza_admin].pop(pytanie_idx)
+                    zapisz_json(PLIK_BAZY, st.session_state.bazy)
                     st.success("Pytanie zostało pomyślnie usunięte z bazy!")
                     st.rerun()
 
@@ -795,13 +874,14 @@ elif menu_glowne == "🔑 Panel Administratora":
                         p["podstawa_prawna"] = podstawa
                         p["tresc_artykulu"] = artykul
 
+                        zapisz_json(PLIK_BAZY, st.session_state.bazy)
                         st.success("Zmiany zostały pomyślnie zapisane!")
                         st.rerun()
                     else:
                         st.error("Pola pytania/odpowiedzi nie mogą być puste, oraz co najmniej jedna odpowiedź musi być zaznaczona jako poprawna!")
 
 # ==============================================================================
-# 12. USTAWIENIA I MOTYW
+# 13. USTAWIENIA I MOTYW
 # ==============================================================================
 elif menu_glowne == "⚙️ Ustawienia / Motyw":
     st.markdown("<div class='main-header'>Ustawienia i Personalizacja</div>", unsafe_allow_html=True)

@@ -34,7 +34,13 @@ def wczytaj_json(sciezka, domyslne):
             return domyslne
     return domyslne
 
+Błąd wskazuje, że w linii 343 funkcja zapisz_wynik_egzaminu ciągle wywołuje zapisz_json, której brakuje w kodzie.
+
+Podmień całą funkcję zapisz_wynik_egzaminu (okolice linii 330–350) na poniższy kod, który sam zapisuje dane do GitHuba i nie potrzebuje wywoływania zapisz_json:
+
+Python
 def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
+    # Zabezpieczenie przed podwójnym zapisem w tej samej sesji
     if st.session_state.get("ostatnio_zapisany_id") == st.session_state.get("id_obecnej_sesji"):
         return
 
@@ -50,12 +56,12 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
         'procent': procent
     }
     
-    # 1. Zapis do session_state
     if user not in st.session_state.statystyki:
         st.session_state.statystyki[user] = []
+        
     st.session_state.statystyki[user].append(wpis)
     
-    # 2. Wysyłanie aktualizacji bezpośrednio do repozytorium GitHub
+    # Wysyłanie aktualizacji bezpośrednio do GitHub API
     try:
         token = st.secrets["GITHUB_TOKEN"]
         repo_name = st.secrets["GITHUB_REPO"]
@@ -63,11 +69,9 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
         g = Github(token)
         repo = g.get_repo(repo_name)
         
-        # Pobieramy plik z repozytorium
         contents = repo.get_contents("statystyki.json")
         nowa_tresc = json.dumps(st.session_state.statystyki, ensure_ascii=False, indent=4)
         
-        # Robimy commit bezpośrednio na GitHubie
         repo.update_file(
             path=contents.path,
             message=f"Auto-update statystyk: {user}",
@@ -76,7 +80,7 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
         )
         st.toast("✅ Wynik zapisany trwale na GitHubie!")
     except Exception as e:
-        st.warning(f"Zapisano lokalnie (błąd synch z GitHubem: {e})")
+        st.warning(f"Błąd zapisu do GitHuba: {e}")
         
     st.session_state.ostatnio_zapisany_id = st.session_state.get("id_obecnej_sesji")
 # ==============================================================================

@@ -691,7 +691,7 @@ elif menu_glowne == "🎮 Testy i Nauka":
                 punkty,
                 len(lista)
             )
-                    )
+        
         else:
             st.balloons()
             st.success("🎉 Zakończyłeś test / egzamin!")

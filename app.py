@@ -33,7 +33,7 @@ def wczytaj_json(sciezka, domyslne):
             return domyslne
     return domyslne
 
-ef zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
+def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
     # Zabezpieczenie przed zduplikowanym zapisem tego samego egzaminu
     if st.session_state.get("ostatnio_zapisany_id") == st.session_state.get("id_obecnej_sesji"):
         return

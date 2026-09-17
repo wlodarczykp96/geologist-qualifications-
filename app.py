@@ -35,11 +35,9 @@ def wczytaj_statystyki():
 if "statystyki" not in st.session_state:
     st.session_state.statystyki = wczytaj_statystyki()
 
-def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
-    # Zabezpieczenie przed podwójnym zapisem w tej samej sesji
-    if st.session_state.get("ostatnio_zapisany_id") == st.session_state.get("id_obecnej_sesji"):
-        return
-
+ef zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
+    st.info("🔄 Rozpoczynam próbę zapisu do GitHuba...")
+    
     procent = (punkty / max_punkty) * 100 if max_punkty > 0 else 0
     zdane = procent >= 75.0
     
@@ -57,8 +55,12 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
         
     st.session_state.statystyki[user].append(wpis)
     
-    # Wysyłanie aktualizacji bezpośrednio do GitHub API
+    # Wysyłanie do GitHub API
     try:
+        if "GITHUB_TOKEN" not in st.secrets or "GITHUB_REPO" not in st.secrets:
+            st.error("❌ Brak kluczy GITHUB_TOKEN lub GITHUB_REPO w Streamlit Secrets!")
+            return
+
         token = st.secrets["GITHUB_TOKEN"]
         repo_name = st.secrets["GITHUB_REPO"]
         
@@ -74,11 +76,9 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
             content=nowa_tresc,
             sha=contents.sha
         )
-        st.toast("✅ Wynik zapisany trwale na GitHubie!")
+        st.success("✅ Zamieszczono nowy commit w repozytorium GitHub!")
     except Exception as e:
-        st.warning(f"Błąd zapisu do GitHuba: {e}")
-        
-    st.session_state.ostatnio_zapisany_id = st.session_state.get("id_obecnej_sesji")
+        st.error(f"❌ Błąd GitHub API: {e}")
 # ==============================================================================
 # 3. MECHANIZM TRWAŁEJ SESJI I INICJALIZACJA
 # ==============================================================================

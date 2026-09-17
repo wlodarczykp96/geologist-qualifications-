@@ -34,7 +34,6 @@ def wczytaj_json(sciezka, domyslne):
     return domyslne
 
 def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
-    # Zabezpieczenie przed zduplikowanym zapisem tego samego egzaminu
     if st.session_state.get("ostatnio_zapisany_id") == st.session_state.get("id_obecnej_sesji"):
         return
 
@@ -54,10 +53,15 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
         st.session_state.statystyki[user] = []
     
     st.session_state.statystyki[user].append(wpis)
-    zapisz_json(PLIK_STATYSTYK, st.session_state.statystyki)
-
-    st.session_state.ostatnio_zapisany_id = st.session_state.get("id_obecnej_sesji")
     
+    try:
+        with open("statystyki.json", "w", encoding="utf-8") as f:
+            json.dump(st.session_state.statystyki, f, ensure_ascii=False, indent=4)
+    except Exception as e:
+        st.error(f"Błąd zapisu statystyk: {e}")
+    
+    # Zapisujemy ID sesji, żeby wiedzieć, że ten egzamin został już zapisany
+    st.session_state.ostatnio_zapisany_id = st.session_state.get("id_obecnej_sesji")
 # ==============================================================================
 # 3. MECHANIZM TRWAŁEJ SESJI I INICJALIZACJA
 # ==============================================================================

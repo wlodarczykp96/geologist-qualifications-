@@ -160,6 +160,8 @@ if 'czas_konca' not in st.session_state:
     st.session_state.czas_konca = None
 if 'test_zakonczony' not in st.session_state:
     st.session_state.test_zakonczony = False
+if 'wynik_zapisany' not in st.session_state:
+    st.session_state.wynik_zapisany = False
 
 def aktualizuj_pamiec_sesji(user=None, theme=None):
     if user is not None:
@@ -339,6 +341,7 @@ def start_sesji(tryb, baza_nazwa, limit_pytan=None, tylko_wielokrotne=False):
     st.session_state.sprawdzono_odpowiedz = False
     st.session_state.odpowiedzi_egzamin = {}
     st.session_state.test_zakonczony = False
+    st.session_state.wynik_zapisany = False
     st.session_state.id_obecnej_sesji = time.time()
     
     pula = pobierz_pytania_z_bazy(baza_nazwa, tylko_wielokrotne=tylko_wielokrotne)
@@ -360,6 +363,7 @@ def powrot_do_wyboru():
     st.session_state.indeks = 0
     st.session_state.sprawdzono_odpowiedz = False
     st.session_state.test_zakonczony = False
+    st.session_state.wynik_zapisany = False
     st.session_state.czas_konca = None
 
 # ==============================================================================
@@ -671,6 +675,24 @@ elif menu_glowne == "🎮 Testy i Nauka":
 
             if st.button("🏁 Zakończ Test / Egzamin"):
                 st.session_state.test_zakonczony = True
+
+                if "Egzamin" in st.session_state.aktywny_tryb and not st.session_state.wynik_zapisany:
+                    punkty = sum(
+                        1 for i, q in enumerate(lista)
+                        if set(st.session_state.odpowiedzi_egzamin.get(i, [])) == set(q["poprawne"])
+                    )
+
+                    zapisz_wynik_egzaminu(
+                        st.session_state.zalogowany_uzytkownik,
+                        st.session_state.aktywny_tryb,
+                        st.session_state.wybrana_baza,
+                        punkty,
+                        len(lista)
+                    )
+                    st.session_state.wynik_zapisany = True
+
+                st.success("🎉 Egzamin zakończony! Wynik został zapisany.")
+                st.balloons()
                 st.rerun()
 
         else:

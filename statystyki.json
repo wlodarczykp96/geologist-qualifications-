@@ -1,5 +1,14 @@
 {
-    "Piotrek": [],
+    "Piotrek": [
+        {
+            "data": "2026-09-17",
+            "tryb": "Egzamin (Losowo – 30 pytań)",
+            "baza": "BAZA PYTAŃ - CZĘŚĆ 1 (Hydrogeologia i geologia inżynierska [...])",
+            "zdane": true,
+            "wynik_str": "26/30",
+            "procent": 86.66666666666667
+        }
+    ],
     "Edyta": [],
     "Gość": []
 }

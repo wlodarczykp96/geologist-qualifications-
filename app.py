@@ -442,7 +442,7 @@ elif menu_glowne == "🎮 Testy i Nauka":
             st.rerun()
 
         # Przycisk uruchamiający egzamin tylko z pytaniami mającymi dokładnie 2 poprawne odpowiedzi
-        if st.button("🎯 Uruchom Egzamin z pytań mających dokładnie 2 poprawne odpowiedzi", use_container_width=True):
+        if st.button("🎯 Uruchom Egzamin z WIELOKROTNEGO WYBORU (50 pytań / 30 min)", use_container_width=True):
             st.session_state.wybrana_baza = "Cała baza (wszystkie pytania)"
             start_sesji("Tryb Egzaminu z pytań (dokładnie 2 poprawne)", "Cała baza (wszystkie pytania)", limit_pytan=None, tylko_dwukrotne=True)
             st.rerun()

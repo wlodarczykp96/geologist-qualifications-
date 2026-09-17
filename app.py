@@ -35,6 +35,51 @@ def wczytaj_statystyki():
 if "statystyki" not in st.session_state:
     st.session_state.statystyki = wczytaj_statystyki()
 
+def zapisz_json(sciezka, dane):
+    try:
+        with open(sciezka, "w", encoding="utf-8") as f:
+            json.dump(dane, f, ensure_ascii=False, indent=4)
+    except Exception as e:
+        st.error(f"❌ Błąd zapisu lokalnego: {e}")
+
+    try:
+        if "GITHUB_TOKEN" not in st.secrets or "GITHUB_REPO" not in st.secrets:
+            st.error("❌ BRAK KLUCZY w Streamlit Secrets!")
+            return
+
+        token = st.secrets["GITHUB_TOKEN"].strip()
+        if token.startswith("gghp_"):
+            token = token[1:]
+
+        repo_name = st.secrets["GITHUB_REPO"].strip()
+        repo_name = repo_name.replace("https://github.com/", "").strip("/")
+
+        g = Github(token)
+        repo = g.get_repo(repo_name)
+
+        nowa_tresc = json.dumps(dane, ensure_ascii=False, indent=4)
+
+        try:
+            contents = repo.get_contents(sciezka)
+            repo.update_file(
+                path=contents.path,
+                message="Auto-update statystyk egzaminu",
+                content=nowa_tresc,
+                sha=contents.sha
+            )
+        except Exception:
+            repo.create_file(
+                path=sciezka,
+                message="Utworzenie pliku statystyk",
+                content=nowa_tresc
+            )
+
+        st.cache_data.clear()
+        st.success("✅ Zapisano i zsynchronizowano z GitHubem!")
+
+    except Exception as e:
+        st.error(f"❌ Błąd synchronizacji z GitHub: {e}")\
+        
 def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
     st.info("🔄 Rozpoczynam próbę zapisu do GitHuba...")
     

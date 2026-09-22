@@ -95,6 +95,14 @@
             "zdane": true,
             "wynik_str": "29/30",
             "procent": 96.66666666666667
+        },
+        {
+            "data": "2026-09-22",
+            "tryb": "Egzamin (Losowo – 30 pytań)",
+            "baza": "BAZA PYTAŃ - CZĘŚĆ 1 (Hydrogeologia i geologia inżynierska [...])",
+            "zdane": true,
+            "wynik_str": "27/30",
+            "procent": 90.0
         }
     ],
     "Edyta": [],

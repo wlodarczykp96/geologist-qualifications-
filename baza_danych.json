@@ -2045,8 +2045,7 @@
                 "C": "Dokumenty finansowe"
             },
             "poprawne": [
-                "A",
-                "B"
+                "A"
             ],
             "podstawa_prawna": "Art. 116 ust. 3 Prawo geologiczne i górnicze",
             "tresc_artykulu": "W skład dokumentacji mierniczo-geologicznej wchodzą dokumenty miernicze i geologiczne, w tym dokumenty pomiarowe, obliczeniowe i kartograficzne, stanowiące jej treść."
@@ -2411,7 +2410,7 @@
             "odpowiedzi": {
                 "A": "prawo do nieodpłatnego korzystania z niej;",
                 "B": "wyłączne prawo do korzystania z informacji geologicznej w celu ubiegania się o wykonywanie działalności w zakresie: - wydobywania kopalin ze złóż, - podziemnego bezzbiornikowego magazynowania substancji oraz podziemnego składowania odpadów, - w jakim wymagane jest pozwolenie wodnoprawne w okresie 5 lat od dnia utraty mocy decyzji, na podstawie której wykonano prace będące źródłem informacji;",
-                "C": "wyłącznie prawo do korzystania z informacji geologicznej w celu ubiegania się o wykorzystywanie w zakresie: wydobywania kopalin ze złóż, podziemnego bezzbiornikowego magazynowania substancji oraz podziemnego składowania odpadów- jakim wymagane jest pozwolenie wodnoprawne w okresie 3 lat od dnia utraty mocy decyzji, na podstawie której wykonano pracę będące źródłem informacji "
+                "C": "prawo sprzedaży uzyskanych informacji;"
             },
             "poprawne": [
                 "A",
@@ -2571,8 +2570,8 @@
             "pytanie": "Podstawę określenia wynagrodzenia za korzystanie z informacji geologicznej:",
             "odpowiedzi": {
                 "A": "opinia organu koncesyjnego;",
-                "B": "wycena określająca koszty projektowania, wykonywania i",
-                "C": "wycena określająca koszty projektowania, wykonywania i"
+                "B": "wycena określająca koszty projektowania, wykonywania i dokumentowaniu prac geologicznych, sfinansowania przez podmiot ubiegający się o korzystanie z tej informacji",
+                "C": "wycena określająca koszty projektowania, wykonywania i dokumentowania prac geologicznych przygotowanych przez państwową służbę geologiczną "
             },
             "poprawne": [
                 "B"

@@ -2829,7 +2829,7 @@
             "pytanie": "Organy administracji geologicznej, stosownie do zakresu swojej właściwości, gromadzą informację geologiczną:",
             "odpowiedzi": {
                 "A": "pochodzącą z bieżącego dokumentowania przebiegu robót geologicznych i ich wyników;",
-                "B": "przekazywaną przez podmioty wykonujące prace geologiczne; przedstawione w formie wyników ;",
+                "B": "przekazywaną przez podmioty wykonujące prace geologiczne; przedstawione w formie wyników;",
                 "C": "przekazywana przez państwową służbę geologiczną;"
             },
             "poprawne": [

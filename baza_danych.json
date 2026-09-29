@@ -2394,9 +2394,9 @@
             "id": 37,
             "pytanie": "Temu, kto ponosząc koszt prac prowadzonych w wyniku decyzji wydanych na podstawie ustawy, uzyskał informację geologiczną, przysługuje:",
             "odpowiedzi": {
-                "A": "prawo własności do tej informacji",
-                "B": "prawo do nieodpłatnego korzystania z niej.",
-                "C": "roszczenie wobec Skarbu Państwa o zwrot poniesionych kosztów."
+                "A": "prawo własności do tej informacji;",
+                "B": "prawo do nieodpłatnego korzystania z niej;",
+                "C": "roszczenie wobec Skarbu Państwa o zwrot poniesionych kosztów;"
             },
             "poprawne": [
                 "B"

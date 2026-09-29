@@ -2442,10 +2442,10 @@
                 "C": "wniesie na rzecz Skarbu Państwa opłatę ryczałtową za korzystanie z informacji geologicznej;"
             },
             "poprawne": [
-                "B"
+                "A"
             ],
             "podstawa_prawna": "Art. 99 ust. 3 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Podmiot, któremu przysługuje wyłączne prawo do korzystania z informacji geologicznej, zachowuje to prawo, jeżeli przed upływem 5 lat od dnia utraty mocy decyzji, na podstawie której wykonano prace będące źródłem informacji, uzyskał decyzję stanowiącą podstawę wykonywania działalności w zakresie poszukiwania złóż kopalin."
+            "tresc_artykulu": "Podmiot, któremu przysługuje wyłączne prawo do korzystania z informacji geologicznej, zachowuje to prawo, jeżeli przed upływem określonego terminu uzyska decyzję stanowiącą podstawę do wykonywania działalności."
         },
         {
             "id": 41,
@@ -2456,10 +2456,10 @@
                 "C": "wyłącznie przez czas określony w takiej decyzji,"
             },
             "poprawne": [
-                "A"
+                "B"
             ],
             "podstawa_prawna": "Art. 99 ust. 3 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Ten, komu przysługuje wyłącznie prawo do korzystania z informacji geologicznej, po uzyskaniu decyzji stanowiącej podstawę wykonywania działalności w zakresie: wydobywania kopalin ze złoża, podziemnego bezzbiornikowego magazynowania substancji oraz podziemnego składowania odpadów, w jakim wymagane jest pozwolenie wodnoprawne, zachowuje to prawo przez czas określony w decyzji oraz dodatkowo przez 5 lat od dnia utraty mocy."
+            "tresc_artykulu": "Zachowuje to prawo przez czas określony w tej decyzji oraz dodatkowo przez okres 2 lat od dnia utraty jej mocy."
         },
         {
             "id": 42,
@@ -2470,6 +2470,7 @@
                 "C": "Skarb Państwa;"
             },
             "poprawne": [
+                "B",
                 "C"
             ],
             "podstawa_prawna": "Art. 100 ust. 1 Prawo geologiczne i górnicze",
@@ -2495,7 +2496,7 @@
             "odpowiedzi": {
                 "A": "ustawy o dostępie do informacji o środowisku;",
                 "B": "ustawy o dostępie do informacji publicznej;",
-                "C": "Kodeksu Cywilnego;"
+                "C": "Kodeksu cywilnego;"
             },
             "poprawne": [
                 "C"
@@ -2516,36 +2517,37 @@
                 "C"
             ],
             "podstawa_prawna": "Art. 100 ust. 2 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Korzystanie z informacji geologicznej, do której prawo przysługuje Skarbowi Państwa, jest nieodpłatne, chyba że ustawa stanowi inaczej. Udostępnianie informacji geologicznej w celu wykonywania działalności gospodarczej następuje odpłatnością."
+            "tresc_artykulu": "Korzystanie z informacji geologicznej, do której prawo przysługuje Skarbowi Państwa, jest nieodpłatne, chyba że ustawa stanowi inaczej."
         },
         {
             "id": 46,
             "pytanie": "Korzystanie z informacji geologicznej, do której prawa przysługują Skarbowi Państwa, jest:",
             "odpowiedzi": {
                 "A": "odpłatne w sytuacji kiedy korzystanie z informacji geologicznej związane jest z udostępnieniem danych geologicznych;",
-                "B": "Realizowane wyłącznie za wynagrodzeniem;",
-                "C": "Odpłatne z wyjątkiem sytuacji kiedy korzystamy z informacji geologicznej, następuje w celu wykonywania działalności w zakresie poszukiwania złóż kopalin;"
+                "B": "podziemnego bezzbiornikowego magazynowania substancji oraz podziemnego składowania odpadów;",
+                "C": "odpłatne z wyjątkiem sytuacji kiedy korzystanie z informacji geologicznej, następuje w celu wykonywania działalności w zakresie poszukiwania złóż kopalin; w jakim wymagane pozwolenie wodnoprawne;"
             },
             "poprawne": [
                 "A"
             ],
             "podstawa_prawna": "Art. 100 ust. 2 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Korzystanie z informacji geologicznej, do której prawo przysługuje skarbowi państwa, jest nieodpłatne, chyba że ustawa stanowi inaczej. Udostępnianie informacji geologicznej w celu wykonywania działalności gospodarczej następuje za odpłatnością."
+            "tresc_artykulu": "Korzystanie z informacji geologicznej, do której prawo przysługuje Skarbowi Państwa, jest nieodpłatne, chyba że ustawa stanowi inaczej."
         },
         {
             "id": 47,
             "pytanie": "Korzystanie z informacji geologicznej, do której prawa przysługują Skarbowi Państwa, następuje w drodze umowy za wynagrodzeniem w celu wykonywania działalności w zakresie:",
             "odpowiedzi": {
                 "A": "wydobywania kopalin ze złóż,",
-                "B": "Podziemnego bezzbiornikowego magazynowania substancji oraz podziemnego składowania odpadów;",
-                "C": "W jakim wymagane pozwolenie wodnoprawne;"
+                "B": "związane jest z badaniem powodującym uszkodzenie, zniszczenie lub zużycie próbki geologicznej, bez względu na cel korzystania;",
+                "C": "związane jest z udostępnieniem danych geologicznych, bez względu na cel korzystania;"
             },
             "poprawne": [
                 "A",
-                "B"
+                "B",
+                "C"
             ],
             "podstawa_prawna": "Art. 100 ust. 2 pkt 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Rozp. prawem do informacji geologicznej przysługuje skarbowi państwa następuje za wynagrodzeniem w drodze umowy jeżeli: następuje w celu wykonywania działalności w zakresie wydobywania kopalin ze złóż podziemnego bezzbiornikowego magazynowania substancji oraz podziemnego składowania odpadów; wiąże się z badaniem powodując uszkodzenie zniszczenie lub zużycie próbki geologicznej, bez względu na cel korzystania."
+            "tresc_artykulu": "Rozporządzenie prawem do informacji geologicznej w celu wykonywania działalności w zakresie wydobywania kopalin ze złóż następuje za wynagrodzeniem w drodze umowy."
         },
         {
             "id": 48,
@@ -2557,24 +2559,25 @@
             },
             "poprawne": [
                 "A",
+                "B",
                 "C"
             ],
             "podstawa_prawna": "Art. 100 ust. 2 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Rozp. prawem do informacji geologicznej przysługuje skarbowi państwa następuje za wynagrodzeniem w drodze umowy jeżeli: następuje w celu wykonywania działalności w zakresie wydobywania kopalin ze złóż podziemnego bezzbiornikowego magazynowania substancji oraz podziemnego składowania odpadów; wiąże się z badaniem powodując uszkodzenie zniszczenie lub zużycie próbki geologicznej, bez względu na cel korzystania."
+            "tresc_artykulu": "Rozporządzenie prawem do informacji geologicznej w celu wykonywania działalności gospodarczej następuje za wynagrodzeniem w drodze umowy."
         },
         {
             "id": 49,
             "pytanie": "Podstawę określenia wynagrodzenia za korzystanie z informacji geologicznej:",
             "odpowiedzi": {
                 "A": "opinia organu koncesyjnego;",
-                "B": "wycena określająca koszty projektowania, wykonywania i",
-                "C": "wycena określająca koszty projektowania, wykonywania i"
+                "B": "wycena określająca koszty projektowania, wykonywania i dokumentowanieprac geologicznych, sfinansowanych przez podmiot ubiegające się o korzystanie z tej informacji.",
+                "C": "wycena określająca koszty projektowania, wykonywania i dokumentowania prac geologicznych przygotowane przez państwową służbą geologiczną."
             },
             "poprawne": [
                 "B"
             ],
             "podstawa_prawna": "Art. 100 ust. 4 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Wysokość wynagrodzenia ustala się na podstawie wyceny określającej koszty projektowania, wykonywania i dokumentowania prac geologicznych."
+            "tresc_artykulu": "Wysokość wynagrodzenia ustala się na podstawie wyceny określającej koszty projektowania, wykonywania i dokumentowania prac geologicznych. wycenę sporządza podmiot ubiegające się o korzystanie z informacji geologicznej."
         },
         {
             "id": 50,

@@ -2354,7 +2354,7 @@
             "odpowiedzi": {
                 "A": "Minister właściwy do spraw wewnętrznych;",
                 "B": "Organ nadzoru górniczego;",
-                "C": "Wójt gminy lub burmistrz (prezydent) miasta"
+                "C": "Wójt gminy lub burmistrz (prezydent) miasta;"
             },
             "poprawne": [
                 "B"

@@ -2116,8 +2116,8 @@
             "pytanie": "Właściwy organ administracji geologicznej może w drodze decyzji wstrzymać działalność określoną ustawą Prawo geologiczne i górnicze, jeżeli jest wykonywana:",
             "odpowiedzi": {
                 "A": "Z naruszeniem warunków określonych w koncesji;",
-                "B": "Bez zatwierdzonego projektu robót geologicznych",
-                "C": "Z naruszeniem warunków zapewniających bezpieczeństwo finansowe przedsiębiorcy."
+                "B": "Bez zatwierdzonego projektu robót geologicznych;",
+                "C": "Z naruszeniem warunków zapewniających bezpieczeństwo finansowe przedsiębiorcy;"
             },
             "poprawne": [
                 "A",

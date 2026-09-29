@@ -2537,13 +2537,12 @@
             "pytanie": "Korzystanie z informacji geologicznej, do której prawa przysługują Skarbowi Państwa, następuje w drodze umowy za wynagrodzeniem w celu wykonywania działalności w zakresie:",
             "odpowiedzi": {
                 "A": "wydobywania kopalin ze złóż,",
-                "B": "związane jest z badaniem powodującym uszkodzenie, zniszczenie lub zużycie próbki geologicznej, bez względu na cel korzystania;",
-                "C": "związane jest z udostępnieniem danych geologicznych, bez względu na cel korzystania;"
+                "B": "Podziemnego bezzbiornikowego magazynowania substancji oraz podziemnego składowania odpadów;",
+                "C": "W jakim wymagane pozwolenie wodnoprawne;"
             },
             "poprawne": [
                 "A",
-                "B",
-                "C"
+                "B"
             ],
             "podstawa_prawna": "Art. 100 ust. 2 pkt 1 Prawo geologiczne i górnicze",
             "tresc_artykulu": "Rozporządzenie prawem do informacji geologicznej w celu wykonywania działalności w zakresie wydobywania kopalin ze złóż następuje za wynagrodzeniem w drodze umowy."

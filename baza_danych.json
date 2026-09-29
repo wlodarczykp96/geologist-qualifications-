@@ -2009,12 +2009,11 @@
             "id": 11,
             "pytanie": "Obowiązek posiadania dokumentacji mierniczo-geologicznej nałożony jest na przedsiębiorcę, który uzyskał koncesję na:",
             "odpowiedzi": {
-                "A": "podziemne bezzbiornikowe magazynowanie substancji",
-                "B": "poszukiwanie i rozpoznawanie złóż kopalin objętych własnością górniczą",
-                "C": "Podziemne składowanie odpadów"
+                "A": "Poszukiwanie i rozpoznawanie złóż kopalin objętych własnością górniczą;",
+                "B": "Podziemne bezzbiornikowe magazynowanie substancji;",
+                "C": "Podziemne składowanie odpadów;"
             },
             "poprawne": [
-                "A",
                 "B",
                 "C"
             ],

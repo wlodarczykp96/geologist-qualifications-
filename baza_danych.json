@@ -1951,9 +1951,9 @@
             "id": 7,
             "pytanie": "Plan ruchu zakładu górniczego sporządza się na okres:",
             "odpowiedzi": {
-                "A": "Od 2 do 6 lat albo na cały planowany okres prowadzenia ruchu, jeżeli jest on krótszy",
-                "B": "Do 8 lat niezależnie od planowanego okresu",
-                "C": "Na cały planowany okres prowadzenia ruchu niezależnie od jego długości "
+                "A": "od 2 do 6 lat albo na cały planowany okres",
+                "B": "do 8 lat niezależnie od planowanego okresu",
+                "C": "na cały planowany okres prowadzenia ruchu niezależnie od"
             },
             "poprawne": [
                 "A"
@@ -1965,7 +1965,7 @@
             "id": 8,
             "pytanie": "Wniosek o zatwierdzenie planu ruchu zakładu górniczego przedkłada się:",
             "odpowiedzi": {
-                "A": "Organowi nadzoru górniczego właściwemu dla miejsca wykonywania robót objętych planem;",
+                "A": "Organowi nadzoru górniczego właściwemu dla miejsca wykonywania robót objętych planem",
                 "B": "Prezeswoi Wyższego Urzędu Górniczego;",
                 "C": "Organowi koncesyjnemu"
             },
@@ -1993,8 +1993,8 @@
             "id": 10,
             "pytanie": "Przedsiębiorca lub podmiot wykonujący w zakresie swojej działalności zawodowej roboty strzałowe powierzone mu w ruchu zakładu górniczego, są zobowiązani:",
             "odpowiedzi": {
-                "A": "Przestrzegać wymagań dotyczących bezpiecznego przechowywania środków strzałowych;",
-                "B": "Zapewnić ewidencjonowanie znajdujących się w zakładzie górniczym tam środków wykorzystywanych;",
+                "A": "Przestrzegać wymagań dotyczących bezpiecznego przechowywania środków strzałowych",
+                "B": "Zapewnić ewidencjonowanie znajdujących się w zakładzie górniczym tam środków wykorzystywanych",
                 "C": "Zapewnić prowadzenie wykazu używanych środków strzałowych i sprzętu strzałowego, określającego warunki ich używania;"
             },
             "poprawne": [
@@ -2009,11 +2009,12 @@
             "id": 11,
             "pytanie": "Obowiązek posiadania dokumentacji mierniczo-geologicznej nałożony jest na przedsiębiorcę, który uzyskał koncesję na:",
             "odpowiedzi": {
-                "A": "Poszukiwanie i rozpoznawanie złóż kopalin objętych własnością górniczą;",
-                "B": "Podziemne bezzbiornikowe magazynowanie substancji;",
-                "C": "Podziemne składowanie odpadów;"
+                "A": "podziemne bezzbiornikowe magazynowanie substancji",
+                "B": "poszukiwanie i rozpoznawanie złóż kopalin objętych własnością górniczą",
+                "C": "Podziemne składowanie odpadów"
             },
             "poprawne": [
+                "A",
                 "B",
                 "C"
             ],
@@ -2024,7 +2025,7 @@
             "id": 12,
             "pytanie": "Obowiązek posiadania dokumentacji mierniczo-geologicznej nałożony jest na przedsiębiorcę, który uzyskał koncesję na:",
             "odpowiedzi": {
-                "A": "poszukiwanie i rozpoznawanie złóż kopalin objętych własnością górniczą;",
+                "A": "poszukiwanie i rozpoznawanie złóż kopalin",
                 "B": "wydobywanie kopalin ze złóż, z wyjątkiem koncesji udzielonej przez starostę;",
                 "C": "wydobywanie kopalin ze złóż, niezależnie od organu udzielającego koncesji;"
             },
@@ -2046,14 +2047,14 @@
             "poprawne": [
                 "A"
             ],
-            "podstawa_prawna": "Art. 116 ust. 2 Prawo geologiczne i górnicze",
+            "podstawa_prawna": "Art. 116 ust. 3 Prawo geologiczne i górnicze",
             "tresc_artykulu": "W skład dokumentacji mierniczo-geologicznej wchodzą dokumenty miernicze i geologiczne, w tym dokumenty pomiarowe, obliczeniowe i kartograficzne, stanowiące jej treść."
         },
         {
             "id": 14,
             "pytanie": "Przy wykonywaniu nadzoru i kontroli upoważnionym pracownikom administracji geologicznej oraz pracownikom organów nadzoru górniczego, w granicach ich właściwości rzeczowej i miejscowej przysługuje, po okazaniu legitymacji służbowej, prawo:",
             "odpowiedzi": {
-                "A": "Całodobowego wstępu do miejsc wykonywania robót geologicznych;",
+                "A": "Całodobowego wstępu do miejsc wykonywania robót objętych własnością",
                 "B": "Dostępu do niezbędnych informacji;",
                 "C": "Żądania udzielenia wyjaśnień w zakresie niezbędnym do sprawowania nadzoru i kontroli;"
             },
@@ -2079,7 +2080,7 @@
                 "C"
             ],
             "podstawa_prawna": "Art. 156 ust. 1 pkt 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Przy wykonywaniu nadzoru i kontroli upoważnionym pracownikom organów nadzoru górniczego oraz pracownikom organów administracji geologicznej, w granicach ich właściwości rzeczowej i miejscowej, przysługuje, po okazaniu legitymacji służbowej, prawo całodobowego wstępu, wraz z niezbędnym sprzętem, do miejsc wykonywania prac geologicznych, robót górniczych, zakładów górniczych, a także na tereny i do obiektów, w których wykonywana jest działalność regulowana ustawą."
+            "tresc_artykulu": "Przy wykonywaniu nadzoru i kontroli upoważnionym pracownikom... przysługuje, po okazaniu legitymacji służbowej, prawo całodobowego wstępu... do zakładów górniczych..."
         },
         {
             "id": 16,
@@ -2116,8 +2117,8 @@
             "pytanie": "Właściwy organ administracji geologicznej może w drodze decyzji wstrzymać działalność określoną ustawą Prawo geologiczne i górnicze, jeżeli jest wykonywana:",
             "odpowiedzi": {
                 "A": "Z naruszeniem warunków określonych w koncesji;",
-                "B": "Bez zatwierdzonego projektu robót geologicznych;",
-                "C": "Z naruszeniem warunków zapewniających bezpieczeństwo finansowe przedsiębiorcy;"
+                "B": "Bez zatwierdzonego projektu robót geologicznych",
+                "C": "Z naruszeniem warunków zapewniających bezpieczeństwo finansowe przedsiębiorcy."
             },
             "poprawne": [
                 "A",
@@ -2187,8 +2188,8 @@
             "pytanie": "Do starosty jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące:",
             "odpowiedzi": {
                 "A": "Warunków hydrogeologicznych w związku z zamierzonym wykonywaniem przedsięwzięć mogących negatywnie oddziaływać na wody podziemne, w tym powodować ich zanieczyszczenie, dotyczących przedsięwzięć mogących znacząco oddziaływać na środowisko, dla których obowiązek sporządzenia raportu o oddziaływaniu przedsięwzięcia na środowisko może być wymagany, z wyłączeniem przedsięwzięć mogących negatywnie oddziaływać na wody lecznicze;",
-                "B": "Wykonywaniem przedsięwzięć mogących negatywnie oddziaływać na wody po dziemne, w tym powodować ich zanieczyszczenie, dotyczących przedsięwzięć mogących znacząco oddziaływać na środowisko, dla których obowiązek sporządzenia raportu o oddziaływaniu przedsięwzięcia na środowisko może być wymagany, w tym przedsięwzięć mogących negatywnie oddziaływać na wody lecznicze;",
-                "C": "Ustanawianiem obszarów ochronnych zbiorników wód podziemnych;"
+                "B": "wykonywaniem przedsięwzięć mogących negatywnie oddziaływać na wody podziemne, w tym powodować ich zanieczyszczenie, dotyczących przedsięwzięć mogących znacząco oddziaływać na środowisko, dla których obowiązek sporządzenia raportu o oddziaływaniu przedsięwzięcia na środowisko może być wymagany, w tym przedsięwzięć mogących negatywnie oddziaływać na wody lecznicze;",
+                "C": "ustanawianiem obszarów ochronnych zbiorników wód podziemnych;"
             },
             "poprawne": [
                 "A"
@@ -2285,8 +2286,8 @@
                 "A",
                 "B"
             ],
-            "podstawa_prawna": "Art. 161 ust. 3 pkt 1, Art 10 ust. 1 i 2 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Zgodnie z art. 10 ust. 1 ustawy, złoża gipsu i anhydrytu są objęte własnością górniczą \nZgodnie z art. 10 ust. 2 ustawy, złoża wód leczniczych są objęte własnością górniczą"
+            "podstawa_prawna": "Art. 161 ust. 3 pkt 1 Prawo geologiczne i górnicze",
+            "tresc_artykulu": "Minister właściwy do spraw środowiska jest organem administracji geologicznej... dotyczących złóż kopalin objętych własnością górniczą."
         },
         {
             "id": 30,
@@ -2297,11 +2298,10 @@
                 "C": "Otworów wiertniczych do rozpoznania budowy głębokiego podłoża, niezwiązanego z dokumentowaniem złóż kopalin;"
             },
             "poprawne": [
-                "B",
                 "C"
             ],
-            "podstawa_prawna": "Art. 161 ust. 3 pkt 1a i 9 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "pkt 1a Minister właściwy do spraw środowiska jest organem administracji geologicznej pierwszej instancji w sprawach dotyczących określania warunków hydrogeologicznych w związku z projektowaniem odwodnień złóż kopalin objętych własnością górniczą.\npkt 9 Minister właściwy do spraw środowiska jest organem administracji geologicznej pierwszej instancji w sprawach dotyczących otworów wiertniczych do rozpoznania budowy głębokiego podłoża, niezwiązanego z dokumentowaniem złóż kopalin."
+            "podstawa_prawna": "Art. 161 ust. 3 pkt 4 Prawo geologiczne i górnicze",
+            "tresc_artykulu": "Minister właściwy do spraw środowiska jest organem administracji geologicznej... dotyczących otworów wiertniczych do rozpoznania budowy głębokiego podłoża, niezwiązanego z dokumentowaniem złóż kopalin."
         },
         {
             "id": 31,
@@ -2321,7 +2321,7 @@
             "id": 32,
             "pytanie": "Organy nadzoru górniczego sprawują nadzór i kontrolę nad ruchem zakładów górniczych, w szczególności w zakresie:",
             "odpowiedzi": {
-                "A": "Bezpieczeństwa i higieny pracy;",
+                "A": "Bezpieczeństwa i Higieny pracy;",
                 "B": "Bezpieczeństwa pożarowego",
                 "C": "Bezpieczeństwa finansowego przedsiębiorcy górniczego;"
             },
@@ -2354,7 +2354,7 @@
             "odpowiedzi": {
                 "A": "Minister właściwy do spraw wewnętrznych;",
                 "B": "Organ nadzoru górniczego;",
-                "C": "Wójt gminy lub burmistrz (prezydent) miasta;"
+                "C": "Wójt gminy lub burmistrz (prezydent) miasta"
             },
             "poprawne": [
                 "B"
@@ -2394,9 +2394,9 @@
             "id": 37,
             "pytanie": "Temu, kto ponosząc koszt prac prowadzonych w wyniku decyzji wydanych na podstawie ustawy, uzyskał informację geologiczną, przysługuje:",
             "odpowiedzi": {
-                "A": "prawo własności do tej informacji;",
-                "B": "prawo do nieodpłatnego korzystania z niej;",
-                "C": "roszczenie wobec Skarbu Państwa o zwrot poniesionych kosztów;"
+                "A": "prawo własności do tej informacji",
+                "B": "prawo do nieodpłatnego korzystania z niej.",
+                "C": "roszczenie wobec Skarbu Państwa o zwrot poniesionych kosztów."
             },
             "poprawne": [
                 "B"
@@ -2416,8 +2416,8 @@
                 "A",
                 "C"
             ],
-            "podstawa_prawna": "Art. 99 ust. 2 pkt 2 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Podmiotowi, który poniósł koszty... przysługuje wyłączne prawo do korzystania z informacji geologicznej w celu ubiegania się o wykonywanie działalności w zakresie wydobywania kopalin, podziemnego bezzbiornikowego magazynowania substancji albo podziemnego składowania odpadów."
+            "podstawa_prawna": "Art. 99 ust. 1 Prawo geologiczne i górnicze",
+            "tresc_artykulu": "Temu, kto ponosząc koszt prac geologicznych prowadzonych w wyniku decyzji wydanych na podstawie ustawy uzyska informację geologiczną, przysługuje wyłącznie prawo do korzystania z niej w celu ubiegania się o wykonywanie działalności w zakresie wydobywania kopalin ze złóż podziemnego bez tego bezzbiornikowego magazynowania substancji I podziemnego składowania odpadów."
         },
         {
             "id": 39,
@@ -2666,7 +2666,7 @@
         },
         {
             "id": 56,
-            "pytanie": "Zadania Skarbu Państwa dotyczącego rozporządzenia prawem do informacji geologicznej, w celu wykonania działalności polegającej na wydobywaniu kopalin ze złoża, wykonuje",
+            "pytanie": "Zadania Skarbu Państwa dotyczącego:",
             "odpowiedzi": {
                 "A": "starosta powiatowy",
                 "B": "marszałek województwa",

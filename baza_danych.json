@@ -2679,17 +2679,17 @@
         },
         {
             "id": 57,
-            "pytanie": "Zadania Skarbu Państwa dotyczące rozporządzania prawem do informacji geologicznej, w celu wykonywania działalności w zakresie w jakim wymagane jest pozwolenie wodnoprawne, wykonuje:",
+            "pytanie": "Zadania Skarbu Państwa dotyczące rozporządzania prawem do informacji geologicznej wykonuje:",
             "odpowiedzi": {
                 "A": "starosta powiatowy;",
                 "B": "marszałek województwa;",
                 "C": "minister właściwy do spraw środowiska;"
             },
             "poprawne": [
-                "B"
+                "C"
             ],
             "podstawa_prawna": "Art. 100 ust. 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Prawem do informacji geologicznej przysługującym Skarbowi Państwa rozporządza... minister właściwy do spraw środowiska."
+            "tresc_artykulu": "Prawem do informacji geologicznej przysługującym Skarbowi Państwa rozporządza, w granicach minister właściwy do spraw środowiska."
         },
         {
             "id": 58,

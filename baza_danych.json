@@ -2697,11 +2697,12 @@
             "odpowiedzi": {
                 "A": "wydobywania kopalin ze złóż;",
                 "B": "podziemnego bezzbiornikowego magazynowania substancji oraz podziemnego składowania odpadów;",
-                "C": "w jakim wymagane jest pozwolenie wodno prawne;"
+                "C": "w jakim wymagane jest pozwolenie wodnoprawne;"
             },
             "poprawne": [
                 "A",
-                "B"
+                "B",
+                "C"
             ],
             "podstawa_prawna": "Art. 100 ust. 1 Prawo geologiczne i górnicze",
             "tresc_artykulu": "Prawem do informacji geologicznej przysługującym Skarbowi Państwa rozporządza, w granicach określonych ustawą, minister właściwy do spraw środowiska."

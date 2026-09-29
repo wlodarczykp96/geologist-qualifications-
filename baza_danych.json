@@ -2187,8 +2187,8 @@
             "pytanie": "Do starosty jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące:",
             "odpowiedzi": {
                 "A": "Warunków hydrogeologicznych w związku z zamierzonym wykonywaniem przedsięwzięć mogących negatywnie oddziaływać na wody podziemne, w tym powodować ich zanieczyszczenie, dotyczących przedsięwzięć mogących znacząco oddziaływać na środowisko, dla których obowiązek sporządzenia raportu o oddziaływaniu przedsięwzięcia na środowisko może być wymagany, z wyłączeniem przedsięwzięć mogących negatywnie oddziaływać na wody lecznicze;",
-                "B": "wykonywaniem przedsięwzięć mogących negatywnie oddziaływać na wody podziemne, w tym powodować ich zanieczyszczenie, dotyczących przedsięwzięć mogących znacząco oddziaływać na środowisko, dla których obowiązek sporządzenia raportu o oddziaływaniu przedsięwzięcia na środowisko może być wymagany, w tym przedsięwzięć mogących negatywnie oddziaływać na wody lecznicze;",
-                "C": "ustanawianiem obszarów ochronnych zbiorników wód podziemnych;"
+                "B": "Wykonywaniem przedsięwzięć mogących negatywnie oddziaływać na wody po dziemne, w tym powodować ich zanieczyszczenie, dotyczących przedsięwzięć mogących znacząco oddziaływać na środowisko, dla których obowiązek sporządzenia raportu o oddziaływaniu przedsięwzięcia na środowisko może być wymagany, w tym przedsięwzięć mogących negatywnie oddziaływać na wody lecznicze;",
+                "C": "Ustanawianiem obszarów ochronnych zbiorników wód podziemnych;"
             },
             "poprawne": [
                 "A"

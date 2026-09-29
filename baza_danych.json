@@ -2297,10 +2297,11 @@
                 "C": "Otworów wiertniczych do rozpoznania budowy głębokiego podłoża, niezwiązanego z dokumentowaniem złóż kopalin;"
             },
             "poprawne": [
+                "B",
                 "C"
             ],
-            "podstawa_prawna": "Art. 161 ust. 3 pkt 4 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Minister właściwy do spraw środowiska jest organem administracji geologicznej... dotyczących otworów wiertniczych do rozpoznania budowy głębokiego podłoża, niezwiązanego z dokumentowaniem złóż kopalin."
+            "podstawa_prawna": "Art. 161 ust. 3 pkt 1a i 9 Prawo geologiczne i górnicze",
+            "tresc_artykulu": "pkt 1a Minister właściwy do spraw środowiska jest organem administracji geologicznej pierwszej instancji w sprawach dotyczących określania warunków hydrogeologicznych w związku z projektowaniem odwodnień złóż kopalin objętych własnością górniczą.\npkt 9 Minister właściwy do spraw środowiska jest organem administracji geologicznej pierwszej instancji w sprawach dotyczących otworów wiertniczych do rozpoznania budowy głębokiego podłoża, niezwiązanego z dokumentowaniem złóż kopalin."
         },
         {
             "id": 31,

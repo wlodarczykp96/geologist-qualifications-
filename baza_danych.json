@@ -2570,8 +2570,8 @@
             "pytanie": "Podstawę określenia wynagrodzenia za korzystanie z informacji geologicznej:",
             "odpowiedzi": {
                 "A": "opinia organu koncesyjnego;",
-                "B": "wycena określająca koszty projektowania, wykonywania i dokumentowaniu prac geologicznych, sfinansowania przez podmiot ubiegający się o korzystanie z tej informacji",
-                "C": "wycena określająca koszty projektowania, wykonywania i dokumentowania prac geologicznych przygotowanych przez państwową służbę geologiczną "
+                "B": "wycena określająca koszty projektowania, wykonywania i",
+                "C": "wycena określająca koszty projektowania, wykonywania i"
             },
             "poprawne": [
                 "B"
@@ -2666,7 +2666,7 @@
         },
         {
             "id": 56,
-            "pytanie": "Zadania Skarbu Państwa dotyczące rozporządzania prawem do informacji geologicznej Prawem do informacji geologicznej, w celu wykonywania działalności w zakresie jakim wymagane jest pozwolenie wodnoprawne wykonuje:",
+            "pytanie": "Zadania Skarbu Państwa dotyczącego rozporządzenia prawem do informacji geologicznej, w celu wykonania działalności polegającej na wydobywaniu kopalin ze złoża, wykonuje",
             "odpowiedzi": {
                 "A": "starosta powiatowy",
                 "B": "marszałek województwa",
@@ -2687,7 +2687,7 @@
                 "C": "minister właściwy do spraw środowiska;"
             },
             "poprawne": [
-                "C"
+                "B"
             ],
             "podstawa_prawna": "Art. 100 ust. 1 Prawo geologiczne i górnicze",
             "tresc_artykulu": "Prawem do informacji geologicznej przysługującym Skarbowi Państwa rozporządza... minister właściwy do spraw środowiska."
@@ -2801,7 +2801,7 @@
             "odpowiedzi": {
                 "A": "rozporządza prawem do informacji geologicznej;",
                 "B": "prowadzi centralne archiwum geologiczne;",
-                "C": "sporządza krajowy bilans wód podziemnych "
+                "C": "Polska Akademia Nauk;"
             },
             "poprawne": [
                 "B",
@@ -2829,7 +2829,7 @@
             "pytanie": "Organy administracji geologicznej, stosownie do zakresu swojej właściwości, gromadzą informację geologiczną:",
             "odpowiedzi": {
                 "A": "pochodzącą z bieżącego dokumentowania przebiegu robót geologicznych i ich wyników;",
-                "B": "przekazywaną przez podmioty wykonujące prace geologiczne; przedstawione w formie wyników;",
+                "B": "przekazywaną przez podmioty wykonujące prace geologiczne; przedstawione w formie",
                 "C": "przekazywana przez państwową służbę geologiczną;"
             },
             "poprawne": [

@@ -2877,12 +2877,10 @@
                 "C": "obliczenie kosztu pozyskania informacji geologicznej, wyrażonego w nominalnych cenach z roku jej pozyskania i zrewaloryzowanego do poziomu cen z roku poprzedzającego rok wykonywania szacowania;"
             },
             "poprawne": [
-                "A",
-                "B",
-                "C"
+                "B"
             ],
             "podstawa_prawna": "Przepisy wykonawcze ws. wyceny informacji geologicznej",
-            "tresc_artykulu": "Określa szczegółowe metody wyceny informacji geologicznej na podstawie kosztów jej pozyskania zrewaloryzowanych do cen aktualnych z roku wyceny."
+            "tresc_artykulu": "Wyceny informacji geologicznych dokonuje się na podstawie kosztów jej pozyskania (projektowania, wykonania prac geologicznych i udokumentowania), rewaloryzacja do cen aktualnych dokonywanie wyceny, zgodnie z zakresem i technologią prac geologicznych"
         },
         {
             "id": 71,

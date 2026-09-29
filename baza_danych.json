@@ -1965,7 +1965,7 @@
             "id": 8,
             "pytanie": "Wniosek o zatwierdzenie planu ruchu zakładu górniczego przedkłada się:",
             "odpowiedzi": {
-                "A": "Organowi nadzoru górniczego właściwemu dla miejsca wykonywania robót objętych planem",
+                "A": "Organowi nadzoru górniczego właściwemu dla miejsca wykonywania robót objętych planem;",
                 "B": "Prezeswoi Wyższego Urzędu Górniczego;",
                 "C": "Organowi koncesyjnemu"
             },

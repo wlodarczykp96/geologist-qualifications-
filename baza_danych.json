@@ -1993,8 +1993,8 @@
             "id": 10,
             "pytanie": "Przedsiębiorca lub podmiot wykonujący w zakresie swojej działalności zawodowej roboty strzałowe powierzone mu w ruchu zakładu górniczego, są zobowiązani:",
             "odpowiedzi": {
-                "A": "Przestrzegać wymagań dotyczących bezpiecznego przechowywania środków strzałowych",
-                "B": "Zapewnić ewidencjonowanie znajdujących się w zakładzie górniczym tam środków wykorzystywanych",
+                "A": "Przestrzegać wymagań dotyczących bezpiecznego przechowywania środków strzałowych;",
+                "B": "Zapewnić ewidencjonowanie znajdujących się w zakładzie górniczym tam środków wykorzystywanych;",
                 "C": "Zapewnić prowadzenie wykazu używanych środków strzałowych i sprzętu strzałowego, określającego warunki ich używania;"
             },
             "poprawne": [

@@ -1951,9 +1951,9 @@
             "id": 7,
             "pytanie": "Plan ruchu zakładu górniczego sporządza się na okres:",
             "odpowiedzi": {
-                "A": "od 2 do 6 lat albo na cały planowany okres",
-                "B": "do 8 lat niezależnie od planowanego okresu",
-                "C": "na cały planowany okres prowadzenia ruchu niezależnie od"
+                "A": "Od 2 do 6 lat albo na cały planowany okres prowadzenia ruchu, jeżeli jest on krótszy",
+                "B": "Do 8 lat niezależnie od planowanego okresu",
+                "C": "Na cały planowany okres prowadzenia ruchu niezależnie od jego długości "
             },
             "poprawne": [
                 "A"

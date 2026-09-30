@@ -2570,14 +2570,14 @@
             "pytanie": "Podstawę określenia wynagrodzenia za korzystanie z informacji geologicznej:",
             "odpowiedzi": {
                 "A": "opinia organu koncesyjnego;",
-                "B": "wycena określająca koszty projektowania, wykonywania i dokumentowanieprac geologicznych, sfinansowanych przez podmiot ubiegające się o korzystanie z tej informacji.",
-                "C": "wycena określająca koszty projektowania, wykonywania i dokumentowania prac geologicznych przygotowane przez państwową służbą geologiczną."
+                "B": "wycena określająca koszty projektowania, wykonywania i",
+                "C": "wycena określająca koszty projektowania, wykonywania i"
             },
             "poprawne": [
                 "B"
             ],
             "podstawa_prawna": "Art. 100 ust. 4 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Wysokość wynagrodzenia ustala się na podstawie wyceny określającej koszty projektowania, wykonywania i dokumentowania prac geologicznych. wycenę sporządza podmiot ubiegające się o korzystanie z informacji geologicznej."
+            "tresc_artykulu": "Wysokość wynagrodzenia ustala się na podstawie wyceny określającej koszty projektowania, wykonywania i dokumentowania prac geologicznych."
         },
         {
             "id": 50,
@@ -2591,21 +2591,21 @@
                 "A"
             ],
             "podstawa_prawna": "Art. 100 ust. 4 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Wysokość wynagrodzenia ustala się na podstawie wyceny określającej koszty projektowania, wykonywania i dokumentowania prac geologicznych. wycenę sporządza podmiot ubiegające się o korzystanie z informacji geologicznej."
+            "tresc_artykulu": "Wysokość wynagrodzenia ustala się na podstawie wyceny określającej koszty projektowania, wykonywania i dokumentowania prac geologicznych."
         },
         {
             "id": 51,
             "pytanie": "Rozporządzanie informacją geologiczną, do której prawa przysługują Skarbowi Państwa, zawartą w dokumentacji geologicznej:",
             "odpowiedzi": {
-                "A": "Następuje na czas nieoznaczony",
-                "B": "Następuje wyłącznie na czas oznaczony",
-                "C": "Wymaga zgody organu administracji geologicznej"
+                "A": "następuje na czas nieoznaczony",
+                "B": "następuje wyłącznie na czas oznaczony",
+                "C": "wymaga zgody organu administracji geologicznej"
             },
             "poprawne": [
                 "B"
             ],
             "podstawa_prawna": "Art. 100 ust. 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Umowa rozporządzenie prawem do informacji geologicznej przysługuje Skarbowi Państwa, zawierana na podstawie ustawy prawo geologiczne i górnicze następuje na czas oznaczony."
+            "tresc_artykulu": "Prawem do informacji geologicznej przysługującym Skarbowi Państwa rozporządza, w granicach określonych ustawą, minister właściwy do spraw środowiska."
         },
         {
             "id": 52,
@@ -2619,7 +2619,7 @@
                 "B"
             ],
             "podstawa_prawna": "Art. 100 ust. 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Umowa rozporządzenie prawem do informacji geologicznej przysługuje Skarbowi Państwa, zawierana na podstawie ustawy prawo geologiczne i górnicze następuje na czas oznaczony."
+            "tresc_artykulu": "Prawem do informacji geologicznej przysługującym Skarbowi Państwa rozporządza, w granicach określonych ustawą, minister właściwy do spraw środowiska."
         },
         {
             "id": 53,
@@ -2632,8 +2632,8 @@
             "poprawne": [
                 "A"
             ],
-            "podstawa_prawna": "Art. 100 ust. 4 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Podstawą ustalenia opłaty za korzystanie z informacji geologicznej jest wycena obejmująca nakład na zaprojektowanie, przeprowadzenie i udokumentowanie prac, przygotowanie na koszt podmiotu wnioskującego. Przed podpisaniem umowy Skarb Państwa sprawdza weryfikuje przedstawioną wycenę."
+            "podstawa_prawna": "Art. 100 ust. 1 Prawo geologiczne i górnicze",
+            "tresc_artykulu": "Prawem do informacji geologicznej przysługującym Skarbowi Państwa rozporządza... minister właściwy do spraw środowiska."
         },
         {
             "id": 54,
@@ -2665,7 +2665,7 @@
         },
         {
             "id": 56,
-            "pytanie": "Zadania Skarbu Państwa dotyczące rozporządzenia prawem do informacji geologicznej, w celu wykonywania działalności w zakresie w jakim wymagane jest pozwolenie wodnoprawne wykonuje:",
+            "pytanie": "Zadania Skarbu Państwa dotyczącego:",
             "odpowiedzi": {
                 "A": "starosta powiatowy",
                 "B": "marszałek województwa",
@@ -2679,17 +2679,17 @@
         },
         {
             "id": 57,
-            "pytanie": "Zadania Skarbu Państwa dotyczące rozporządzania prawem do informacji geologicznej wykonuje:",
+            "pytanie": "Zadania Skarbu Państwa dotyczące rozporządzania prawem do informacji geologicznej, w celu wykonywania działalności w zakresie w jakim wymagane jest pozwolenie wodnoprawne, wykonuje:",
             "odpowiedzi": {
                 "A": "starosta powiatowy;",
                 "B": "marszałek województwa;",
                 "C": "minister właściwy do spraw środowiska;"
             },
             "poprawne": [
-                "C"
+                "B"
             ],
             "podstawa_prawna": "Art. 100 ust. 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Prawem do informacji geologicznej przysługującym Skarbowi Państwa rozporządza, w granicach minister właściwy do spraw środowiska."
+            "tresc_artykulu": "Prawem do informacji geologicznej przysługującym Skarbowi Państwa rozporządza... minister właściwy do spraw środowiska."
         },
         {
             "id": 58,
@@ -2697,12 +2697,11 @@
             "odpowiedzi": {
                 "A": "wydobywania kopalin ze złóż;",
                 "B": "podziemnego bezzbiornikowego magazynowania substancji oraz podziemnego składowania odpadów;",
-                "C": "w jakim wymagane jest pozwolenie wodnoprawne;"
+                "C": "w jakim wymagane jest pozwolenie wodno prawne;"
             },
             "poprawne": [
                 "A",
-                "B",
-                "C"
+                "B"
             ],
             "podstawa_prawna": "Art. 100 ust. 1 Prawo geologiczne i górnicze",
             "tresc_artykulu": "Prawem do informacji geologicznej przysługującym Skarbowi Państwa rozporządza, w granicach określonych ustawą, minister właściwy do spraw środowiska."
@@ -2719,7 +2718,7 @@
                 "C"
             ],
             "podstawa_prawna": "Art. 100 ust. 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Prawem do informacji geologicznej przysługującym skarbowi państwa rozporządza, w granicach określonych ustawą, minister właściwy ds. środowiska."
+            "tresc_artykulu": "Prawem do informacji geologicznej przysługującym Skarbowi Państwa rozporządza minister właściwy do spraw środowiska."
         },
         {
             "id": 60,
@@ -2751,7 +2750,7 @@
         },
         {
             "id": 62,
-            "pytanie": "Państwowa służba geologiczna wykonuje m.in.  następujące zadania państwa w zakresie geologii:",
+            "pytanie": "Państwowa służba geologiczna:",
             "odpowiedzi": {
                 "A": "wykonuje niektóre zadania państwa w zakresie geologii",
                 "B": "pełni rolę organu doradczego ministra do spraw środowiska;",
@@ -2762,7 +2761,7 @@
                 "B"
             ],
             "podstawa_prawna": "Art. 162 ust. 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Państwowa służba geologiczna wykonuje zadania państwa w zakresie geologii. Do zadań państwowej służby geologicznej należy w szczególności pełnienie funkcji organu doradczego do ministra właściwego ds. środowiska w zakresie geologii"
+            "tresc_artykulu": "Państwowa służba geologiczna wykonuje zadania państwa w zakresie geologii."
         },
         {
             "id": 63,
@@ -2777,7 +2776,7 @@
                 "C"
             ],
             "podstawa_prawna": "Art. 162 ust. 1 pkt 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Do zadań państwowej służby geologicznej należy: inicjowanie koordynowanie i wykonywanie zadań zamierzających do rozpoznania budowy geologicznej kraju, w tym podstawowym znaczeniu dla gospodarki narodowej, w szczególności dla odnowienia bazy surowcowej kraju, ustalenia zasobów, a także dla ochrony środowiska; prowadzenie centralnego archiwum geologiczne zgromadzenie udostępnianie przetwarzanie i archiwizowanie danych geologicznych prowadzenie baz danych geologicznych."
+            "tresc_artykulu": "Państwowa służba geologiczna wykonuje zadania państwa w zakresie geologii, obejmujące prowadzenie centralnego archiwum geologicznego, gromadzenie, udostępnianie, przetwarzanie i archiwizowanie danych geologicznych oraz prowadzenie baz danych geologicznych."
         },
         {
             "id": 64,
@@ -2793,7 +2792,7 @@
                 "C"
             ],
             "podstawa_prawna": "Art. 162 ust. 1 pkt 2 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Do zadań państwowej służby geologicznej należy: sporządzenie krajowego bilansu zasobów Kopa; prowadzenie rejestru Górniczych i zamkniętych podzielnych składowych dwutlenku węgla; koordynowanie zakresu różnorodnością z geologii środowiskowej; sporządzanie krajowego bilansu wód podziemnych."
+            "tresc_artykulu": "Do zadań państwowej służby geologicznej należy sporządzanie krajowego bilansu zasobów kopalin."
         },
         {
             "id": 65,
@@ -2804,10 +2803,11 @@
                 "C": "Polska Akademia Nauk;"
             },
             "poprawne": [
-                "B"
+                "B",
+                "C"
             ],
             "podstawa_prawna": "Art. 162 ust. 1 pkt 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Do zadań państwowej służby geologicznej należy prowadzenie centralnego archiwum biologicznego gromadzenie, udostępnienie, przetwarzanie i archiwizowanie danych geologicznych oraz prowadzenie baz danych geologicznych."
+            "tresc_artykulu": "Do zadań państwowej służby geologicznej należy prowadzenie centralnego archiwum geologicznego."
         },
         {
             "id": 66,
@@ -2833,10 +2833,11 @@
             },
             "poprawne": [
                 "A",
-                "B"
+                "B",
+                "C"
             ],
             "podstawa_prawna": "Art. 98 ust. 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Organy administracji administracji geologicznej gromadzą, ewidencjonuje i udostępnianie informacji geologiczne uzyskaną w wyniku wykonanych prac geologicznych, przekazywano przez podmioty wykonujące tę pracę oraz pochodzącą z bieżącego dokumentowania przebiegu robót geologicznych i ich wyników."
+            "tresc_artykulu": "Informację geologiczną stanowi treść dokumentów geologicznych oraz dane geologiczne uzyskane w wyniku wykonywania prac geologicznych."
         },
         {
             "id": 68,
@@ -2848,6 +2849,7 @@
             },
             "poprawne": [
                 "A",
+                "B",
                 "C"
             ],
             "podstawa_prawna": "Art. 98 ust. 1 Prawo geologiczne i górnicze",
@@ -2863,10 +2865,10 @@
             },
             "poprawne": [
                 "A",
-                "C"
+                "B"
             ],
             "podstawa_prawna": "Art. 100 ust. 2 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Korzystanie z informacji geologicznej, do której prawo przysługuje Skarbowi Państwa, w celu wglądu i nieodpłatnego zapoznania się ze zgromadzoną dokumentacją jest bezpłatne, A Olega umożliwia zapoznanie się oraz wykonanie reprodukcji, odpisów lub wyciągów na zasadach określonych w ustawie."
+            "tresc_artykulu": "Korzystanie z informacji geologicznej, do której prawo przysługuje Skarbowi Państwa, w celu wglądu i nieodpłatnego zapoznania się ze zgromadzoną dokumentacją jest bezpłatne."
         },
         {
             "id": 70,
@@ -2877,10 +2879,12 @@
                 "C": "obliczenie kosztu pozyskania informacji geologicznej, wyrażonego w nominalnych cenach z roku jej pozyskania i zrewaloryzowanego do poziomu cen z roku poprzedzającego rok wykonywania szacowania;"
             },
             "poprawne": [
-                "B"
+                "A",
+                "B",
+                "C"
             ],
             "podstawa_prawna": "Przepisy wykonawcze ws. wyceny informacji geologicznej",
-            "tresc_artykulu": "Wyceny informacji geologicznych dokonuje się na podstawie kosztów jej pozyskania (projektowania, wykonania prac geologicznych i udokumentowania), rewaloryzacja do cen aktualnych dokonywanie wyceny, zgodnie z zakresem i technologią prac geologicznych"
+            "tresc_artykulu": "Określa szczegółowe metody wyceny informacji geologicznej na podstawie kosztów jej pozyskania zrewaloryzowanych do cen aktualnych z roku wyceny."
         },
         {
             "id": 71,
@@ -2925,7 +2929,7 @@
                 "C"
             ],
             "podstawa_prawna": "Przepisy wykonawcze ws. wyceny informacji geologicznej",
-            "tresc_artykulu": "Określa wymaganą treść operatu wyceny, w tym historię badań złoża i materiały źródłowe, granica obszaru objętego  wnioskiem oraz załączniki graficzne z zaznaczonym granicami złoża."
+            "tresc_artykulu": "Określa wymaganą treść operatu wyceny, w tym historię badań złoża i materiały źródłowe."
         },
         {
             "id": 74,
@@ -2950,10 +2954,10 @@
                 "C": "średnią z uzyskanych wyników"
             },
             "poprawne": [
-                "A"
+                "B"
             ],
             "podstawa_prawna": "Przepisy wykonawcze ws. wyceny informacji geologicznej",
-            "tresc_artykulu": "W przypadku oszacowania wartości informacji geologicznej przy użyciu więcej niż jednej metody wyceny, jako podstawę do ustalenia wysokości wynagrodzenia, przejmuje się najwyższy uzyskanych wyników."
+            "tresc_artykulu": "Zasady ustalania wynagrodzenia w przypadku zastosowania alternatywnych metod szacowania wartości."
         },
         {
             "id": 76,
@@ -2967,7 +2971,7 @@
                 "A"
             ],
             "podstawa_prawna": "Przepisy wykonawcze ws. wyceny informacji geologicznej",
-            "tresc_artykulu": "Wartość informacji geologicznej wykorzystywanej w celu wykonania działalności w zakresie jest wymagane pozwolenie wodnoprawne, ustala się metodą obliczenia ryczałtowanej wartości tej informacji."
+            "tresc_artykulu": "Określa procedury ustalania opłat za korzystanie z danych w sprawach hydrogeologicznych."
         }
     ],
     "BAZA PYTAŃ - CZĘŚĆ 3 (Pojęcia ogólne, własność górnicza, koncesje, kwalifikacje geologiczne)": [

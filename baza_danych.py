@@ -1865,8 +1865,8 @@ BAZY_PYTAN = {
                 "B",
                 "C"
             ],
-            "podstawa_prawna": "Art. 104 ust. 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Miejscowy plan zagospodarowania przestrzennego dla terenu górniczego sporządza się dla terenu górniczego wyznaczonego koncesją udzieloną na wydobywanie kopalin ze złóż, podziemne bezzbiornikowe magazynowanie substancji albo podziemne składowanie odpadów, jeżeli w wyniku zamierzonej działalności przewiduje się istotne skutki dla środowiska. Plan ten powinien zapewniać integrację wszelkich działań podejmowanych w granicach terenu górniczego w celu ochrony środowiska, w tym obiektów budowlanych."
+            "podstawa_prawna": "Art. 104 ust. 4 PGiG",
+            "tresc_artykulu": "Plan o którym mowa (MPZP dla TG), niezależnie od wymagań określonych odrębnymi przepisami, powinien zapewniać interację wszystkich działań podejmujących w graniach terenu górniczego w celu: wykonania działalności określonej w koncesji, zapewnienia bezpieczeństwa powszechnego, ochrony środowiska w tym obiektów budowalnych"
         },
         {
             "id": 2,
@@ -1877,11 +1877,12 @@ BAZY_PYTAN = {
                 "C": "Obszary wyłączone z zabudowy;"
             },
             "poprawne": [
+                "A"
                 "B",
                 "C"
             ],
-            "podstawa_prawna": "Art. 104 ust. 2 pkt 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Miejscowy plan zagospodarowania przestrzennego dla terenu górniczego może w szczególności określić: obszary, dla których wyznacza się filar ochronny, w granicach którego, ze względu na ochronę dóbr chronionych, kopalina nie może być wydobywana albo może być wydobywana tylko w sposób zapewniający ochronę tych dóbr; obszary objęte zakazem wznoszenia obiektów budowlanych lub określonego ich rodzaju."
+            "podstawa_prawna": "Art. 104 ust. 5 PGiG",
+            "tresc_artykulu": "Plan o którym mowa (MPZP) obiekty lub obszary dla których wyznacza się filar ochronny, w granicach którego ruch ZG może być zabroniony bądz może być dozwolony tylko w sposób zapewniający należytą ochronę tych obiektów lub obszarów; obszary wyłączone z zabudowy lub takie, w granicy, których zabudowa jest dozwolona tylko po spełnieniu tych odpowiednich wymagań [...]"
         },
         {
             "id": 3,
@@ -1895,8 +1896,8 @@ BAZY_PYTAN = {
                 "A",
                 "B"
             ],
-            "podstawa_prawna": "Art. 105 ust. 2 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Planu ruchu nie sporządza się, jeżeli koncesji na wydobywanie kopalin udzielił starosta."
+            "podstawa_prawna": "Art. 105 ust. 2 PGiG",
+            "tresc_artykulu": "Planu ruchu nie sporządza się, jeżeli koncesji na wydobywanie kopalin udzielił starosta; jeżeli roboty geologiczne służące poszukiwaniu lub rozpoznawaniu złóż kopalin są wykonywane bez użycia środków strzałowych na głębokości do 100 m poza obszarem górniczym - w takim wypadku ruch ZG prowadzi się na podstawie warunków określanych w koncesji lub decyzji zatwierdzającej PRG."
         },
         {
             "id": 4,
@@ -1911,8 +1912,8 @@ BAZY_PYTAN = {
                 "B",
                 "C"
             ],
-            "podstawa_prawna": "Art. 107 ust. 1 pkt 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Plan ruchu zakładu górniczego określa szczegółowe przedsięwzięcia niezbędne w celu zapewnienia bezpieczeństwa powszechnego."
+            "podstawa_prawna": "Art. 108 ust. 2 pkt 2 PGiG",
+            "tresc_artykulu": "Plan ruchu zakładu górniczego określa szczegółowe przedsięwzięcia niezbędne w celu zapewnienia: wykonywania działoalności objętej koncesją, bezpieczeństwa powszechnego, bezpieczeństwa pożarowego, bezpieczeństwa osób przebywającyhc w ZG, w szczególności dotyczące BHP, racjonalnej gospodarki złożem, ochrony elementów środowiska, ochrone obiektów budowlanych, zapobieganie szkododom i ich naprawy."
         },
         {
             "id": 5,
@@ -1927,8 +1928,8 @@ BAZY_PYTAN = {
                 "B",
                 "C"
             ],
-            "podstawa_prawna": "Art. 107 ust. 1 pkt 2 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Plan ruchu zakładu górniczego określa szczegółowe przedsięwzięcia niezbędne w celu zapewnienia bezpieczeństwa osób przebywających w zakładzie górniczym, w szczególności dotyczące bezpieczeństwa i higieny pracy."
+            "podstawa_prawna": "Art. 108 ust. 2 pkt 2 PGiG",
+            "tresc_artykulu": "Plan ruchu zakładu górniczego określa szczegółowe przedsięwzięcia niezbędne w celu zapewnienia: wykonywania działoalności objętej koncesją, bezpieczeństwa powszechnego, bezpieczeństwa pożarowego, bezpieczeństwa osób przebywającyhc w ZG, w szczególności dotyczące BHP, racjonalnej gospodarki złożem, ochrony elementów środowiska, ochrone obiektów budowlanych, zapobieganie szkododom i ich naprawy."
         },
         {
             "id": 6,
@@ -1943,8 +1944,8 @@ BAZY_PYTAN = {
                 "B",
                 "C"
             ],
-            "podstawa_prawna": "Art. 107 ust. 1 pkt 4 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Plan ruchu zakładu górniczego określa szczegółowe przedsięwzięcia niezbędne w celu zapewnienia ochrony obiektów budowlanych."
+            "podstawa_prawna": "Art. 108 ust. 2 pkt 2 PGiG",
+            "tresc_artykulu": "Plan ruchu zakładu górniczego określa szczegółowe przedsięwzięcia niezbędne w celu zapewnienia: wykonywania działoalności objętej koncesją, bezpieczeństwa powszechnego, bezpieczeństwa pożarowego, bezpieczeństwa osób przebywającyhc w ZG, w szczególności dotyczące BHP, racjonalnej gospodarki złożem, ochrony elementów środowiska, ochrone obiektów budowlanych, zapobieganie szkododom i ich naprawy."
         },
         {
             "id": 7,
@@ -1957,7 +1958,7 @@ BAZY_PYTAN = {
             "poprawne": [
                 "A"
             ],
-            "podstawa_prawna": "Art. 108 ust. 1 Prawo geologiczne i górnicze",
+            "podstawa_prawna": "Art. 108 ust. 1 PGiG",
             "tresc_artykulu": "Plan ruchu zakładu górniczego sporządza się na okres od 2 do 6 lat albo na cały planowany okres prowadzenia ruchu, jeżeli jest on krótszy."
         },
         {
@@ -1985,7 +1986,7 @@ BAZY_PYTAN = {
             "poprawne": [
                 "A"
             ],
-            "podstawa_prawna": "Art. 120 ust. 1 Prawo geologiczne i górnicze",
+            "podstawa_prawna": "Art. 120 ust. 1 PGiG",
             "tresc_artykulu": "Przechowywanie lub używanie środków strzałowych i sprzętu strzałowego w ruchu zakładu górniczego wymaga pozwolenia wydanego, w drodze decyzji, przez organ nadzoru górniczego właściwy dla miejsca wykonywania robót strzałowych."
         },
         {
@@ -2001,15 +2002,15 @@ BAZY_PYTAN = {
                 "B",
                 "C"
             ],
-            "podstawa_prawna": "Art. 120 ust. 5 pkt 2 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Przedsiębiorca oraz podmiot wykonujący w zakresie swojej działalności zawodowej roboty powierzone mu w ruchu zakładu górniczego są zobowiązani zapewnić prowadzenie wykazu używanych środków strzałowych i sprzętu strzałowego określającego warunki ich używania."
+            "podstawa_prawna": "Art. 115 ust. 7 PGiG",
+            "tresc_artykulu": "Przedsiębiorca oraz podmiot wykonujący w zakresie swojej działalności zawodowej roboty powierzone mu w ruchu zakładu górniczego są obowiązani:przestrzegać wymagań dotyczących przechowywania środkó strzałowych [...]; zapewnić ewidencjonowania znajdujących się w ZG oraz wykorzystywanych tam [...]; zapewnić prowadzenie wykazu używanych środków strzałowych i sprzętu strzałowego określającego warunki ich używania."
         },
         {
             "id": 11,
             "pytanie": "Obowiązek posiadania dokumentacji mierniczo-geologicznej nałożony jest na przedsiębiorcę, który uzyskał koncesję na:",
             "odpowiedzi": {
-                "A": "podziemne bezzbiornikowe magazynowanie substancji",
-                "B": "poszukiwanie i rozpoznawanie złóż kopalin objętych własnością górniczą",
+                "A": "Podziemne bezzbiornikowe magazynowanie substancji",
+                "B": "Poszukiwanie i rozpoznawanie złóż kopalin objętych własnością górniczą",
                 "C": "Podziemne składowanie odpadów"
             },
             "poprawne": [
@@ -2017,23 +2018,23 @@ BAZY_PYTAN = {
                 "B",
                 "C"
             ],
-            "podstawa_prawna": "Art. 116 ust. 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Przedsiębiorca, który uzyskał koncesję na wydobywanie kopalin ze złóż, podziemne bezzbiornikowe magazynowanie substancji albo podziemne składowanie odpadów, posiada dokumentację mierniczo-geologiczną, mierzy obiekty zakładu górniczego oraz na bieżąco uzupełnia tę dokumentację w trakcie postępu robót górniczych."
+            "podstawa_prawna": "Art. 116 ust. 1 PGiG",
+            "tresc_artykulu": "Przedsiębiorca, który uzyskał koncesję na: wydobywanie kopalin ze złóż, podziemne bezzbiornikowe magazynowanie substancji, podziemne składowanie odpadów - posiada dokumentację mierniczo-geologiczną, mierzy obiekty zakładu górniczego oraz na bieżąco uzupełnia tę dokumentację w trakcie postępu robót górniczych."
         },
         {
             "id": 12,
             "pytanie": "Obowiązek posiadania dokumentacji mierniczo-geologicznej nałożony jest na przedsiębiorcę, który uzyskał koncesję na:",
             "odpowiedzi": {
-                "A": "poszukiwanie i rozpoznawanie złóż kopalin",
-                "B": "wydobywanie kopalin ze złóż, z wyjątkiem koncesji udzielonej przez starostę;",
-                "C": "wydobywanie kopalin ze złóż, niezależnie od organu udzielającego koncesji;"
+                "A": "Poszukiwanie i rozpoznawanie złóż kopalin",
+                "B": "Wydobywanie kopalin ze złóż, z wyjątkiem koncesji udzielonej przez starostę;",
+                "C": "Wydobywanie kopalin ze złóż, niezależnie od organu udzielającego koncesji;"
             },
             "poprawne": [
                 "A",
                 "B"
             ],
-            "podstawa_prawna": "Art. 116 ust. 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Przedsiębiorca, który uzyskał koncesję na wydobywanie kopalin ze złóż, podziemne bezzbiornikowe magazynowanie substancji albo podziemne składowanie odpadów, posiada dokumentację mierniczo-geologiczną..."
+            "podstawa_prawna": "Art. 116 ust. 1 PGiG",
+            "tresc_artykulu": "Przedsiębiorca, który uzyskał koncesję na: wydobywanie kopalin ze złóż, podziemne bezzbiornikowe magazynowanie substancji, podziemne składowanie odpadów - posiada dokumentację mierniczo-geologiczną, mierzy obiekty zakładu górniczego oraz na bieżąco uzupełnia tę dokumentację w trakcie postępu robót górniczych."
         },
         {
             "id": 13,
@@ -2047,14 +2048,14 @@ BAZY_PYTAN = {
                 "A",
                 "B"
             ],
-            "podstawa_prawna": "Art. 116 ust. 2 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "W skład dokumentacji mierniczo-geologicznej wchodzą dokumenty miernicze i geologiczne, w tym dokumenty pomiarowe, obliczeniowe i kartograficzne, stanowiące jej treść."
+            "podstawa_prawna": "Art. 116 ust. 2 PGiG",
+            "tresc_artykulu": "W skład dokumentacji mierniczo-geologicznej wchodzą: dokumenty pomiarowe, dokumenty obliczeniowe, dokumenty kartograficzne przedstawiające aktualną sytuację geologiczną oraz górniczą ZG, a także stan powierzchni w graicach terenu górniczego, stanowiące jej treść."
         },
         {
             "id": 14,
             "pytanie": "Przy wykonywaniu nadzoru i kontroli upoważnionym pracownikom administracji geologicznej oraz pracownikom organów nadzoru górniczego, w granicach ich właściwości rzeczowej i miejscowej przysługuje, po okazaniu legitymacji służbowej, prawo:",
             "odpowiedzi": {
-                "A": "Całodobowego wstępu do miejsc wykonywania robót objętych własnością",
+                "A": "Całodobowego wstępu do miejsc wykonywania robót geologicznych;",
                 "B": "Dostępu do niezbędnych informacji;",
                 "C": "Żądania udzielenia wyjaśnień w zakresie niezbędnym do sprawowania nadzoru i kontroli;"
             },
@@ -2063,8 +2064,8 @@ BAZY_PYTAN = {
                 "B",
                 "C"
             ],
-            "podstawa_prawna": "Art. 156 ust. 1 pkt 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Przy wykonywaniu nadzoru i kontroli upoważnionym pracownikom organów nadzoru górniczego oraz pracownikom organów administracji geologicznej, w granicach ich właściwości rzeczowej i miejscowej, przysługuje, po okazaniu legitymacji służbowej, prawo całodobowego wstępu, wraz z niezbędnym sprzętem, do miejsc wykonywania prac geologicznych, robót górniczych, zakładów górniczych, a także na tereny i do obiektów, w których wykonywana jest działalność regulowana ustawą."
+            "podstawa_prawna": "Art. 153 ust. 1 pkt 1 PGiG",
+            "tresc_artykulu": "Przy wykonywaniu nadzoru i kontroli upoważnionym pracownikom organów nadzoru górniczego oraz pracownikom organów administracji geologicznej, w granicach ich właściwości rzeczowej i miejscowej, przysługuje, po okazaniu legitymacji służbowej, prawo: całodobowego wstępu, wraz z niezbędnym sprzętem, do miejsc wykonywania prac geologicznych, robót górniczych, zakładów górniczych, a także na tereny i do obiektów, w których wykonywana jest działalność regulowana ustawą; dostępu do niezbędnch informacji, dokumentów i pisemnych wyjaśnień; żądania udzielenia wyjaśnień w zakresie niezbędnym do sprawowoania nadzoru i kontroli."
         },
         {
             "id": 15,
@@ -2079,14 +2080,14 @@ BAZY_PYTAN = {
                 "B",
                 "C"
             ],
-            "podstawa_prawna": "Art. 156 ust. 1 pkt 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Przy wykonywaniu nadzoru i kontroli upoważnionym pracownikom... przysługuje, po okazaniu legitymacji służbowej, prawo całodobowego wstępu... do zakładów górniczych..."
+            "podstawa_prawna": "Art. 153 ust. 1 PGiG",
+            "tresc_artykulu": "Przy wykonywaniu nadzoru i kontroli upoważnionym pracownikom organów nadzoru górniczego oraz pracownikom organów administracji geologicznej, w granicach ich właściwości rzeczowej i miejscowej, przysługuje, po okazaniu legitymacji służbowej, prawo: całodobowego wstępu, wraz z niezbędnym sprzętem, do miejsc wykonywania prac geologicznych, robót górniczych, zakładów górniczych, a także na tereny i do obiektów, w których wykonywana jest działalność regulowana ustawą; dostępu do niezbędnch informacji, dokumentów i pisemnych wyjaśnień; żądania udzielenia wyjaśnień w zakresie niezbędnym do sprawowoania nadzoru i kontroli; legitymowania osób w celu stwierdzenia ich tożsamości, jeżeli jest to niezbędne dla potrzeb kontroli; żądania okazania dokumentów i udostępniania niezbędnych danych;."
         },
         {
             "id": 16,
             "pytanie": "Organami administracji geologicznej są:",
             "odpowiedzi": {
-                "A": "Minister środowiska",
+                "A": "Minister właściwy ds. Środowiska ",
                 "B": "Marszałkowie województw",
                 "C": "Wójtowie gmin"
             },
@@ -2094,14 +2095,14 @@ BAZY_PYTAN = {
                 "A",
                 "B"
             ],
-            "podstawa_prawna": "Art. 156 ust. 1 pkt 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Organami administracji geologicznej są: minister właściwy do spraw środowiska, marszałkowie województw, starostowie."
+            "podstawa_prawna": "Art. 156 ust. 1 pkt 1 PGiG",
+            "tresc_artykulu": "Organami administracji geologicznej są: minister właściwy do spraw środowiska (geolog kraju), marszałkowie województw (geolog wojewódzki), starostowie (geolog powiatowy)."
         },
         {
             "id": 17,
             "pytanie": "Organami administracji geologicznej są:",
             "odpowiedzi": {
-                "A": "Minister środowiska",
+                "A": "Minister właściwy ds. Środowiska",
                 "B": "Marszałkowie województw",
                 "C": "Prezes Wyższego Urzędu Górniczego"
             },
@@ -2109,8 +2110,8 @@ BAZY_PYTAN = {
                 "A",
                 "B"
             ],
-            "podstawa_prawna": "Art. 156 ust. 1 pkt 2 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Organami administracji geologicznej są: minister właściwy do spraw środowiska, marszałkowie województw, starostowie."
+            "podstawa_prawna": "Art. 156 ust. 1 pkt 2 PGiG",
+            "tresc_artykulu": "Organami administracji geologicznej są: minister właściwy do spraw środowiska (geolog kraju), marszałkowie województw (geolog wojewódzki), starostowie (geolog powiatowy)."
         },
         {
             "id": 18,
@@ -2121,11 +2122,10 @@ BAZY_PYTAN = {
                 "C": "Z naruszeniem warunków zapewniających bezpieczeństwo finansowe przedsiębiorcy."
             },
             "poprawne": [
-                "A",
                 "B"
             ],
-            "podstawa_prawna": "Art. 160 ust. 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Jeżeli działalność regulowana ustawą jest wykonywana z naruszeniem warunków określonych w projekcie robót geologicznych lub bez zatwierdzonego projektu robót geologicznych, właściwy organ administracji geologicznej wydaje decyzję o wstrzymaniu działalności."
+            "podstawa_prawna": "Art. 173 ust. 1 PGiG",
+            "tresc_artykulu": "Jeżeli działalność regulowana ustawą jest wykonywana z naruszeniem warunków określonych w koncesji, w PRG lub bez zatwierdzonego PRG, właściwy organ administracji geologicznej wydaje decyzję o wstrzymaniu działalności."
         },
         {
             "id": 19,
@@ -2138,9 +2138,9 @@ BAZY_PYTAN = {
             "poprawne": [
                 "A"
             ],
-            "podstawa_prawna": "Art. 161 ust. 2 pkt 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Starosta jest organem administracji geologicznej pierwszej instancji w sprawach związanych z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczących złóż kopalin nieobjętych własnością górniczą, poszukiwanych lub rozpoznawanych na obszarze do 2 ha w celu wydobycia metodą odkrywkową w ilości do 20 000 m³ w roku kalendarzowym i bez użycia środków strzałowych."
-        },
+            "podstawa_prawna": "Art. 161 ust. 2 pkt 1 PGiG",
+            "tresc_artykulu": "Do starosty, jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące: złóż kopalin nieobjętych własnością górniczą, poszukiwanych lub rozpoznawanych na obszarze do 2 ha w celu wydobycia metodą odkrywkową w ilości do 20 000 m³ w roku kalendarzowym i bez użycia środków strzałowych."
+        }
         {
             "id": 20,
             "pytanie": "Do starosty jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące:",
@@ -2152,9 +2152,9 @@ BAZY_PYTAN = {
             "poprawne": [
                 "A"
             ],
-            "podstawa_prawna": "Art. 161 ust. 2 pkt 2 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Starosta jest organem administracji geologicznej pierwszej instancji w sprawach... dotyczących ujęć wód podziemnych, których przewidywane lub ustalone zasoby nie przekraczają 50 m³/h."
-        },
+            "podstawa_prawna": "Art. 161 ust. 2 PGiG",
+            "tresc_artykulu": "Do starosty, jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące: [...] ujęć wód podziemnych, których przewidywane lub ustalone zasoby nie przekraczają 50 m³/h, z wyłączeniem wykonywania wkopów oraz otworów wiertniczych o głębokości do 30 m w celu wykonywania ujęć wód podziemnych na potrzeby poboru wód podziemnych w ilości nieprzekraczającej 5 m³ na dobę na obszarach górniczych utworzonych w celu wydobywania wód leczniczych lub solanek."
+        
         {
             "id": 21,
             "pytanie": "Do starosty jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące:",
@@ -2166,8 +2166,8 @@ BAZY_PYTAN = {
             "poprawne": [
                 "A"
             ],
-            "podstawa_prawna": "Art. 161 ust. 2 pkt 3 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Starosta jest organem administracji geologicznej pierwszej instancji w sprawach... dotyczących odwodnień budowlanych, których wydajność nie przekracza 50 m³/h."
+            "podstawa_prawna": "Art. 161 ust. 2 PGiG",
+            "tresc_artykulu": "Do starosty, jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące: [...] odwodnień budowlanych o wydajności nieprzekraczającej 50 m³/h."
         },
         {
             "id": 22,
@@ -2180,22 +2180,22 @@ BAZY_PYTAN = {
             "poprawne": [
                 "A"
             ],
-            "podstawa_prawna": "Art. 161 ust. 2 pkt 4 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Starosta jest organem administracji geologicznej pierwszej instancji w sprawach... dotyczących badań geologiczno-inżynierskich wykonywanych na potrzeby zagospodarowania przestrzennego gminy oraz warunków posadawiania obiektów budowlanych."
+            "podstawa_prawna": "Art. 161 ust. 2 PGiG",
+            "tresc_artykulu": "Do starosty, jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące: [...] warunków hydrogeologicznych w związku z zamierzonym wykonywaniem przedsięwzięć mogących negatywnie oddziaływać na wody podziemne, w tym powodować ich zanieczyszczenie, dotyczących inwestycji zaliczonych do przed-sięwzięć mogących znacząco oddziaływać na środowisko, dla których obowiązek sporządzenia raportu o oddziaływaniu przedsięwzięcia na środowisko może być wymagany, z wyłączeniem przedsięwzięć mogących negatywnie oddziaływać na wody lecznicze oraz ponadwojewódzkich inwestycji liniowych."
         },
         {
             "id": 23,
             "pytanie": "Do starosty jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące:",
             "odpowiedzi": {
-                "A": "Warunków hydrogeologicznych w związku z zamierzonym wykonywaniem przedsięwzięć mogących negatywnie oddziaływać na wody podziemne, w tym powodować ich zanieczyszczenie, dotyczących przedsięwzięć mogących znacząco oddziaływać na środowisko, dla których obowiązek sporządzenia raportu o oddziaływaniu przedsięwzięcia na środowisko może być wymagany, z wyłączeniem przedsięwzięć mogących negatywnie oddziaływać na wody lecznicze;",
+                "A": "Warunków hydrogeologicznych w związku z zamierzonym wykonywaniem przedsięwzięć mogących negatywnie oddziaływać na wody podziemne, w tym powodować ich zanieczyszczenie, dotyczących przedsięwzięć mogących znacząco oddziaływać.na środowisko, dla których obowiązek sporządzenia raportu o oddziaływaniu przedsięwzięcia na środowisko może być wymagany, z wyłączeniem przedsięwzięć mogących negatywnie oddziaływać na wody lecznicze;",
                 "B": "wykonywaniem przedsięwzięć mogących negatywnie oddziaływać na wody podziemne, w tym powodować ich zanieczyszczenie, dotyczących przedsięwzięć mogących znacząco oddziaływać na środowisko, dla których obowiązek sporządzenia raportu o oddziaływaniu przedsięwzięcia na środowisko może być wymagany, w tym przedsięwzięć mogących negatywnie oddziaływać na wody lecznicze;",
                 "C": "ustanawianiem obszarów ochronnych zbiorników wód podziemnych;"
             },
             "poprawne": [
                 "A"
             ],
-            "podstawa_prawna": "Art. 161 ust. 2 pkt 5 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Starosta jest organem administracji geologicznej pierwszej instancji w sprawach... dotyczących warunków hydrogeologicznych w związku z zamierzonym wykonywaniem przedsięwzięć mogących negatywnie oddziaływać na wody podziemne..."
+            "podstawa_prawna": "Art. 161 ust. 2 PGiG",
+            "tresc_artykulu": "Do starosty, jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące: [...] warunków hydrogeologicznych w związku z zamierzonym wykonywaniem przedsięwzięć mogących negatywnie oddziaływać na wody podziemne, w tym powodować ich zanieczyszczenie, dotyczących inwestycji zaliczonych do przed-sięwzięć mogących znacząco oddziaływać na środowisko, dla których obowiązek sporządzenia raportu o oddziaływaniu przedsięwzięcia na środowisko może być wymagany, z wyłączeniem przedsięwzięć mogących negatywnie oddziaływać na wody lecznicze oraz ponadwojewódzkich inwestycji liniowych."
         },
         {
             "id": 24,
@@ -2208,8 +2208,8 @@ BAZY_PYTAN = {
             "poprawne": [
                 "A"
             ],
-            "podstawa_prawna": "Art. 161 ust. 2 pkt 6 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Starosta jest organem administracji geologicznej pierwszej instancji w sprawach... dotyczących robót geologicznych wykonywanych w celu wykorzystania ciepła Ziemi."
+            "podstawa_prawna": "Art. 161 ust. 2 PGiG",
+            "tresc_artykulu": "Do starosty, jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące: [...] robót geologicznych wykonywanych w celu wykorzystania ciepła Ziemi, z wyłączeniem robót geologicznych obejmujących rekonstrukcję zlikwidowanego otworu wiertniczego w celu wykorzystania ciepła Ziemi."
         },
         {
             "id": 25,
@@ -2223,8 +2223,8 @@ BAZY_PYTAN = {
                 "B",
                 "C"
             ],
-            "podstawa_prawna": "Art. 161 ust. 3 pkt 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Minister właściwy do spraw środowiska jest organem administracji geologicznej pierwszej instancji w sprawach związanych z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczących złóż kopalin objętych własnością górniczą, z wyjątkiem wód objętych własnością górniczą."
+            "podstawa_prawna": "Art. 161 ust. 3 PGiG",
+            "tresc_artykulu": "Do ministra właściwego do spraw środowiska, jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące: złóż kopalin objętych własnością górniczą."
         },
         {
             "id": 26,
@@ -2239,8 +2239,8 @@ BAZY_PYTAN = {
                 "B",
                 "C"
             ],
-            "podstawa_prawna": "Art. 161 ust. 3 pkt 3 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Minister właściwy do spraw środowiska jest organem administracji geologicznej... dotyczących regionalnych badań budowy geologicznej kraju."
+            "podstawa_prawna": "Art. 162 ust. 3 pkt 3 PGiG",
+            "tresc_artykulu": "Do ministra właściwego do spraw środowiska, jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące: [...] regionalnych badań hydrogeologicznych, regionalnych prac kartografii geologicznej i regionalnych badań budowy geologicznej kraju."
         },
         {
             "id": 27,
@@ -2252,11 +2252,10 @@ BAZY_PYTAN = {
             },
             "poprawne": [
                 "A",
-                "B",
-                "C"
+                "B"
             ],
-            "podstawa_prawna": "Art. 161 ust. 3 pkt 4 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Minister właściwy do spraw środowiska jest organem administracji geologicznej... dotyczących otworów wiertniczych do rozpoznania budowy głębokiego podłoża, niezwiązanego z dokumentowaniem złóż kopalin."
+            "podstawa_prawna": "Art. 161 ust. 3 PGiG,
+            "tresc_artykulu": "Do ministra właściwego do spraw środowiska, jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące: [...] obiektów budownictwa wodnego o wysokości piętrzenia przekraczającej 5 m, otworów wiertniczych do rozpoznania budowy głębokiego podłoża, niezwiązanego z dokumentowaniem złóż kopalin, "
         },
         {
             "id": 28,
@@ -2271,8 +2270,8 @@ BAZY_PYTAN = {
                 "B",
                 "C"
             ],
-            "podstawa_prawna": "Art. 161 ust. 3 pkt 5 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Minister właściwy do spraw środowiska jest organem administracji geologicznej... dotyczących określania warunków hydrogeologicznych oraz geologiczno-inżynierskich dla potrzeb podziemnego bezzbiornikowego magazynowania substancji albo podziemnego składowania odpadów."
+            "podstawa_prawna": "Art. 161 ust. 3 PGiG",
+            "tresc_artykulu": "Do ministra właściwego do spraw środowiska, jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące: [...] określania warunków hydrogeologicznych oraz geologiczno-inżynierskich dla potrzeb podziemnego bezzbiornikowego magazynowania substancji albo podziemnego składowania odpadów."
         },
         {
             "id": 29,
@@ -2286,8 +2285,8 @@ BAZY_PYTAN = {
                 "A",
                 "B"
             ],
-            "podstawa_prawna": "Art. 161 ust. 3 pkt 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Minister właściwy do spraw środowiska jest organem administracji geologicznej... dotyczących złóż kopalin objętych własnością górniczą."
+            "podstawa_prawna": "Art. 161 ust. 3 PGiG",
+            "tresc_artykulu": "Do ministra właściwego do spraw środowiska, jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robó t geologicznych oraz dokumentacjami geologicznymi, dotyczące: [...] dotyczących złóż kopalin objętych własnością górniczą."
         },
         {
             "id": 30,
@@ -2300,39 +2299,39 @@ BAZY_PYTAN = {
             "poprawne": [
                 "C"
             ],
-            "podstawa_prawna": "Art. 161 ust. 3 pkt 4 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Minister właściwy do spraw środowiska jest organem administracji geologicznej... dotyczących otworów wiertniczych do rozpoznania budowy głębokiego podłoża, niezwiązanego z dokumentowaniem złóż kopalin."
+            "podstawa_prawna": "Art. 161 ust. 3 PGiG",
+            "tresc_artykulu": "Do ministra właściwego do spraw środowiska, jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące: [...] dotyczących otworów wiertniczych do rozpoznania budowy głębokiego podłoża, niezwiązanego z dokumentowaniem złóż kopalin."
         },
         {
             "id": 31,
             "pytanie": "Organami nadzoru górniczego są:",
             "odpowiedzi": {
-                "A": "Minister Środowiska;",
+                "A": "Minister właściwy ds. Środowiska;",
                 "B": "Prezes Wyższego Urzędu Górniczego;",
                 "C": "Prezesi regionalnych urzędów górniczych;"
             },
             "poprawne": [
                 "B"
             ],
-            "podstawa_prawna": "Art. 163 pkt 1 Prawo geologiczne i górnicze",
+            "podstawa_prawna": "Art. 164 pkt 1 PGiG",
             "tresc_artykulu": "Organami nadzoru górniczego są: Prezes Wyższego Urzędu Górniczego oraz dyrektorzy okręgowych urzędów górniczych i Dyrektor Specjalistycznego Urzędu Górniczego."
         },
         {
             "id": 32,
             "pytanie": "Organy nadzoru górniczego sprawują nadzór i kontrolę nad ruchem zakładów górniczych, w szczególności w zakresie:",
             "odpowiedzi": {
-                "A": "Bezpieczeństwa i Higieny pracy;",
-                "B": "Bezpieczeństwa pożarowego",
+                "A": "Bezpieczeństwa i higieny pracy;",
+                "B": "Bezpieczeństwa pożarowego;",
                 "C": "Bezpieczeństwa finansowego przedsiębiorcy górniczego;"
             },
             "poprawne": [
                 "A",
                 "B"
             ],
-            "podstawa_prawna": "Art. 167 ust. 1 pkt 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Organy nadzoru górniczego sprawują nadzór i kontrolę nad ruchem zakładów górniczych, w szczególności w zakresie bezpieczeństwa i higieny pracy oraz bezpieczeństwa pożarowego."
+            "podstawa_prawna": "Art. 168 ust. 1 PGiG",
+            "tresc_artykulu": "Organy nadzoru górniczego sprawują nadzór i kontrolę nad ruchem zakładów górniczych, w szczególności w zakresie: bezpieczeństwa i higieny pracy, bezpieczeństwa pożarowego, ratownictwa górniczego, gospodarki złożami kopalin w procesie ich wydobywania, ochrony środowiska i gospodarki złożem, w tym według kryterium wykonywania przez przedsiębiorców obowiązków określonych w odrębnych przepisach lub na ich podstawie;, zapobiegania szkodom, budowy i likwidacji zakładu górniczego, w tym rekultywacji gruntów po działalności górniczej."
         },
-        {
+        
             "id": 33,
             "pytanie": "Organy nadzoru górniczego sprawują nadzór i kontrolę nad ruchem zakładów górniczych, w szczególności w zakresie:",
             "odpowiedzi": {
@@ -2345,8 +2344,8 @@ BAZY_PYTAN = {
                 "B",
                 "C"
             ],
-            "podstawa_prawna": "Art. 167 ust. 1 pkt 2 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Organy nadzoru górniczego sprawują nadzór i kontrolę nad ruchem zakładów górniczych, w szczególności w zakresie ratownictwa górniczego."
+            "podstawa_prawna": "Art. 168 ust. 1 PGiG",
+            "tresc_artykulu": "Organy nadzoru górniczego sprawują nadzór i kontrolę nad ruchem zakładów górniczych, w szczególności w zakresie: bezpieczeństwa i higieny pracy, bezpieczeństwa pożarowego, ratownictwa górniczego, gospodarki złożami kopalin w procesie ich wydobywania, ochrony środowiska i gospodarki złożem, w tym według kryterium wykonywania przez przedsiębiorców obowiązków określonych w odrębnych przepisach lub na ich podstawie;, zapobiegania szkodom, budowy i likwidacji zakładu górniczego, w tym rekultywacji gruntów po działalności górniczej."
         },
         {
             "id": 34,
@@ -2359,21 +2358,21 @@ BAZY_PYTAN = {
             "poprawne": [
                 "B"
             ],
-            "podstawa_prawna": "Art. 167 ust. 2 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Nadzór i kontrolę nad wykonywaniem prac geologicznych służących poszukiwaniu lub rozpoznawaniu złóż kopalin, wykonywanych z użyciem środków strzałowych, sprawują właściwe organy nadzoru górniczego."
+            "podstawa_prawna": "Art. 167 ust. 2 PGiG",
+            "tresc_artykulu": "Organy nadzoru górniczego sprawują nadzór i kontrolę nad szkoleniem osób wykonujących czynności w ruchu zakładu górniczego lub wykonujących roboty geologiczne, sprawują właściwe organy nadzoru górniczego."
         },
         {
             "id": 35,
             "pytanie": "Prawo do informacji geologicznej uzyskanej od dnia 1 stycznia 2012 r. przysługuje:",
             "odpowiedzi": {
-                "A": "wykonawcy prac geologicznych;",
-                "B": "podmiotowi, który sfinansował wykonanie prac geologicznych;",
+                "A": "Wykonawcy prac geologicznych;",
+                "B": "Podmiotowi, który sfinansował wykonanie prac geologicznych;",
                 "C": "Skarbowi Państwa;"
             },
             "poprawne": [
                 "C"
             ],
-            "podstawa_prawna": "Art. 99 ust. 1 Prawo geologiczne i górnicze",
+            "podstawa_prawna": "Art. 99 ust. 1 PGiG",
             "tresc_artykulu": "Prawo do informacji geologicznej przysługuje Skarbowi Państwa."
         },
         {
@@ -2381,114 +2380,112 @@ BAZY_PYTAN = {
             "pytanie": "Prawo do informacji geologicznej uzyskanej od dnia 1 stycznia 2012 r. przysługuje:",
             "odpowiedzi": {
                 "A": "Skarbowi Państwa;",
-                "B": "gminie, na terenie której zlokalizowane jest miejsce wykonywania prac",
-                "C": "podmiotowi, który opracował dokumentację geologiczną;"
+                "B": "Gminie, na terenie której zlokalizowane jest miejsce wykonywania prac",
+                "C": "Podmiotowi, który opracował dokumentację geologiczną;"
             },
             "poprawne": [
                 "A"
             ],
-            "podstawa_prawna": "Art. 99 ust. 1 Prawo geologiczne i górnicze",
+            "podstawa_prawna": "Art. 99 ust. 1 PGiG",
             "tresc_artykulu": "Prawo do informacji geologicznej przysługuje Skarbowi Państwa."
         },
         {
             "id": 37,
             "pytanie": "Temu, kto ponosząc koszt prac prowadzonych w wyniku decyzji wydanych na podstawie ustawy, uzyskał informację geologiczną, przysługuje:",
             "odpowiedzi": {
-                "A": "prawo własności do tej informacji",
-                "B": "prawo do nieodpłatnego korzystania z niej.",
-                "C": "roszczenie wobec Skarbu Państwa o zwrot poniesionych kosztów."
+                "A": "Prawo własności do tej informacji",
+                "B": "Prawo do nieodpłatnego korzystania z niej.",
+                "C": "Roszczenie wobec Skarbu Państwa o zwrot poniesionych kosztów."
             },
             "poprawne": [
                 "B"
             ],
-            "podstawa_prawna": "Art. 99 ust. 2 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Podmiotowi, który poniósł koszty prac geologicznych prowadzonych na podstawie decyzji wydanych na podstawie ustawy, przysługuje prawo do korzystania z informacji geologicznej."
+            "podstawa_prawna": "Art. 99 ust. 2 PGiG",
+            "tresc_artykulu": "Temu, kto, ponosząc koszt prac prowadzonych w wyniku decyzji wydanych na podstawie ustawy lub prowadzonych na podstawie zgłoszenia, o którym mowa w art. 85 ust. 2 i art. 85a ust. 1, uzyskał informację geologiczną, przysługuje prawo do nieodpłatnego korzystania z niej."
         },
         {
             "id": 38,
             "pytanie": "Temu, kto ponosząc koszt prac prowadzonych w wyniku decyzji wydanych na podstawie ustawy, uzyskał informację geologiczną, przysługuje:",
             "odpowiedzi": {
-                "A": "prawo do nieodpłatnego korzystania z niej;",
-                "B": "wyłączne prawo do korzystania z informacji geologicznej w celu ubiegania się o wykonywanie działalności w zakresie: - wydobywania kopalin ze złóż, - podziemnego bezzbiornikowego magazynowania substancji oraz podziemnego składowania odpadów, - w jakim wymagane jest pozwolenie wodnoprawne w okresie 5 lat od dnia utraty mocy decyzji, na podstawie której wykonano prace będące źródłem informacji;",
-                "C": "prawo sprzedaży uzyskanych informacji;"
+                "A": "Prawo do nieodpłatnego korzystania z niej;",
+                "B": "Wyłączne prawo do korzystania z informacji geologicznej w celu ubiegania się o wykonywanie działalności w zakresie: - wydobywania kopalin ze złóż, - podziemnego bezzbiornikowego magazynowania substancji oraz podziemnego składowania odpadów, - w jakim wymagane jest pozwolenie wodnoprawne w okresie 5 lat od dnia utraty mocy decyzji, na podstawie której wykonano prace będące źródłem informacji;",
+                "C": "Prawo sprzedaży uzyskanych informacji;"
             },
             "poprawne": [
                 "A",
                 "C"
             ],
-            "podstawa_prawna": "Art. 99 ust. 2 pkt 2 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Podmiotowi, który poniósł koszty... przysługuje wyłączne prawo do korzystania z informacji geologicznej w celu ubiegania się o wykonywanie działalności w zakresie wydobywania kopalin, podziemnego bezzbiornikowego magazynowania substancji albo podziemnego składowania odpadów."
-        },
+            "podstawa_prawna": "Art. 99 ust. 2 PGiG",
+            "tresc_artykulu": "Temu, kto, ponosząc koszt prac prowadzonych w wyniku decyzji wydanych na podstawie ustawy lub prowadzonych na podstawie zgłoszenia, o którym mowa w art. 85 ust. 2 i art. 85a ust. 1, uzyskał informację geologiczną, przysługuje prawo do nieodpłatnego korzystania z niej."
         {
             "id": 39,
             "pytanie": "Temu, kto ponosząc koszt prac prowadzonych w wyniku decyzji wydanych na podstawie ustawy, uzyskał informację geologiczną, przysługuje:",
             "odpowiedzi": {
-                "A": "wyłączne prawo do korzystania z informacji geologicznej w celu ubiegania się o wykonywanie działalności w zakresie: wydobywania kopalin ze złóż, podziemnego bezzbiornikowego magazynowania substancji oraz podziemnego składowania odpadów, - w jakim wymagane jest pozwolenie wodnoprawne w okresie 5 lat od dnia utraty mocy decyzji, na podstawie której wykonano prace będące źródłem informacji",
-                "B": "wyłączne prawo do korzystania z informacji geologicznej w celu ubiegania się o wykonywanie działalności w zakresie: wydobywania kopalin ze złóż, podziemnego bezzbiornikowego magazynowania substancji oraz podziemnego składowania odpadów, - w jakim wymagane jest pozwolenie wodnoprawne w okresie 3 lat od dnia utraty mocy decyzji, na podstawie której wykonano prace będące źródłem informacji;",
-                "C": "prawo do nieodpłatnego korzystania z niej;"
+                "A": "Wyłączne prawo do korzystania z informacji geologicznej w celu ubiegania się o wykonywanie działalności w zakresie: wydobywania kopalin ze złóż, podziemnego bezzbiornikowego magazynowania substancji oraz podziemnego składowania odpadów, - w jakim wymagane jest pozwolenie wodnoprawne w okresie 5 lat od dnia utraty mocy decyzji, na podstawie której wykonano prace będące źródłem informacji",
+                "B": "Wyłączne prawo do korzystania z informacji geologicznej w celu ubiegania się o wykonywanie działalności w zakresie: wydobywania kopalin ze złóż, podziemnego bezzbiornikowego magazynowania substancji oraz podziemnego składowania odpadów, - w jakim wymagane jest pozwolenie wodnoprawne w okresie 3 lat od dnia utraty mocy decyzji, na podstawie której wykonano prace będące źródłem informacji;",
+                "C": "Prawo do nieodpłatnego korzystania z niej;"
             },
             "poprawne": [
                 "B"
             ],
-            "podstawa_prawna": "Art. 99 ust. 2 pkt 2 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Podmiotowi, który poniósł koszty... przysługuje wyłączne prawo do korzystania z informacji geologicznej w celu ubiegania się o wykonywanie działalności... w okresie 5 lat od dnia utraty mocy decyzji."
+            "podstawa_prawna": "Art. 99 ust. 2 PGiG",
+            "tresc_artykulu": "Temu, kto, ponosząc koszt prac prowadzonych w wyniku decyzji wydanych na podstawie ustawy lub prowadzonych na podstawie zgłoszenia, o którym mowa w art. 85 ust. 2 i art. 85a ust. 1, uzyskał informację geologiczną, przysługuje prawo do nieodpłatnego korzystania z niej, w okresie 5 lat od dnia doręczenia decyzji zatwierdzającej dokumentację geologiczną lub od dnia przekazania dokumentacji sporządzonej w przypadkach, o których mowa w art. 92 pkt 3 i 5, podmiotowi, o którym mowa w ust. 2, przysługuje wyłączne prawo do korzystania z informacji geologicznej w celu ubiegania się o wykonywanie działalności, o której mowa w art. 100 ust. 2. Nie dotyczy to państwowej służby geologicznej sporządzającej dokumentację geologiczną zawie-rającą wyniki robót geologicznych wykonanych na podstawie projektu robót geologicznych, o którym mowa w art. 79 ust. 1b."
         },
         {
             "id": 40,
             "pytanie": "Ten, komu przysługuje wyłączne prawo do korzystania z informacji geologicznej, zachowuje to prawo jeżeli:",
             "odpowiedzi": {
-                "A": "przed upływem 5 lat od dnia utraty mocy decyzji, na podstawie której wykonano prace będące źródłem informacji uzyskał decyzję stanowiącą podstawę wykonywania działalności w zakresie: - wydobywania kopalin ze złóż, - podziemnego bezzbiornikowego magazynowania substancji oraz podziemnego składowania odpadów, - w jakim wymagane jest pozwolenie wodnoprawne,",
-                "B": "przed upływem 5 lat od dnia utraty mocy decyzji, na podstawie której wykonano prace będące źródłem informacji uzyskał decyzję stanowiącą podstawę wykonywania działalności w zakresie poszukiwania złóż kopalin",
-                "C": "wniesie na rzecz Skarbu Państwa opłatę ryczałtową za korzystanie z informacji geologicznej;"
+                "A": "Przed upływem 5 lat od dnia utraty mocy decyzji, na podstawie której wykonano prace będące źródłem informacji uzyskał decyzję stanowiącą podstawę wykonywania działalności w zakresie: - wydobywania kopalin ze złóż, - podziemnego bezzbiornikowego magazynowania substancji oraz podziemnego składowania odpadów, - w jakim wymagane jest pozwolenie wodnoprawne,",
+                "B": "Przed upływem 5 lat od dnia utraty mocy decyzji, na podstawie której wykonano prace będące źródłem informacji uzyskał decyzję stanowiącą podstawę wykonywania działalności w zakresie poszukiwania złóż kopalin",
+                "C": "Wniesie na rzecz Skarbu Państwa opłatę ryczałtową za korzystanie z informacji geologicznej;"
             },
             "poprawne": [
                 "A"
             ],
-            "podstawa_prawna": "Art. 99 ust. 3 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Podmiot, któremu przysługuje wyłączne prawo do korzystania z informacji geologicznej, zachowuje to prawo, jeżeli przed upływem określonego terminu uzyska decyzję stanowiącą podstawę do wykonywania działalności."
+            "podstawa_prawna": "Art. 99 ust. 3 PGiG",
+            "tresc_artykulu": "Temu, kto, ponosząc koszt prac prowadzonych w wyniku decyzji wydanych na podstawie ustawy lub prowadzonych na podstawie zgłoszenia, o którym mowa w art. 85 ust. 2 i art. 85a ust. 1, uzyskał informację geologiczną, przysługuje prawo do nieodpłatnego korzystania z niej, jeżeli przed upływem terminu określonego w ust. 3 ten, komu przysługuje wyłączne prawo do korzystania z informacji geologicznej, uzyskał decyzję stanowiącą podstawę wykonywania działalności, o której mowa w art. 100 ust. 2, zachowuje wyłączne prawo do korzystania z informacji geologicznej przez czas określony w takiej decyzji oraz dodatkowo przez 5 lat od dnia utraty jej mocy."
         },
         {
             "id": 41,
             "pytanie": "Ten, komu przysługuje wyłączne prawo do korzystania z informacji geologicznej, po uzyskaniu decyzji stanowiącej podstawę wykonywania działalności zakresie: - wydobywania kopalin ze złóż, - podziemnego bezzbiornikowego magazynowania substancji oraz podziemnego składowania odpadów, - w jakim wymagane jest pozwolenie wodnoprawne, zachowuje wyłączne prawo do korzystania z informacji geologicznej",
             "odpowiedzi": {
-                "A": "przez czas określony w takiej decyzji oraz dodatkowo przez 5 lata od dnia utraty jej mocy,",
-                "B": "przez czas określony w takiej decyzji oraz dodatkowo przez 2 lata od dnia utraty jej mocy,",
-                "C": "wyłącznie przez czas określony w takiej decyzji,"
+                "A": "Przez czas określony w takiej decyzji oraz dodatkowo przez 5 lata od dnia utraty jej mocy,",
+                "B": "Przez czas określony w takiej decyzji oraz dodatkowo przez 2 lata od dnia utraty jej mocy,",
+                "C": "Wyłącznie przez czas określony w takiej decyzji,"
             },
             "poprawne": [
                 "B"
             ],
-            "podstawa_prawna": "Art. 99 ust. 3 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Zachowuje to prawo przez czas określony w tej decyzji oraz dodatkowo przez okres 2 lat od dnia utraty jej mocy."
+            "podstawa_prawna": "Art. 99 ust. 3 PGiG",
+            "tresc_artykulu": "Temu, kto, ponosząc koszt prac prowadzonych w wyniku decyzji wydanych na podstawie ustawy lub prowadzonych na podstawie zgłoszenia, o którym mowa w art. 85 ust. 2 i art. 85a ust. 1, uzyskał informację geologiczną, przysługuje prawo do nieodpłatnego korzystania z niej, jeżeli przed upływem terminu określonego w ust. 3 ten, komu przysługuje wyłączne prawo do korzystania z informacji geologicznej, uzyskał decyzję stanowiącą podstawę wykonywania działalności, o której mowa w art. 100 ust. 2, zachowuje wyłączne prawo do korzystania z informacji geologicznej przez czas określony w takiej decyzji oraz dodatkowo przez 5 lat od dnia utraty jej mocy."
         },
         {
             "id": 42,
             "pytanie": "Prawem do informacji geologicznej rozporządza:",
             "odpowiedzi": {
-                "A": "organ administracji geologicznej;",
-                "B": "ten, komu przysługują prawa do korzystania z informacji geologicznej w granicach określonych przepisami ustawy;",
+                "A": "Organ administracji geologicznej;",
+                "B": "Ten, komu przysługują prawa do korzystania z informacji geologicznej w granicach określonych przepisami ustawy;",
                 "C": "Skarb Państwa;"
             },
             "poprawne": [
-                "B",
                 "C"
             ],
             "podstawa_prawna": "Art. 100 ust. 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Prawem do informacji geologicznej przysługującym Skarbowi Państwa rozporządza, w granicach określonych ustawą, minister właściwy do spraw środowiska."
+            "tresc_artykulu": "Prawem do informacji geologicznej przysługuje Skarbowi Państwa."
         },
         {
             "id": 43,
             "pytanie": "Ten, komu przysługują prawa do korzystania z informacji geologicznej, może:",
             "odpowiedzi": {
-                "A": "sprzedać informację geologiczną na rynku wtórnym;",
-                "B": "rozporządzać nimi w granicach określonych przepisami ustawy;",
-                "C": "zgłaszać do Skarbu Państwa roszczenia o zwrot poniesionych nakładów na pozyskanie informacji geologicznej;"
+                "A": "Sprzedać informację geologiczną na rynku wtórnym;",
+                "B": "Rozporządzać nimi w granicach określonych przepisami ustawy;",
+                "C": "Zgłaszać do Skarbu Państwa roszczenia o zwrot poniesionych nakładów na pozyskanie informacji geologicznej;"
             },
             "poprawne": [
                 "B"
             ],
-            "podstawa_prawna": "Art. 100 ust. 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Prawem do informacji geologicznej przysługującym Skarbowi Państwa rozporządza, w granicach określonych ustawą, minister właściwy do spraw środowiska."
+            "podstawa_prawna": "Art. 99 ust. 6 PGiG",
+            "tresc_artykulu": "Ten, kto przysługują prawa określone w ust. 2-4, może rzoporządzać ninmi w granicach określonych tymi przepisami"
         },
         {
             "id": 44,
@@ -2501,8 +2498,8 @@ BAZY_PYTAN = {
             "poprawne": [
                 "C"
             ],
-            "podstawa_prawna": "Art. 100 ust. 3 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Do rozporządzania prawem do informacji geologicznej przysługującym Skarbowi Państwa w sprawach nieuregulowanych w ustawie stosuje się przepisy Kodeksu cywilnego."
+            "podstawa_prawna": "Art. 99 ust. 8 PGiG",
+            "tresc_artykulu": "Do praw, o których mowa w ust. 2-4, w sprawach nieuregulowanych w ustawie stosuje się przpisy Kodeksu Cywilnego."
         },
         {
             "id": 45,
@@ -2513,10 +2510,9 @@ BAZY_PYTAN = {
                 "C": "odpłatne w wyjątkiem kiedy korzystanie z informacji geologicznej, jest związane z badaniem powodującym uszkodzenie, zniszczenie lub zużycie próbki geologicznej;"
             },
             "poprawne": [
-                "B",
-                "C"
+                "B"
             ],
-            "podstawa_prawna": "Art. 100 ust. 2 Prawo geologiczne i górnicze",
+            "podstawa_prawna": "Art. 100 ust. 2 PGiG ,
             "tresc_artykulu": "Korzystanie z informacji geologicznej, do której prawo przysługuje Skarbowi Państwa, jest nieodpłatne, chyba że ustawa stanowi inaczej."
         },
         {
@@ -2524,14 +2520,14 @@ BAZY_PYTAN = {
             "pytanie": "Korzystanie z informacji geologicznej, do której prawa przysługują Skarbowi Państwa, jest:",
             "odpowiedzi": {
                 "A": "odpłatne w sytuacji kiedy korzystanie z informacji geologicznej związane jest z udostępnieniem danych geologicznych;",
-                "B": "podziemnego bezzbiornikowego magazynowania substancji oraz podziemnego składowania odpadów;",
-                "C": "odpłatne z wyjątkiem sytuacji kiedy korzystanie z informacji geologicznej, następuje w celu wykonywania działalności w zakresie poszukiwania złóż kopalin; w jakim wymagane pozwolenie wodnoprawne;"
+                "B": "realizowane jest za wynagrodzeniem"
+                "C": "odpłatne z wyjątkiem sytuacji kiedy korzystanie z informacji geologicznej, następuje w celu wykonywania działalności w zakresie poszukiwania złóż kopalin;"
             },
             "poprawne": [
-                "A"
+                "B"
             ],
-            "podstawa_prawna": "Art. 100 ust. 2 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Korzystanie z informacji geologicznej, do której prawo przysługuje Skarbowi Państwa, jest nieodpłatne, chyba że ustawa stanowi inaczej."
+            "podstawa_prawna": "Art. 100 ust. 2 PGiG",
+            "tresc_artykulu": "Korzystanie z informacji geologicznej [...] jest nieodpłatne."
         },
         {
             "id": 47,
@@ -2546,8 +2542,8 @@ BAZY_PYTAN = {
                 "B",
                 "C"
             ],
-            "podstawa_prawna": "Art. 100 ust. 2 pkt 1 Prawo geologiczne i górnicze",
-            "tresc_artykulu": "Rozporządzenie prawem do informacji geologicznej w celu wykonywania działalności w zakresie wydobywania kopalin ze złóż następuje za wynagrodzeniem w drodze umowy."
+            "podstawa_prawna": "Art. 100 ust. 2 pkt 1 PGiG,
+            "tresc_artykulu": "Korzystanie z informacji geologicznej, do której prawo przysługuje Skarbowi Państwa, następuje na podstawie umowy, za wynagrodzeniem, jeżeli jest to związane z wykonywaniem działalności w zakresie poszukiwania, rozpoznawania, wydobywania kopalin ze złóż."
         },
         {
             "id": 48,

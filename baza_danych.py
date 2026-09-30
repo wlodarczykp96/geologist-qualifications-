@@ -2257,7 +2257,7 @@ BAZY_PYTAN = {
             "podstawa_prawna": "Art. 161 ust. 3 PGiG",
             "tresc_artykulu": "Do ministra właściwego do spraw środowiska, jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące: [...] obiektów budownictwa wodnego o wysokości piętrzenia przekraczającej 5 m, otworów wiertniczych do rozpoznania budowy głębokiego podłoża, niezwiązanego z dokumentowaniem złóż kopalin."
         },
-        {
+        }
             "id": 28,
             "pytanie": "Do ministra właściwego do spraw środowiska jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące:",
             "odpowiedzi": {

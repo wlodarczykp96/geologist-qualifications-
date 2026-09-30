@@ -2417,7 +2417,7 @@ BAZY_PYTAN = {
             ],
             "podstawa_prawna": "Art. 99 ust. 2 PGiG",
             "tresc_artykulu": "Temu, kto, ponosząc koszt prac prowadzonych w wyniku decyzji wydanych na podstawie ustawy lub prowadzonych na podstawie zgłoszenia, o którym mowa w art. 85 ust. 2 i art. 85a ust. 1, uzyskał informację geologiczną, przysługuje prawo do nieodpłatnego korzystania z niej."
-        }
+        },
         {
             "id": 39,
             "pytanie": "Temu, kto ponosząc koszt prac prowadzonych w wyniku decyzji wydanych na podstawie ustawy, uzyskał informację geologiczną, przysługuje:",

@@ -21,7 +21,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 # ==============================================================================
-# 2. OBSŁUGA TRWAŁEGO ZAPISU DANYCH (JSON)
+# 2. OBSŁUGA TRWAŁEGO ZAPISU DANYCH (JSON / PYTHON FILE)
 # ==============================================================================
 PLIK_STATYSTYK = "statystyki.json"
 
@@ -34,6 +34,51 @@ def wczytaj_statystyki():
 
 if "statystyki" not in st.session_state:
     st.session_state.statystyki = wczytaj_statystyki()
+
+def zapisz_baze_pytan():
+    """Zapisuje strukturę pytań z st.session_state.bazy do baza_danych.py oraz synchronizuje z GitHubem"""
+    try:
+        tresc_py = "BAZY_PYTAN = " + json.dumps(st.session_state.bazy, ensure_ascii=False, indent=4)
+        with open("baza_danych.py", "w", encoding="utf-8") as f:
+            f.write(tresc_py)
+    except Exception as e:
+        st.error(f"❌ Błąd lokalnego zapisu bazy pytań: {e}")
+
+    try:
+        if "GITHUB_TOKEN" not in st.secrets or "GITHUB_REPO" not in st.secrets:
+            return
+
+        token = st.secrets["GITHUB_TOKEN"].strip()
+        if token.startswith("gghp_"):
+            token = token[1:]
+
+        repo_name = st.secrets["GITHUB_REPO"].strip().replace("https://github.com/", "").strip("/")
+
+        g = Github(token)
+        repo = g.get_repo(repo_name)
+
+        tresc_py = "BAZY_PYTAN = " + json.dumps(st.session_state.bazy, ensure_ascii=False, indent=4)
+
+        try:
+            contents = repo.get_contents("baza_danych.py")
+            repo.update_file(
+                path=contents.path,
+                message="Auto-update bazy pytan",
+                content=tresc_py,
+                sha=contents.sha
+            )
+        except Exception:
+            repo.create_file(
+                path="baza_danych.py",
+                message="Utworzenie pliku bazy pytań",
+                content=tresc_py
+            )
+
+        st.cache_data.clear()
+        st.success("✅ Baza pytań została pomyślnie zsynchronizowana z GitHubem!")
+
+    except Exception as e:
+        st.error(f"❌ Błąd synchronizacji bazy z GitHub: {e}")
 
 def zapisz_json(sciezka, dane):
     try:
@@ -808,8 +853,8 @@ elif menu_glowne == "➕ Dodaj Pytanie":
                 if artykul: nowe_pytanie["tresc_artykulu"] = artykul
 
                 st.session_state.bazy[baza_docelowa].append(nowe_pytanie)
-                zapisz_json("baza_danych.json", st.session_state.bazy)
-                st.success(f"Dodano pytanie o ID {nowe_id} i zapisano baze na stałe!")
+                zapisz_baze_pytan()
+                st.success(f"Dodano pytanie o ID {nowe_id} i zapisano bazy na stałe!")
             else:
                 st.error("Uzupełnij pola i wybierz co najmniej jedną poprawną odpowiedź!")
 
@@ -907,7 +952,7 @@ elif menu_glowne == "🔑 Panel Administratora":
                 st.write("**Usuwanie**")
                 if st.button("🗑️ Usuń pytanie", type="primary"):
                     st.session_state.bazy[wybrana_baza_admin].pop(pytanie_idx)
-                    zapisz_json("baza_danych.json", st.session_state.bazy)
+                    zapisz_baze_pytan()
                     st.success("Pytanie zostało pomyślnie usunięte z bazy!")
                     st.rerun()
 
@@ -940,7 +985,7 @@ elif menu_glowne == "🔑 Panel Administratora":
                         p["podstawa_prawna"] = podstawa
                         p["tresc_artykulu"] = artykul
 
-                        zapisz_json("baza_danych.json", st.session_state.bazy)
+                        zapisz_baze_pytan()
                         st.success("Zmiany zostały pomyślnie zapisane!")
                         st.rerun()
                     else:

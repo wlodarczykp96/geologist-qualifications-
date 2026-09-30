@@ -2513,7 +2513,7 @@ BAZY_PYTAN = {
             "poprawne": [
                 "B"
             ],
-            "podstawa_prawna": "Art. 100 ust. 2 PGiG ,
+            "podstawa_prawna": "Art. 100 ust. 2 PGiG",
             "tresc_artykulu": "Korzystanie z informacji geologicznej, do której prawo przysługuje Skarbowi Państwa, jest nieodpłatne, chyba że ustawa stanowi inaczej."
         },
         {
@@ -2521,7 +2521,7 @@ BAZY_PYTAN = {
             "pytanie": "Korzystanie z informacji geologicznej, do której prawa przysługują Skarbowi Państwa, jest:",
             "odpowiedzi": {
                 "A": "odpłatne w sytuacji kiedy korzystanie z informacji geologicznej związane jest z udostępnieniem danych geologicznych;",
-                "B": "realizowane jest za wynagrodzeniem"
+                "B": "realizowane jest za wynagrodzeniem",
                 "C": "odpłatne z wyjątkiem sytuacji kiedy korzystanie z informacji geologicznej, następuje w celu wykonywania działalności w zakresie poszukiwania złóż kopalin;"
             },
             "poprawne": [
@@ -2543,7 +2543,7 @@ BAZY_PYTAN = {
                 "B",
                 "C"
             ],
-            "podstawa_prawna": "Art. 100 ust. 2 pkt 1 PGiG,
+            "podstawa_prawna": "Art. 100 ust. 2 pkt 1 PGiG",
             "tresc_artykulu": "Korzystanie z informacji geologicznej, do której prawo przysługuje Skarbowi Państwa, następuje na podstawie umowy, za wynagrodzeniem, jeżeli jest to związane z wykonywaniem działalności w zakresie poszukiwania, rozpoznawania, wydobywania kopalin ze złóż."
         },
         {

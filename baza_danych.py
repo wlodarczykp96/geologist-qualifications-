@@ -2154,7 +2154,7 @@ BAZY_PYTAN = {
             ],
             "podstawa_prawna": "Art. 161 ust. 2 PGiG",
             "tresc_artykulu": "Do starosty, jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące: [...] ujęć wód podziemnych, których przewidywane lub ustalone zasoby nie przekraczają 50 m³/h, z wyłączeniem wykonywania wkopów oraz otworów wiertniczych o głębokości do 30 m w celu wykonywania ujęć wód podziemnych na potrzeby poboru wód podziemnych w ilości nieprzekraczającej 5 m³ na dobę na obszarach górniczych utworzonych w celu wydobywania wód leczniczych lub solanek."
-        
+        }
         {
             "id": 21,
             "pytanie": "Do starosty jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące:",
@@ -2331,7 +2331,7 @@ BAZY_PYTAN = {
             "podstawa_prawna": "Art. 168 ust. 1 PGiG",
             "tresc_artykulu": "Organy nadzoru górniczego sprawują nadzór i kontrolę nad ruchem zakładów górniczych, w szczególności w zakresie: bezpieczeństwa i higieny pracy, bezpieczeństwa pożarowego, ratownictwa górniczego, gospodarki złożami kopalin w procesie ich wydobywania, ochrony środowiska i gospodarki złożem, w tym według kryterium wykonywania przez przedsiębiorców obowiązków określonych w odrębnych przepisach lub na ich podstawie;, zapobiegania szkodom, budowy i likwidacji zakładu górniczego, w tym rekultywacji gruntów po działalności górniczej."
         },
-        
+        {
             "id": 33,
             "pytanie": "Organy nadzoru górniczego sprawują nadzór i kontrolę nad ruchem zakładów górniczych, w szczególności w zakresie:",
             "odpowiedzi": {
@@ -2417,6 +2417,7 @@ BAZY_PYTAN = {
             ],
             "podstawa_prawna": "Art. 99 ust. 2 PGiG",
             "tresc_artykulu": "Temu, kto, ponosząc koszt prac prowadzonych w wyniku decyzji wydanych na podstawie ustawy lub prowadzonych na podstawie zgłoszenia, o którym mowa w art. 85 ust. 2 i art. 85a ust. 1, uzyskał informację geologiczną, przysługuje prawo do nieodpłatnego korzystania z niej."
+        }
         {
             "id": 39,
             "pytanie": "Temu, kto ponosząc koszt prac prowadzonych w wyniku decyzji wydanych na podstawie ustawy, uzyskał informację geologiczną, przysługuje:",

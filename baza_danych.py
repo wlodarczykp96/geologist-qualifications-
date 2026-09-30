@@ -2140,7 +2140,7 @@ BAZY_PYTAN = {
             ],
             "podstawa_prawna": "Art. 161 ust. 2 pkt 1 PGiG",
             "tresc_artykulu": "Do starosty, jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące: złóż kopalin nieobjętych własnością górniczą, poszukiwanych lub rozpoznawanych na obszarze do 2 ha w celu wydobycia metodą odkrywkową w ilości do 20 000 m³ w roku kalendarzowym i bez użycia środków strzałowych."
-        }
+        },
         {
             "id": 20,
             "pytanie": "Do starosty jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące:",
@@ -2154,7 +2154,7 @@ BAZY_PYTAN = {
             ],
             "podstawa_prawna": "Art. 161 ust. 2 PGiG",
             "tresc_artykulu": "Do starosty, jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące: [...] ujęć wód podziemnych, których przewidywane lub ustalone zasoby nie przekraczają 50 m³/h, z wyłączeniem wykonywania wkopów oraz otworów wiertniczych o głębokości do 30 m w celu wykonywania ujęć wód podziemnych na potrzeby poboru wód podziemnych w ilości nieprzekraczającej 5 m³ na dobę na obszarach górniczych utworzonych w celu wydobywania wód leczniczych lub solanek."
-        }
+        },
         {
             "id": 21,
             "pytanie": "Do starosty jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące:",
@@ -2254,8 +2254,8 @@ BAZY_PYTAN = {
                 "A",
                 "B"
             ],
-            "podstawa_prawna": "Art. 161 ust. 3 PGiG,
-            "tresc_artykulu": "Do ministra właściwego do spraw środowiska, jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące: [...] obiektów budownictwa wodnego o wysokości piętrzenia przekraczającej 5 m, otworów wiertniczych do rozpoznania budowy głębokiego podłoża, niezwiązanego z dokumentowaniem złóż kopalin, "
+            "podstawa_prawna": "Art. 161 ust. 3 PGiG",
+            "tresc_artykulu": "Do ministra właściwego do spraw środowiska, jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące: [...] obiektów budownictwa wodnego o wysokości piętrzenia przekraczającej 5 m, otworów wiertniczych do rozpoznania budowy głębokiego podłoża, niezwiązanego z dokumentowaniem złóż kopalin."
         },
         {
             "id": 28,

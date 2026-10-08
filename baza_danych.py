@@ -2114,20 +2114,6 @@ BAZY_PYTAN = {
             "tresc_artykulu": "Organami administracji geologicznej są: minister właściwy do spraw środowiska (geolog kraju), marszałkowie województw (geolog wojewódzki), starostowie (geolog powiatowy)."
         },
         {
-            "id": 18,
-            "pytanie": "Właściwy organ administracji geologicznej może w drodze decyzji wstrzymać działalność określoną ustawą Prawo geologiczne i górnicze, jeżeli jest wykonywana:",
-            "odpowiedzi": {
-                "A": "Z naruszeniem warunków określonych w koncesji;",
-                "B": "Bez zatwierdzonego projektu robót geologicznych",
-                "C": "Z naruszeniem warunków zapewniających bezpieczeństwo finansowe przedsiębiorcy."
-            },
-            "poprawne": [
-                "B"
-            ],
-            "podstawa_prawna": "Art. 173 ust. 1 PGiG",
-            "tresc_artykulu": "Jeżeli działalność regulowana ustawą jest wykonywana z naruszeniem warunków określonych w koncesji, w PRG lub bez zatwierdzonego PRG, właściwy organ administracji geologicznej wydaje decyzję o wstrzymaniu działalności."
-        },
-        {
             "id": 19,
             "pytanie": "Do starosty jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące:",
             "odpowiedzi": {
@@ -2175,7 +2161,7 @@ BAZY_PYTAN = {
             "odpowiedzi": {
                 "A": "Badań geologiczno-inżynierskich wykonywanych na potrzeby zagospodarowania przestrzennego gminy oraz warunków posadawiania obiektów budowlanych;",
                 "B": "Określania warunków hydrogeologicznych oraz geologiczno – inżynierskich dla potrzeb podziemnego bezzbiornikowego magazynowania substancji;",
-                "C": "Określania warunków hydrogeologicznych oraz geologiczno-inżynierskich dla potrzeb podziemnego składowania odpadów."
+                "C": "Określania warunków hydrogeologicznych oraz geologiczno – inżynierskich dla potrzeb podziemnego składowania odpadów."
             },
             "poprawne": [
                 "A"
@@ -2220,11 +2206,12 @@ BAZY_PYTAN = {
                 "C": "Obszarów morskich Rzeczypospolitej Polskiej;"
             },
             "poprawne": [
+                "A",
                 "B",
                 "C"
             ],
             "podstawa_prawna": "Art. 161 ust. 3 PGiG",
-            "tresc_artykulu": "Do ministra właściwego do spraw środowiska, jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące: złóż kopalin objętych własnością górniczą."
+            "tresc_artykulu": "Do ministra właściwego do spraw środowiska, jako organu administracji geologicznej pierwszej instancji, należą sprawy związane z zatwierdzaniem projektów robót geologicznych oraz dokumentacjami geologicznymi, dotyczące: złóż kopalin ,o których mowa art. 10 ust. 1"
         },
         {
             "id": 26,
@@ -2641,11 +2628,10 @@ BAZY_PYTAN = {
                 "C": "Minister właściwy do spraw środowiska;"
             },
             "poprawne": [
-                "B",
                 "C"
             ],
             "podstawa_prawna": "Art. 161 ust. 3 PGiG",
-            "tresc_artykulu": "Zadaniem Skarbu Państwa jako właściciela informacji geologicznej wykonują organy administracji geologiczznej (minister właściwy do spraw środowiska oraz marszałek województwa (z wyłączeniem starosty)."
+            "tresc_artykulu": "Zadaniem Skarbu Państwa jako właściciela informacji geologicznej wykonują organy administracji geologiczznej (minister właściwy do spraw środowiska."
         },
         {
             "id": 55,
@@ -2716,7 +2702,7 @@ BAZY_PYTAN = {
                 "C"
             ],
             "podstawa_prawna": "Art. 99 ust. 5 PGiG",
-            "tresc_artykulu": "Zadaniem Skarbu Państwa, o których mowa jest w art, 4 i w art 99 ust. 5, w zakresie określonym w ust.2 pkt 4., wyokuje marszałek województwa"
+            "tresc_artykulu": "Zadaniem Skarbu Państwa, o których mowa jest w art, 4 i w art 99 ust. 5, w zakresie określonym w ust.2 pkt 4., wykonuje marszałek województwa"
         },
         {
             "id": 60,
@@ -2755,8 +2741,7 @@ BAZY_PYTAN = {
                 "C": "Jest organem administracji geologicznej;"
             },
             "poprawne": [
-                "A",
-                "B"
+                "A"
             ],
             "podstawa_prawna": "Art. 162 ust. 1 PGiG",
             "tresc_artykulu": "Państwowa służba geologiczna wykonuje zadania państwa w zakresie geologii."
@@ -2840,8 +2825,8 @@ BAZY_PYTAN = {
             "pytanie": "Organy administracji geologicznej gromadzą informację geologiczną jako:",
             "odpowiedzi": {
                 "A": "Dokumenty geologiczne;",
-                "B": "Wartości informacji geologicznej;",
-                "C": "Zbiory danych geologicznych;"
+                "B": "Zbiory danych geologicznych;",
+                "C": "Próbki geologiczne trwałego przechowywania;"
             },
             "poprawne": [
                 "A",
@@ -2855,12 +2840,12 @@ BAZY_PYTAN = {
             "pytanie": "Organy administracji geologicznej umożliwiają:",
             "odpowiedzi": {
                 "A": "Nieodpłatne zapoznanie się ze zgromadzoną informacją geologiczną, bez prawa dokonywania reprodukcji, odpisu, odrysu, wydruku, fotokopii lub kopii w postaci elektronicznej dokumentów i zbiorów danych, a także bez prawa pobierania próbek;",
-                "B": "Odpłatne zapoznanie się ze zgromadzoną informacją geologiczną, bez prawa dokonywania reprodukcji, odpisu, odrysu, wydruku, fotokopii lub kopii w postaci elektronicznej dokumentów i zbiorów danych, a także bez prawa pobierania próbek;",
-                "C": "Wykonywanie reprodukcji, odpisu, odrysu, wydruku, fotokopii lub kopii w postaci elektronicznej dokumentów i zbiorów danych oraz pobieranie próbek geologicznych;"
+                "B": "Wykonywanie reprodukcji, odpisu, odrysu, wydruku, fotokopii lub kopii w postaci elektronicznej dokumentów i zbiorów danych oraz pobieranie próbek geologicznych;"
+                "C": "Odpłatne zapoznanie się ze zgromadzoną informacją geologiczną, bez prawa dokonywania reprodukcji, odpisu, odrysu, wydruku, fotokopii lub kopii w postaci elektronicznej dokumentów i zbiorów danych, a także bez prawa pobierania próbek;",
+
             },
             "poprawne": [
-                "A",
-                "B"
+                "A"
             ],
             "podstawa_prawna": "Art. 100 ust. 2 PGiG",
             "tresc_artykulu": "Organy administracji geologicznej, stosownie do zakresu swojej właściwości, umożliwiają nieodpłatne zapoznanie się ze zgromadzoną informacją geologiczną, bez prawa dokonywania reprodukcji, odpisu, odrysu, wydruku, fotokopii lub kopii w postaci elektronicznej dokumentów i zbiorów danych geologicznych."
@@ -2949,7 +2934,7 @@ BAZY_PYTAN = {
                 "C": "Średnią z uzyskanych wyników"
             },
             "poprawne": [
-                "B"
+                "A"
             ],
             "podstawa_prawna": "Rozporządzenie MŚ z dn. 19 grudnia 2014 r w sprawie wyceny informacji geologicznej (paragraf 6)",
             "tresc_artykulu": "W przypadku szacowania wartośi informacji geologicznej przy użyciu więcej niż jednej metod wyceny, jako podstawę do ustalenia wynagrodzenia przyjmuje się najwyższy z uzyskanych wyników."
@@ -2966,7 +2951,7 @@ BAZY_PYTAN = {
                 "A"
             ],
             "podstawa_prawna": "Rozporządzenie MŚ z dn. 19 grudnia 2014 r w sprawie wyceny informacji geologicznej (paragraf 2)",
-            "tresc_artykulu": "OSzacowania wartości informacji geologicznej wykorzystywanej w celu wykonywania działalności w zakresie, w jakim jest wymagane pozwolenie wodnoprawne, dokonuje się metodą obliczenia kosztu pozyskania informacji geologicznej, zgodnie z zakresem i technologią prac geologicznych, które posłużyły do jej pozyskania, wyrażonego w cenach stosowanych dla tego typu prac w roku dokonywania wyceny."
+            "tresc_artykulu": "Szacowania wartości informacji geologicznej wykorzystywanej w celu wykonywania działalności w zakresie, w jakim jest wymagane pozwolenie wodnoprawne, dokonuje się metodą obliczenia kosztu pozyskania informacji geologicznej, zgodnie z zakresem i technologią prac geologicznych, które posłużyły do jej pozyskania, wyrażonego w cenach stosowanych dla tego typu prac w roku dokonywania wyceny."
         }
     ],
     "BAZA PYTAŃ - CZĘŚĆ 3 (Pojęcia ogólne, własność górnicza, koncesje, kwalifikacje geologiczne)": [

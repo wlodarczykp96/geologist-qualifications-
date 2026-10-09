@@ -175,6 +175,14 @@
             "zdane": false,
             "wynik_str": "22/30",
             "procent": 73.33333333333333
+        },
+        {
+            "data": "2026-10-09",
+            "tryb": "Egzamin (Losowo – 30 pytań)",
+            "baza": "BAZA PYTAŃ - CZĘŚĆ 2 (Informacja geologiczna, organy administracji geologicznej, organy nadzoru górniczego, plany ruchu zakładu górniczego)",
+            "zdane": true,
+            "wynik_str": "25/30",
+            "procent": 83.33333333333334
         }
     ],
     "Edyta": [],

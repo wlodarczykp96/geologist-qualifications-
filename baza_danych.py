@@ -3169,6 +3169,7 @@ BAZY_PYTAN = {
                 "C": "uzyskać decyzję zatwierdzającą dokumentację geologiczną złoża kopaliny;"
             },
             "poprawne": [
+                "A",
                 "B",
                 "C"
             ],

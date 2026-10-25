@@ -351,6 +351,14 @@
             "zdane": true,
             "wynik_str": "26/30",
             "procent": 86.66666666666667
+        },
+        {
+            "data": "2026-10-25",
+            "tryb": "Egzamin (Losowo – 30 pytań)",
+            "baza": "BAZA PYTAŃ - CZĘŚĆ 3 (Pojęcia ogólne, własność górnicza, koncesje, kwalifikacje geologiczne)",
+            "zdane": true,
+            "wynik_str": "24/30",
+            "procent": 80.0
         }
     ],
     "Edyta": [],

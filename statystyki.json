@@ -375,6 +375,14 @@
             "zdane": true,
             "wynik_str": "26/30",
             "procent": 86.66666666666667
+        },
+        {
+            "data": "2026-10-28",
+            "tryb": "Egzamin (Losowo – 30 pytań)",
+            "baza": "BAZA PYTAŃ - CZĘŚĆ 4 (Projekty robót, dokumentacje geologiczne, inne dokumentacje, operaty ewidencyjne, projekty zagospodarowania złóż)",
+            "zdane": false,
+            "wynik_str": "21/30",
+            "procent": 70.0
         }
     ],
     "Edyta": [],

@@ -1,4 +1,4 @@
-BAZY_PYTAN = {
+BAZY_PYTAN = [
     "BAZA PYTAŃ - CZĘŚĆ 4 (Projekty robót, dokumentacje geologiczne, inne dokumentacje, operaty ewidencyjne, projekty zagospodarowania złóż)": [
         {
             "id": 1,
@@ -829,6 +829,6 @@ BAZY_PYTAN = {
             ],
             "podstawa_prawna": "Paragraf. 1 pkt. 2 Rozporządzenia MŚ w sprawie szczegółowych wymagań dotyczących PRG",
             "tresc_artykulu": "Część tekstowa projektu obejmuje opis zamierzonych robót geologicznych zawierający, w zależności od celu tych robót: przedstawienie możliwości osiągnięcia celu robót geologicznych, zawierające w szczególności: a) opis i uzasadnienie liczby, lokalizacji i rodzaju projektowanych otworów wiertniczych lub wyrobisk, b) przewidywaną konstrukcję projektowanych otworów wiertniczych lub wyrobisk, c) informacje dotyczące zamykania horyzontów wodonośnych, d) sposób i termin likwidacji otworów wiertniczych lub wyrobisk oraz rekultywacji gruntów, e) charakterystykę i uzasadnienie zakresu oraz metod zamierzonych badań geofizycznych i geochemicznych oraz ich lokalizacji, f)4) opis opróbowania otworów wiertniczych lub wyrobisk, w tym sposób pobierania próbek geologicznych, zakres, ilość i wielkość przewidywanych do pobrania próbek geologicznych,"
-        },
-    ],
-}
+        }
+    ]
+]

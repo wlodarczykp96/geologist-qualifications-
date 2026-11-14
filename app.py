@@ -19,13 +19,24 @@ PLIKI_BAZ = {
 }
 
 def wczytaj_wszystkie_bazy():
-    """Wczytuje pytania z poszczególnych plików JSON do słownika w sesji."""
+    """Wczytuje pytania z poszczególnych plików JSON do słownika w sesji (obsługuje listy oraz słowniki)."""
     załadowane_bazy = {}
     for nazwa, plik in PLIKI_BAZ.items():
         if os.path.exists(plik):
             try:
                 with open(plik, "r", encoding="utf-8") as f:
-                    załadowane_bazy[nazwa] = json.load(f)
+                    dane = json.load(f)
+                    if isinstance(dane, list):
+                        załadowane_bazy[nazwa] = dane
+                    elif isinstance(dane, dict):
+                        # Jeśli plik zawiera słownik z kluczami, bierzemy pierwszą pasującą listę lub łączymy
+                        pula = []
+                        for k, v in dane.items():
+                            if isinstance(v, list):
+                                pula.extend(v)
+                        załadowane_bazy[nazwa] = pula if pula else []
+                    else:
+                        załadowane_bazy[nazwa] = []
             except Exception:
                 załadowane_bazy[nazwa] = []
         else:
@@ -404,12 +415,14 @@ def pobierz_pytania_z_bazy(nazwa_bazy, tylko_wielokrotne=False):
     if nazwa_bazy == "Cała baza (wszystkie pytania)":
         pula = []
         for b in st.session_state.bazy.values():
-            pula.extend(b)
+            if isinstance(b, list):
+                pula.extend(b)
     else:
-        pula = list(st.session_state.bazy.get(nazwa_bazy, []))
+        baza_dane = st.session_state.bazy.get(nazwa_bazy, [])
+        pula = list(baza_dane) if isinstance(baza_dane, list) else []
     
     if tylko_wielokrotne:
-        return [p for p in pula if len(p.get("poprawne", [])) in [1, 2]]
+        return [p for p in pula if isinstance(p, dict) and len(p.get("poprawne", [])) in [1, 2]]
     return pula
 
 def start_sesji(tryb, baza_nazwa, limit_pytan=None, tylko_wielokrotne=False):
@@ -604,7 +617,6 @@ elif menu_glowne == "🎮 Testy i Nauka":
         st.subheader("📁 Wybierz Rozdział Bazy")
         for nazwa_bazy in st.session_state.bazy.keys():
             if nazwa_bazy == "Baza 1":
-                # Czerwony kafelek dla Baza 1
                 if st.button(f"📁 {nazwa_bazy}", use_container_width=True, type="primary"):
                     st.session_state.wybrana_baza = nazwa_bazy
                     st.rerun()
@@ -628,7 +640,7 @@ elif menu_glowne == "🎮 Testy i Nauka":
         col_w1, col_w2 = st.columns(2)
         
         with col_w1:
-            st.markdown("### 🎯 WIELOKROTNY WYBÓR (1/2/3)")
+            st.markdown("### 🌐 WIELOKROTNY WYBÓR (1/2/3)")
             if st.button("Tryb Nauki (Kolejno)", key="n_w_k", use_container_width=True):
                 start_sesji("Tryb Nauki (Wszystkie – Kolejno)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=False)
                 st.rerun()
@@ -702,13 +714,13 @@ elif menu_glowne == "🎮 Testy i Nauka":
 
         if idx < len(lista) and not st.session_state.test_zakonczony:
             p = lista[idx]
-            st.markdown(f"**Pytanie {idx + 1} z {len(lista)}** (ID: {p['id']})")
-            st.markdown(f"<div class='question-box'><h3>{p['pytanie']}</h3></div>", unsafe_allow_html=True)
+            st.markdown(f"**Pytanie {idx + 1} z {len(lista)}** (ID: {p.get('id', 'N/A')})")
+            st.markdown(f"<div class='question-box'><h3>{p.get('pytanie', '')}</h3></div>", unsafe_allow_html=True)
 
             if "Nauki" in st.session_state.aktywny_tryb:
                 with st.form(key=f"form_nauka_{idx}"):
                     wybrane = []
-                    for k, v in p["odpowiedzi"].items():
+                    for k, v in p.get("odpowiedzi", {}).items():
                         if st.checkbox(f"**{k}**: {v}", key=f"cb_nauka_{idx}_{k}"):
                             wybrane.append(k)
                     sprawdz = st.form_submit_button("Sprawdź odpowiedź")
@@ -717,12 +729,12 @@ elif menu_glowne == "🎮 Testy i Nauka":
                     st.session_state.sprawdzono_odpowiedz = True
 
                 if st.session_state.sprawdzono_odpowiedz:
-                    poprawne = set(p["poprawne"])
+                    poprawne = set(p.get("poprawne", []))
                     zaznaczone = set(wybrane)
                     if zaznaczone == poprawne:
                         st.success("✅ Poprawna odpowiedź!")
                     else:
-                        st.error(f"❌ Błąd! Poprawne odpowiedzi to: {', '.join(p['poprawne'])}")
+                        st.error(f"❌ Błąd! Poprawne odpowiedzi to: {', '.join(p.get('poprawne', []))}")
 
                     podstawa = p.get("podstawa_prawna", "Brak zdefiniowanej podstawy prawnej")
                     artykul = p.get("tresc_artykulu", "Brak opisu treści artykułu")
@@ -736,7 +748,7 @@ elif menu_glowne == "🎮 Testy i Nauka":
             else:
                 poprzednie_wybory = st.session_state.odpowiedzi_egzamin.get(idx, [])
                 wybrane = []
-                for k, v in p["odpowiedzi"].items():
+                for k, v in p.get("odpowiedzi", {}).items():
                     zaznaczone = k in poprzednie_wybory
                     if st.checkbox(f"**{k}**: {v}", value=zaznaczone, key=f"cb_egz_{idx}_{k}"):
                         wybrane.append(k)
@@ -761,7 +773,7 @@ elif menu_glowne == "🎮 Testy i Nauka":
                 if "Egzamin" in st.session_state.aktywny_tryb and not st.session_state.wynik_zapisany:
                     punkty = sum(
                         1 for i, q in enumerate(lista)
-                        if set(st.session_state.odpowiedzi_egzamin.get(i, [])) == set(q["poprawne"])
+                        if set(st.session_state.odpowiedzi_egzamin.get(i, [])) == set(q.get("poprawne", []))
                     )
 
                     zapisz_wynik_egzaminu(
@@ -778,6 +790,7 @@ elif menu_glowne == "🎮 Testy i Nauka":
                 st.rerun()
 
         else:
+            st.balloons()
             st.success("🎉 Zakończyłeś test / egzamin!")
             
             if "Egzamin" in st.session_state.aktywny_tryb:
@@ -785,14 +798,14 @@ elif menu_glowne == "🎮 Testy i Nauka":
                 szczegoly_wynikow = []
                 for i, q in enumerate(lista):
                     user_ans = set(st.session_state.odpowiedzi_egzamin.get(i, []))
-                    correct_ans = set(q["poprawne"])
+                    correct_ans = set(q.get("poprawne", []))
                     is_correct = (user_ans == correct_ans)
                     if is_correct:
                         punkty += 1
                     szczegoly_wynikow.append({
-                        "id": q["id"],
-                        "pytanie": q["pytanie"],
-                        "odpowiedzi": q["odpowiedzi"],
+                        "id": q.get("id", i),
+                        "pytanie": q.get("pytanie", ""),
+                        "odpowiedzi": q.get("odpowiedzi", {}),
                         "user_ans": sorted(list(user_ans)),
                         "correct_ans": sorted(list(correct_ans)),
                         "is_correct": is_correct,
@@ -878,7 +891,8 @@ elif menu_glowne == "➕ Dodaj Pytanie":
             if pop_c: poprawne_list.append("C")
 
             if tresc and ans_a and ans_b and ans_c and poprawne_list:
-                nowe_id = max([p["id"] for p in st.session_state.bazy[baza_docelowa]], default=0) + 1
+                baza_lista = st.session_state.bazy[baza_docelowa]
+                nowe_id = max([p.get("id", 0) for p in baza_lista if isinstance(p, dict)], default=0) + 1
                 nowe_pytanie = {
                     "id": nowe_id,
                     "pytanie": tresc,
@@ -888,6 +902,8 @@ elif menu_glowne == "➕ Dodaj Pytanie":
                 if podstawa: nowe_pytanie["podstawa_prawna"] = podstawa
                 if artykul: nowe_pytanie["tresc_artykulu"] = artykul
 
+                if not isinstance(baza_lista, list):
+                    st.session_state.bazy[baza_docelowa] = []
                 st.session_state.bazy[baza_docelowa].append(nowe_pytanie)
                 zapisz_konkretna_baze(baza_docelowa)
                 st.success(f"Dodano pytanie o ID {nowe_id} do bazy '{baza_docelowa}' i zapisano zmiany na stałe!")
@@ -908,15 +924,19 @@ elif menu_glowne == "🔍 Przegląd Bazy":
     elif wybrana == "Cała baza (pytania wielokrotnego wyboru)":
         lista_do_wyswietlenia = pobierz_pytania_z_bazy("Cała baza (wszystkie pytania)", tylko_wielokrotne=True)
     else:
-        lista_do_wyswietlenia = st.session_state.bazy[wybrana]
+        lista_do_wyswietlenia = pobierz_pytania_z_bazy(wybrana, tylko_wielokrotne=False)
         
     st.caption(f"Wyświetlono pytań: {len(lista_do_wyswietlenia)}")
 
     for item in lista_do_wyswietlenia:
-        with st.expander(f"ID {item['id']}: {item['pytanie'][:80]}..."):
-            st.write(f"**Pytanie:** {item['pytanie']}")
-            for k, v in item["odpowiedzi"].items():
-                is_correct = "✅" if k in item["poprawne"] else "❌"
+        if not isinstance(item, dict):
+            continue
+        p_id = item.get('id', 'N/A')
+        p_tresc = item.get('pytanie', 'Brak treści')
+        with st.expander(f"ID {p_id}: {p_tresc[:80]}..."):
+            st.write(f"**Pytanie:** {p_tresc}")
+            for k, v in item.get("odpowiedzi", {}).items():
+                is_correct = "✅" if k in item.get("poprawne", []) else "❌"
                 st.write(f"{is_correct} **{k}**: {v}")
             if "podstawa_prawna" in item:
                 st.caption(f"Podstawa: {item['podstawa_prawna']}")
@@ -974,84 +994,49 @@ elif menu_glowne == "🔑 Panel Administratora":
         wybrana_baza_admin = st.radio("Wybierz część bazy do edycji:", list(st.session_state.bazy.keys()), key="admin_baza_select", horizontal=True)
         lista_pytan = st.session_state.bazy[wybrana_baza_admin]
 
-        if not lista_pytan:
-            st.warning("Wybrana baza nie posiada żadnych pytań.")
+        if not lista_pytan or not isinstance(lista_pytan, list):
+            st.warning("Wybrana baza nie posiada żadnych pytań lub ma nieprawidłowy format.")
         else:
-            opcje_pytan = [f"ID {p['id']}: {p['pytanie'][:60]}..." for p in lista_pytan]
-            wybrane_pytanie_str = st.radio("Wybierz pytanie do edycji/usunięcia:", opcje_pytan)
-            
-            pytanie_idx = opcje_pytan.index(wybrane_pytanie_str)
-            p = lista_pytan[pytanie_idx]
+            opcje_pytan = [f"ID {p.get('id', i)}: {p.get('pytanie', '')[:60]}..." for i, p in enumerate(lista_pytan) if isinstance(p, dict)]
+            if not opcje_pytan:
+                st.warning("Brak poprawnych pytań w tej bazie.")
+            else:
+                wybrane_pytanie_str = st.radio("Wybierz pytanie do edycji/usunięcia:", opcje_pytan)
+                
+                pytanie_idx = opcje_pytan.index(wybrane_pytanie_str)
+                p = lista_pytan[pytanie_idx]
 
-            col_del, col_edit = st.columns([1, 4])
-            with col_del:
-                st.write("**Usuwanie**")
-                if st.button("🗑️ Usuń pytanie", type="primary"):
-                    st.session_state.bazy[wybrana_baza_admin].pop(pytanie_idx)
-                    zapisz_konkretna_baze(wybrana_baza_admin)
-                    st.success("Pytanie zostało pomyślnie usunięte z bazy!")
-                    st.rerun()
-
-            st.markdown("---")
-            st.write("### Formularz edycji pytania")
-
-            with st.form(key=f"edit_form_{p['id']}"):
-                nowa_tresc = st.text_area("Treść pytania:", value=p["pytanie"])
-                ans_a = st.text_input("Odpowiedź A:", value=p["odpowiedzi"].get("A", ""))
-                ans_b = st.text_input("Odpowiedź B:", value=p["odpowiedzi"].get("B", ""))
-                ans_c = st.text_input("Odpowiedź C:", value=p["odpowiedzi"].get("C", ""))
-
-                pop_a = st.checkbox("Odpowiedź A jest poprawne", value=("A" in p["poprawne"]))
-                pop_b = st.checkbox("Odpowiedź B jest poprawne", value=("B" in p["poprawne"]))
-                pop_c = st.checkbox("Odpowiedź C jest poprawne", value=("C" in p["poprawne"]))
-
-                podstawa = st.text_input("Podstawa prawna:", value=p.get("podstawa_prawna", ""))
-                artykul = st.text_area("Treść artykułu:", value=p.get("tresc_artykulu", ""))
-
-                if st.form_submit_button("💾 Zapisz zmiany w pytaniu"):
-                    nowe_poprawne = []
-                    if pop_a: nowe_poprawne.append("A")
-                    if pop_b: nowe_poprawne.append("B")
-                    if pop_c: nowe_poprawne.append("C")
-
-                    if nowa_tresc and ans_a and ans_b and ans_c and nowe_poprawne:
-                        p["pytanie"] = nowa_tresc
-                        p["odpowiedzi"] = {"A": ans_a, "B": ans_b, "C": ans_c}
-                        p["poprawne"] = nowe_poprawne
-                        p["podstawa_prawna"] = podstawa
-                        p["tresc_artykulu"] = artykul
-
+                col_del, col_edit = st.columns([1, 4])
+                with col_del:
+                    st.write("**Usuwanie**")
+                    if st.button("🗑️ Usuń pytanie", type="primary"):
+                        st.session_state.bazy[wybrana_baza_admin].pop(pytanie_idx)
                         zapisz_konkretna_baze(wybrana_baza_admin)
-                        st.success("Zmiany zostały pomyślnie zapisane!")
+                        st.success("Pytanie zostało pomyślnie usunięte z bazy!")
                         st.rerun()
-                    else:
-                        st.error("Pola pytania/odpowiedzi nie mogą być puste, oraz co najmniej jedna odpowiedź musi być zaznaczona jako poprawna!")
 
-# ==============================================================================
-# 13. USTAWIENIA I MOTYW
-# ==============================================================================
-elif menu_glowne == "⚙️ Ustawienia / Motyw":
-    st.markdown("<div class='main-header'>Ustawienia i Personalizacja</div>", unsafe_allow_html=True)
-    
-    st.subheader("🎨 Wybór motywu wizualnego")
-    
-    opcje_motywu = ["Ciemny", "Jasny"]
-    wybrany_index = opcje_motywu.index(st.session_state.theme) if st.session_state.theme in opcje_motywu else 0
+                st.markdown("---")
+                st.write("### Formularz edycji pytania")
 
-    nowy_motyw = st.radio(
-        "Wybierz preferowany motyw:",
-        opcje_motywu,
-        index=wybrany_index,
-        key="settings_theme_radio"
-    )
+                with st.form(key=f"edit_form_{p.get('id', pytanie_idx)}"):
+                    nowa_tresc = st.text_area("Treść pytania:", value=p.get("pytanie", ""))
+                    ans_a = st.text_input("Odpowiedź A:", value=p.get("odpowiedzi", {}).get("A", ""))
+                    ans_b = st.text_input("Odpowiedź B:", value=p.get("odpowiedzi", {}).get("B", ""))
+                    ans_c = st.text_input("Odpowiedź C:", value=p.get("odpowiedzi", {}).get("C", ""))
 
-    if nowy_motyw != st.session_state.theme:
-        aktualizuj_pamiec_sesji(theme=nowy_motyw)
-        st.success(f"Zmieniono tryb na: {nowy_motyw}")
-        st.rerun()
+                    pop_a = st.checkbox("Odpowiedź A jest poprawne", value=("A" in p.get("poprawne", [])))
+                    pop_b = st.checkbox("Odpowiedź B jest poprawne", value=("B" in p.get("poprawne", [])))
+                    pop_c = st.checkbox("Odpowiedź C jest poprawne", value=("C" in p.get("poprawne", [])))
 
-st.divider()
-st.subheader("Test połączenia z GitHub API")
-if st.button("Uruchom test zapisu do GitHuba"):
-    testowe_dane = st.session_state.get("statystyki", {"Test": ["połączenie"]})
-    zapisz_json("statystyki.json", testowe_dane)
+                    podstawa = st.text_input("Podstawa prawna:", value=p.get("podstawa_prawna", ""))
+                    artykul = st.text_area("Treść artykułu:", value=p.get("tresc_artykulu", ""))
+
+                    if st.form_submit_button("💾 Zapisz zmiany w pytaniu"):
+                        nowe_poprawne = []
+                        if pop_a: nowe_poprawne.append("A")
+                        if pop_b: nowe_poprawne.append("B")
+                        if pop_c: nowe_poprawne.append("C")
+
+                        if nowa_tresc and ans_a and ans_b and ans_c and nowe_poprawne:
+                            p["pytanie"] = nowa_tresc
+                            p["odpowiedzi"] = {"A": ans_a, "B": ans_b, "C": ans_c}

@@ -1536,6 +1536,7 @@ BAZY_PYTAN = {
     ],
     "podstawa_prawna": "Art. 17 Ustawy o MPZP",
     "tresc_artykulu": "Wójt, burmistrz albo prezydent miasta po podjęciu przez radę gminy uchwały o przystąpieniu do sporządzania planu miejscowego kolejno: 6) występują o: a) opinie o projekcie planu miejscowego do: marszałka województwa w zakresie: – udokumentowanych złóż kopalin, o których mowa w art. 10 ust. 3 ustawy z dnia 9 czerwca 2011 r. – Prawo geologiczne i górnicze, innych niż złoża strategiczne, – udokumentowanych wód podziemnych,"
+  },
   {
     "id": 108,
     "pytanie": "Kiedy rada gminy może podjąć uchwałę o odstąpieniu od sporządzenia miejscowego planu  zagospodarowania przestrzennego dla terenu górniczego:",

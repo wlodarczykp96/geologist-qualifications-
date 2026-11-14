@@ -1,5 +1,5 @@
 BAZY_PYTAN = {
-    "BAZA PYTAŃ- CZĘŚĆ 2 (Informacja geologiczna, organy administracji geologicznej, organy nadzoru górniczego, plany ruchu zakładu górniczego)": [
+    "BAZA PYTAŃ- CZĘŚĆ 3 (Informacja geologiczna, organy administracji geologicznej, organy nadzoru górniczego, plany ruchu zakładu górniczego)": [
         {
             "id": 1,
             "pytanie": "Miejscowy plan zagospodarowania przestrzennego, sporządzany dla terenu górniczego w sytuacji, gdy w wyniku zamierzonej działalności określonej w koncesji przewiduje się istotne skutki dla środowiska powienien zapewniać integrację wszelkich działań podejmowanych w granicach terenu górniczego w celu:",

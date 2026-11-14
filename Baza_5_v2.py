@@ -1,5 +1,5 @@
 BAZY_PYTAN = {
-    "BAZA PYTAŃ - CZĘŚĆ 4 (Projekty robót, dokumentacje geologiczne, inne dokumentacje, operaty ewidencyjne, projekty zagospodarowania złóż)": [
+    "BAZA PYTAŃ - CZĘŚĆ 5 (Projekty robót, dokumentacje geologiczne, inne dokumentacje, operaty ewidencyjne, projekty zagospodarowania złóż)": [
         {
             "id": 1,
             "pytanie": "Prace geologiczne z zastosowaniem robót geologicznych mogą być wykonane tylko na podstawie:",

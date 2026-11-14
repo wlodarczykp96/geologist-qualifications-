@@ -21,7 +21,7 @@ PLIKI_BAZ = {
 def wczytaj_wszystkie_bazy():
     załadowane_bazy = {}
     for nazwa, plik in PLIKI_BAZ.items():
-        załadowane_bazy[nazwa] = [] # Domyślnie pusta lista, żeby uniknąć KeyError
+        załadowane_bazy[nazwa] = []
         if os.path.exists(plik):
             try:
                 with open(plik, "r", encoding="utf-8") as f:
@@ -29,13 +29,18 @@ def wczytaj_wszystkie_bazy():
                     if isinstance(dane, list):
                         załadowane_bazy[nazwa] = [p for p in dane if isinstance(p, dict)]
                     elif isinstance(dane, dict):
+                        # Obsługa sytuacji, gdy plik zawiera słownik z kluczami
                         pula = []
                         for k, v in dane.items():
                             if isinstance(v, list):
                                 pula.extend([item for item in v if isinstance(item, dict)])
                         załadowane_bazy[nazwa] = pula
-            except Exception:
-                pass
+            except json.JSONDecodeError as e:
+                st.error(f"❌ Błąd składni JSON w pliku {plik}: {e}")
+            except Exception as e:
+                st.error(f"❌ Błąd wczytywania pliku {plik}: {e}")
+        else:
+            st.warning(f"⚠️ Brak pliku: {plik}")
     return załadowane_bazy
 
 if 'bazy' not in st.session_state:

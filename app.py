@@ -43,8 +43,8 @@ def wczytaj_wszystkie_bazy():
             załadowane_bazy[nazwa] = []
     return załadowane_bazy
 
-if 'bazy' not in st.session_state:
-    st.session_state.bazy = wczytaj_wszystkie_bazy()
+st.write("📂 Status plików w folderze:", {plik: os.path.exists(plik) for plik in PLIKI_BAZ.values()})
+st.write("📊 Liczba pytań w bazie:", {k: len(v) for k, v in st.session_state.bazy.items()})
     
 # ==============================================================================
 # 1. KONFIGURACJA STRONY

@@ -1118,6 +1118,7 @@ BAZY_PYTAN = [
     ],
     "podstawa_prawna": "Art. 91 ust. 2 PGiG",
     "tresc_artykulu": "2. Dokumentacja geologiczno-inżynierska określa w szczególności: 1) budowę geologiczną, warunki geologiczno-inżynierskie i hydrogeologiczne podłoża budowlanego lub określonej przestrzeni; 2) przydatność badanego terenu do realizacji zamierzonych przedsięwzięć; 3) prognozę zmian w środowisku, które mogą powstać na skutek realizacji, funkcjonowania oraz likwidacji zamierzonych przedsięwzięć – jeżeli nie istnieje obowiązek sporządzenia raportu o oddziaływaniu przedsięwzięcia na środowisko zgodnie z odrębnymi przepisami."
+  },
   {
     "id": 79,
     "pytanie": "Które warunki, spośród wymienionych obok, powinna spełniać dokumentacja hydrogeologiczna:",

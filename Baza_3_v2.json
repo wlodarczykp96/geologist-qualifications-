@@ -1,5 +1,5 @@
-BAZY_PYTAN = {
-    "BAZA PYTAŃ- CZĘŚĆ 3 (Informacja geologiczna, organy administracji geologicznej, organy nadzoru górniczego, plany ruchu zakładu górniczego)": [
+BAZY_PYTAN = [
+    "BAZA PYTAŃ- CZĘŚĆ 3 (Informacja geologiczna, organy administracji geologicznej, organy nadzoru górniczego, plany ruchu zakładu górniczego)": {
         {
             "id": 1,
             "pytanie": "Miejscowy plan zagospodarowania przestrzennego, sporządzany dla terenu górniczego w sytuacji, gdy w wyniku zamierzonej działalności określonej w koncesji przewiduje się istotne skutki dla środowiska powienien zapewniać integrację wszelkich działań podejmowanych w granicach terenu górniczego w celu:",
@@ -996,5 +996,5 @@ BAZY_PYTAN = {
             "podstawa_prawna": "Art. 100 ust. 2 PGiG",
             "tresc_artykulu": "Organy administracji geologicznej, stosownie do zakresu swojej właściwości, umożliwiają nieodpłatne zapoznanie się ze zgromadzoną informacją geologiczną, bez prawa dokonywania reprodukcji, odpisu, odrysu, wydruku, fotokopii lub kopii w postaci elektronicznej dokumentów i zbiorów danych geologicznych."
         }
-    ]
-}
+    }
+]

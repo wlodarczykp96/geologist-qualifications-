@@ -19,29 +19,27 @@ PLIKI_BAZ = {
 }
 
 def wczytaj_wszystkie_bazy():
-    """Wczytuje pytania z poszczególnych plików JSON do słownika w sesji (obsługuje listy oraz słowniki)."""
     załadowane_bazy = {}
     for nazwa, plik in PLIKI_BAZ.items():
+        załadowane_bazy[nazwa] = [] # Domyślnie pusta lista, żeby uniknąć KeyError
         if os.path.exists(plik):
             try:
                 with open(plik, "r", encoding="utf-8") as f:
                     dane = json.load(f)
                     if isinstance(dane, list):
-                        załadowane_bazy[nazwa] = dane
+                        załadowane_bazy[nazwa] = [p for p in dane if isinstance(p, dict)]
                     elif isinstance(dane, dict):
-                        # Jeśli plik zawiera słownik z kluczami, bierzemy pierwszą pasującą listę lub łączymy
                         pula = []
                         for k, v in dane.items():
                             if isinstance(v, list):
-                                pula.extend(v)
-                        załadowane_bazy[nazwa] = pula if pula else []
-                    else:
-                        załadowane_bazy[nazwa] = []
+                                pula.extend([item for item in v if isinstance(item, dict)])
+                        załadowane_bazy[nazwa] = pula
             except Exception:
-                załadowane_bazy[nazwa] = []
-        else:
-            załadowane_bazy[nazwa] = []
+                pass
     return załadowane_bazy
+
+if 'bazy' not in st.session_state:
+    st.session_state.bazy = wczytaj_wszystkie_bazy()
 
 st.write("📂 Status plików w folderze:", {plik: os.path.exists(plik) for plik in PLIKI_BAZ.values()})
 st.write("📊 Liczba pytań w bazie:", {k: len(v) for k, v in st.session_state.bazy.items()})

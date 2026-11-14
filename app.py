@@ -25,35 +25,36 @@ def wczytaj_wszystkie_bazy():
         if os.path.exists(plik):
             try:
                 with open(plik, "r", encoding="utf-8") as f:
-                    dane = json.load(f)
-                    
-                    # Przypadek 1: Plik to czysta lista pytań [...]
-                    if isinstance(dane, list):
-                        załadowane_bazy[nazwa] = [p for p in dane if isinstance(p, dict)]
-                    
-                    # Przypadek 2: Plik to słownik (np. z kluczem "BAZA PYTAŃ - CZĘŚĆ...")
-                    elif isinstance(dane, dict):
-                        pula = []
-                        for k, v in dane.items():
-                            if isinstance(v, list):
-                                pula.extend([item for item in v if isinstance(item, dict)])
-                            elif isinstance(v, dict):
-                                pula.append(v)
-                        załadowane_bazy[nazwa] = pula
-            except Exception as e:
-                # Jeśli plik ma brak nawiasu zamykającego lub inny błąd, próbujemy odczytać go jako słownik z pliku tekstowego
+                    zawartosc = f.read().strip()
+                
+                # Jeśli plik jest pusty
+                if not zawartosc:
+                    continue
+                
+                # Próba standardowego wczytania JSON
                 try:
-                    with open(plik, "r", encoding="utf-8") as f:
-                        tekst = f.read().strip()
-                        # Jeśli plik zaczyna się od tekstu i '[', spróbujemy wyciagnąć zawartość
-                        if "[" in tekst and "]" in tekst:
-                            poczatek = tekst.find("[")
-                            koniec = tekst.rfind("]") + 1
-                            dane = json.loads(tekst[poczatek:koniec])
-                            if isinstance(dane, list):
-                                załadowane_bazy[nazwa] = [p for p in dane if isinstance(p, dict)]
-                except Exception:
-                    pass
+                    dane = json.loads(zawartosc)
+                except json.JSONDecodeError:
+                    # Automatyczna naprawa formatu (jeśli brakuje nawiasu klamrowego na początku)
+                    if zawartosc.startswith('"') or zawartosc.startswith("'"):
+                        zawartosc_naprawiona = "{" + zawartosc + "}"
+                        dane = json.loads(zawartosc_naprawiona)
+                    else:
+                        raise
+
+                # Przetwarzanie wczytanych danych do listy pytań
+                if isinstance(dane, list):
+                    załadowane_bazy[nazwa] = [p for p in dane if isinstance(p, dict)]
+                elif isinstance(dane, dict):
+                    pula = []
+                    for k, v in dane.items():
+                        if isinstance(v, list):
+                            pula.extend([item for item in v if isinstance(item, dict)])
+                        elif isinstance(v, dict):
+                            pula.append(v)
+                    załadowane_bazy[nazwa] = pula
+            except Exception as e:
+                print(f"Błąd wczytywania {plik}: {e}")
     return załadowane_bazy
 
 if 'bazy' not in st.session_state:

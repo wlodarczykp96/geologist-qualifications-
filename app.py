@@ -55,6 +55,8 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Szybki podgląd stanu baz na ekranie
+st.write("Stan wczytanych baz w pamięci:", {k: len(v) for k, v in st.session_state.bazy.items()})
 # ==============================================================================
 # 3. MECHANIZM TRWAŁEJ SESJI I INICJALIZACJA
 # ==============================================================================

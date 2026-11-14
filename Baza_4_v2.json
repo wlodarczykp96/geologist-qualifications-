@@ -1,5 +1,5 @@
-BAZY_PYTAN = {
-    "BAZA PYTAŃ - CZĘŚĆ 3 (Pojęcia ogólne, własność górnicza, koncesje, kwalifikacje geologiczne)": [
+BAZY_PYTAN = [
+    "BAZA PYTAŃ - CZĘŚĆ 4 (Pojęcia ogólne, własność górnicza, koncesje, kwalifikacje geologiczne)": {
         {
             "id": 1,
             "pytanie": "Ustawa Prawo geologiczne i górnicze określa zasady i warunki podejmowania, wykonywania oraz zakończenia działalności w zakresie:",
@@ -1566,5 +1566,5 @@ BAZY_PYTAN = {
             "podstawa_prawna": "Art. 68 ust. 1 PGiG",
             "tresc_artykulu": "Można orzec zakaz ich wykonywania na okres do 2 lat."
         }
-    ]
-}
+    }
+]

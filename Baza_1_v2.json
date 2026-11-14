@@ -1,5 +1,4 @@
-BAZY_PYTAN = [
-  "BAZA PYTAŃ - CZĘŚĆ 1 (Wiedz ogólna o Prawie Górniczym i geologicznym [...])": {
+BAZA PYTAŃ - CZĘŚĆ 1 (Wiedz ogólna o Prawie Górniczym i geologicznym [...]): [
   {
     "id": 1,
     "pytanie": "Czy przepisy Prawa geologicznego i górniczego obejmują m. in. :",
@@ -3750,6 +3749,5 @@ BAZY_PYTAN = [
     ],
     "podstawa_prawna": "Art. 183 PGiG",
     "tresc_artykulu": "Kto nie dopełnia ciążących na nim obowiązków w zakresie prowadzenia ewidencji zasobów złoża kopaliny, w zakresie przedkładania informacji o zmianach zasobów złoża kopaliny, w zakresie posiadania, sporządzania, aktualizowania i uzupełniania wymaganej dokumentacji mierniczo-geologicznej oraz przekazywania danych geologicznych i próbek oraz wyników ich badań, uzyskanych w wyniku robót geologicznych, podlega karze grzywny."
-  }
-}
+  },
 ]

@@ -1,5 +1,5 @@
 BAZY_PYTAN = {
-    "BAZA PYTAŃ - CZĘŚĆ 1 (Hydrogeologia i geologia inżynierska [...])":
+    "BAZA PYTAŃ - CZĘŚĆ 1 (Hydrogeologia i geologia inżynierska [...])":[
         {
             "id": 1,
             "pytanie": "W jakim terminie przedsiębiorca powinien przedłożyć organowi koncesyjnemu aktualny dowód istnienia zabezpieczenia roszczeń mogących powstać wskutek wykonywania działalności objętej koncesją na podziemne składowanie odpadów:",
@@ -1850,4 +1850,5 @@ BAZY_PYTAN = {
             "podstawa_prawna": "Rozporządzenie w sprawie dokumentacji hydrogeologicznej i dokumentacji geologiczno-inżynierskiej (Załącznik - wzór karty)",
             "tresc_artykulu": "Karta informacyjna dokumentacji geologiczno-inżynierskiej określa m.in. daty wykonania badań oraz miejsce archiwizacji i przechowywania próbek gruntu."
         }
+    ]
  } 

@@ -430,7 +430,25 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
 # 5. FUNKCJE POMOCNICZE
 # ==============================================================================
 def pobierz_pytania_z_bazy(nazwa_bazy, tylko_wielokrotne=False):
-    if nazwa_bazy == "Cała baza (wszystkie pytania)":
+    if nazwa_bazy == "Egzamin mieszany (40 Baza 1 + 10 reszta)":
+        b1 = list(st.session_state.bazy.get("Baza 1", []))
+        reszta = []
+        for k, v in st.session_state.bazy.items():
+            if k != "Baza 1":
+                reszta.extend(v)
+        
+        if tylko_wielokrotne:
+            b1 = [p for p in b1 if len(p.get("poprawne", [])) in [1, 2]]
+            reszta = [p for p in reszta if len(p.get("poprawne", [])) in [1, 2]]
+            
+        random.shuffle(b1)
+        random.shuffle(reszta)
+        
+        pula = b1[:40] + reszta[:10]
+        random.shuffle(pula)
+        return pula
+
+    elif nazwa_bazy == "Cała baza (wszystkie pytania)":
         pula = []
         for b in st.session_state.bazy.values():
             pula.extend(b)
@@ -452,25 +470,17 @@ def start_sesji(tryb, baza_nazwa, limit_pytan=None, tylko_wielokrotne=False):
     
     pula = pobierz_pytania_z_bazy(baza_nazwa, tylko_wielokrotne=tylko_wielokrotne)
     
-    if "Losowo" in tryb or "Egzamin" in tryb:
-        random.shuffle(pula)
-    if limit_pytan:
-        pula = pula[:limit_pytan]
+    if baza_nazwa != "Egzamin mieszany (40 Baza 1 + 10 reszta)":
+        if "Losowo" in tryb or "Egzamin" in tryb:
+            random.shuffle(pula)
+        if limit_pytan:
+            pula = pula[:limit_pytan]
         
     st.session_state.pytania_sesji = pula
-    if "30 min" in tryb:
-        st.session_state.czas_konca = time.time() + (30 * 60)
+    if "20 min" in tryb:
+        st.session_state.czas_konca = time.time() + (20 * 60)
     else:
         st.session_state.czas_konca = None
-
-def powrot_do_wyboru():
-    st.session_state.wybrana_baza = None
-    st.session_state.aktywny_tryb = None
-    st.session_state.indeks = 0
-    st.session_state.sprawdzono_odpowiedz = False
-    st.session_state.test_zakonczony = False
-    st.session_state.wynik_zapisany = False
-    st.session_state.czas_konca = None
 
 # ==============================================================================
 # 6. EKRAN LOGOWANIA
@@ -528,7 +538,7 @@ menu_glowne = st.sidebar.radio(
     "Przejdź do:",
     [
         "🏠 Strona Główna", 
-        "🎮 Testy i Nauka", 
+        "📚 Testy i Nauka", 
         "➕ Dodaj Pytanie", 
         "🔍 Przegląd Bazy", 
         "🔑 Panel Administratora",
@@ -614,19 +624,19 @@ if menu_glowne == "🏠 Strona Główna":
 # ==============================================================================
 # 9. TESTY I NAUKA
 # ==============================================================================
-elif menu_glowne == "🎮 Testy i Nauka":
+elif menu_glowne == "📚 Testy i Nauka":
     if st.session_state.wybrana_baza is None and st.session_state.aktywny_tryb is None:
         st.markdown("<div class='main-header'>Wybierz tryb testowy lub bazę pytań</div>", unsafe_allow_html=True)
         
-        st.subheader("📚 PEŁNE BAZY")
-        if st.button("🚀 Uruchom Egzamin WIELOKROTNEGO WYBORU (1/2/3) (Wszystkie pytania | 50 pytań / 30 min)", use_container_width=True, type="primary"):
-            st.session_state.wybrana_baza = "Cała baza (wszystkie pytania)"
-            start_sesji("Egzamin (Losowo – 50 pytań)", "Cała baza (wszystkie pytania)", limit_pytan=50, tylko_wielokrotne=False)
+st.subheader("📚 PEŁNE BAZY")
+        if st.button("🎯 Uruchom Egzamin WIELOKROTNEGO WYBORU (1/2/3) (40 Baza 1 + 10 reszta | 50 pytań / 20 min)", use_container_width=True, type="primary"):
+            st.session_state.wybrana_baza = "Wszystkie"
+            start_sesji("Egzamin (Losowo – 50 pytań / 20 min)", "Egzamin mieszany (40 Baza 1 + 10 reszta)", limit_pytan=50, tylko_wielokrotne=False)
             st.rerun()
 
-        if st.button("🎯 Uruchom Egzamin WIELOKROTNEGO WYBORU (1/2) (Wszystkie pytania | 50 pytań / 30 min)", use_container_width=True):
-            st.session_state.wybrana_baza = "Cała baza (wszystkie pytania)"
-            start_sesji("Egzamin (Losowo – 50 pytań)", "Cała baza (wszystkie pytania)", limit_pytan=50, tylko_wielokrotne=True)
+        if st.button("🎯 Uruchom Egzamin WIELOKROTNEGO WYBORU (1/2) (40 Baza 1 + 10 reszta | 50 pytań / 20 min)", use_container_width=True, type="primary"):
+            st.session_state.wybrana_baza = "Wszystkie"
+            start_sesji("Egzamin (Losowo – 50 pytań / 20 min)", "Egzamin mieszany (40 Baza 1 + 10 reszta)", limit_pytan=50, tylko_wielokrotne=True)
             st.rerun()
 
         st.markdown("---")
@@ -806,7 +816,7 @@ elif menu_glowne == "🎮 Testy i Nauka":
                 st.rerun()
 
         else:
-            st.success("🎉 Zakończyłeś test / egzamin!")
+            st.success("Zakończyłeś test / egzamin!")
             
             if "Egzamin" in st.session_state.aktywny_tryb:
                 punkty = 0

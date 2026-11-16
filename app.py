@@ -482,6 +482,15 @@ def start_sesji(tryb, baza_nazwa, limit_pytan=None, tylko_wielokrotne=False):
     else:
         st.session_state.czas_konca = None
 
+def powrot_do_wyboru():
+    st.session_state.wybrana_baza = None
+    st.session_state.aktywny_tryb = None
+    st.session_state.indeks = 0
+    st.session_state.sprawdzono_odpowiedz = False
+    st.session_state.test_zakonczony = False
+    st.session_state.wynik_zapisany = False
+    st.session_state.czas_konca = None
+
 # ==============================================================================
 # 6. EKRAN LOGOWANIA
 # ==============================================================================
@@ -538,7 +547,7 @@ menu_glowne = st.sidebar.radio(
     "Przejdź do:",
     [
         "🏠 Strona Główna", 
-        "📚 Testy i Nauka", 
+        "🎮 Testy i Nauka", 
         "➕ Dodaj Pytanie", 
         "🔍 Przegląd Bazy", 
         "🔑 Panel Administratora",
@@ -627,7 +636,7 @@ if menu_glowne == "🏠 Strona Główna":
 elif menu_glowne == "🎮 Testy i Nauka":
     if st.session_state.wybrana_baza is None and st.session_state.aktywny_tryb is None:
         st.markdown("<div class='main-header'>Wybierz tryb testowy lub bazę pytań</div>", unsafe_allow_html=True)
-
+        
         st.subheader("📚 PEŁNE BAZY")
         if st.button("🎯 Uruchom Egzamin WIELOKROTNEGO WYBORU (1/2/3) (40 Baza 1 + 10 reszta | 50 pytań / 20 min)", use_container_width=True, type="primary"):
             st.session_state.wybrana_baza = "Wszystkie"
@@ -816,7 +825,7 @@ elif menu_glowne == "🎮 Testy i Nauka":
                 st.rerun()
 
         else:
-            st.success("Zakończyłeś test / egzamin!")
+            st.success("🎉 Zakończyłeś test / egzamin!")
             
             if "Egzamin" in st.session_state.aktywny_tryb:
                 punkty = 0

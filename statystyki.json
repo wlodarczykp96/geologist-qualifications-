@@ -383,6 +383,22 @@
             "zdane": false,
             "wynik_str": "21/30",
             "procent": 70.0
+        },
+        {
+            "data": "2026-11-16",
+            "tryb": "Egzamin (Losowo – 30 pytań)",
+            "baza": "Baza 1",
+            "zdane": false,
+            "wynik_str": "20/30",
+            "procent": 66.66666666666666
+        },
+        {
+            "data": "2026-11-16",
+            "tryb": "Egzamin (Losowo – 30 pytań)",
+            "baza": "Baza 1",
+            "zdane": true,
+            "wynik_str": "23/30",
+            "procent": 76.66666666666667
         }
     ],
     "Edyta": [],

@@ -624,9 +624,9 @@ if menu_glowne == "🏠 Strona Główna":
 # ==============================================================================
 # 9. TESTY I NAUKA
 # ==============================================================================
-elif menu_glowne == "📚 Testy i Nauka":
-        if st.session_state.wybrana_baza is None and st.session_state.aktywny_tryb is None:
-            st.markdown("<div class='main-header'>Wybierz tryb testowy lub bazę pytań</div>", unsafe_allow_html=True)
+elif menu_glowne == "🎮 Testy i Nauka":
+    if st.session_state.wybrana_baza is None and st.session_state.aktywny_tryb is None:
+        st.markdown("<div class='main-header'>Wybierz tryb testowy lub bazę pytań</div>", unsafe_allow_html=True)
         
         st.subheader("📚 PEŁNE BAZY")
         if st.button("🎯 Uruchom Egzamin WIELOKROTNEGO WYBORU (1/2/3) (40 Baza 1 + 10 reszta | 50 pytań / 20 min)", use_container_width=True, type="primary"):

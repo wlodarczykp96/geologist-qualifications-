@@ -2683,7 +2683,7 @@ BAZY_PYTAN = {
     "odpowiedzi": {
       "A": "obsługa rejestru obszarów górniczych,",
       "B": "bilansowanie zasobów kopalin,",
-      "C": ""
+      "C": "-"
     },
     "poprawne": [
       "A",

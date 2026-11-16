@@ -547,7 +547,7 @@ menu_glowne = st.sidebar.radio(
     "Przejdź do:",
     [
         "🏠 Strona Główna", 
-        "🎮 Testy i Nauka", 
+        "📚 Testy i Nauka", 
         "➕ Dodaj Pytanie", 
         "🔍 Przegląd Bazy", 
         "🔑 Panel Administratora",
@@ -633,7 +633,7 @@ if menu_glowne == "🏠 Strona Główna":
 # ==============================================================================
 # 9. TESTY I NAUKA
 # ==============================================================================
-elif menu_glowne == "🎮 Testy i Nauka":
+elif menu_glowne == "📚 Testy i Nauka":
     if st.session_state.wybrana_baza is None and st.session_state.aktywny_tryb is None:
         st.markdown("<div class='main-header'>Wybierz tryb testowy lub bazę pytań</div>", unsafe_allow_html=True)
         

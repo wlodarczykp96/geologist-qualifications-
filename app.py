@@ -676,7 +676,7 @@ elif menu_glowne == "🎮 Testy i Nauka":
                 start_sesji("Tryb Nauki (Losowo – 30 pytań)", nazwa_bary, limit_pytan=30, tylko_wielokrotne=True)
                 st.rerun()
             if st.button("Egzamin (Losowo – 30 pytań)", key="e_f_l", use_container_width=True):
-                start_sesji("Tryb Nauki (Losowo – 30 pytań)", nazwa_bary, limit_pytan=30, tylko_wielokrotne=True)
+                start_sesji("Egzamin (Losowo – 30 pytań)", nazwa_bary, limit_pytan=30, tylko_wielokrotne=True)
                 st.rerun()
         st.write("")
         if st.button("← Powrót do wyboru baz", use_container_width=True):

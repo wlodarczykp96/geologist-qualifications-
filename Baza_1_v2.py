@@ -3159,20 +3159,6 @@ BAZY_PYTAN = {
     "tresc_artykulu": "Własnością górniczą są objęte także części górotworu położone poza granicami przestrzennymi nieruchomości gruntowej, w szczególności znajdujące się w granicach obszarów morskich Rzeczypospolitej Polskiej."
   }, 
   {
-    "id": 234,
-    "pytanie": "Wydobywani kopalin można podjąć:",
-    "odpowiedzi": {
-      "A": "za zgodą właściciela nieruchomości na potrzeby gminy",
-      "B": "za zgodą wójta",
-      "C": "wyłącznie jako koncesjonowaną działalność gospodarczą w rozumieniu ustawy z dnia 2 lipca 2004 r o swobodzie działalności gospodarczej"
-    },
-    "poprawne": [
-      ""
-    ],
-    "podstawa_prawna": "Art. 21 ust. 1 PGiG",
-    "tresc_artykulu": "Działalność w zakresie: 2) wydobywania kopalin ze złóż – może być wykonywana po uzyskaniu koncesji. Prawo o swobodzie działalności gospodarczej zastąpiono Prawem Przedsiębiorców."
-  },
-  {
     "id": 235,
     "pytanie": "Projektowanie i wykonywanie badań na potrzeby wykorzystania ciepła Ziemi to:",
     "odpowiedzi": {

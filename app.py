@@ -105,6 +105,24 @@ if 'test_zakonczony' not in st.session_state:
 if 'wynik_zapisany' not in st.session_state:
     st.session_state.wynik_zapisany = False
 
+# --- ZMIENNE DLA TRYBU INTELIGENTNEJ NAUKI (QUIZLET / DUOLINGO) ---
+if 'smart_pula_calkowita' not in st.session_state:
+    st.session_state.smart_pula_calkowita = []
+if 'smart_nieopanowane' not in st.session_state:
+    st.session_state.smart_nieopanowane = []
+if 'smart_kolejka_rundy' not in st.session_state:
+    st.session_state.smart_kolejka_rundy = []
+if 'smart_opanowane_ids' not in st.session_state:
+    st.session_state.smart_opanowane_ids = set()
+if 'smart_bledne_w_rundzie' not in st.session_state:
+    st.session_state.smart_bledne_w_rundzie = set()
+if 'smart_nr_rundy' not in st.session_state:
+    st.session_state.smart_nr_rundy = 1
+if 'smart_ostatni_wynik' not in st.session_state:
+    st.session_state.smart_ostatni_wynik = None
+if 'smart_krok' not in st.session_state:
+    st.session_state.smart_krok = 0
+
 def aktualizuj_pamiec_sesji(user=None, theme=None):
     if user is not None:
         if user is False:
@@ -450,10 +468,17 @@ def pobierz_pytania_z_bazy(nazwa_bazy, tylko_wielokrotne=False):
 
     elif nazwa_bazy == "Cała baza (wszystkie pytania)":
         pula = []
-        for b in st.session_state.bazy.values():
-            pula.extend(b)
+        for nazwa_b, b in st.session_state.bazy.items():
+            for p in b:
+                p_copy = dict(p)
+                p_copy["_uid"] = f"{nazwa_b}_{p['id']}"
+                pula.append(p_copy)
     else:
-        pula = list(st.session_state.bazy.get(nazwa_bazy, []))
+        pula = []
+        for p in st.session_state.bazy.get(nazwa_bazy, []):
+            p_copy = dict(p)
+            p_copy["_uid"] = f"{nazwa_bazy}_{p['id']}"
+            pula.append(p_copy)
     
     if tylko_wielokrotne:
         return [p for p in pula if len(p.get("poprawne", [])) in [1, 2]]
@@ -481,6 +506,35 @@ def start_sesji(tryb, baza_nazwa, limit_pytan=None, tylko_wielokrotne=False):
         st.session_state.czas_konca = time.time() + (20 * 60)
     else:
         st.session_state.czas_konca = None
+
+def start_inteligentna_nauka(baza_nazwa, tylko_wielokrotne=False, rozmiar_partii=20):
+    st.session_state.aktywny_tryb = "Inteligentna Nauka (1/2)" if tylko_wielokrotne else "Inteligentna Nauka (1/2/3)"
+    st.session_state.sprawdzono_odpowiedz = False
+    st.session_state.smart_ostatni_wynik = None
+    st.session_state.smart_krok = 0
+    
+    pula = pobierz_pytania_z_bazy(baza_nazwa, tylko_wielokrotne=tylko_wielokrotne)
+    random.shuffle(pula)
+    
+    st.session_state.smart_pula_calkowita = pula
+    st.session_state.smart_opanowane_ids = set()
+    st.session_state.smart_nr_rundy = 1
+    st.session_state.smart_bledne_w_rundzie = set()
+    
+    # Wydzielenie pierwszej partii (20 pytań) i reszty nieopanowanych
+    st.session_state.smart_kolejka_rundy = pula[:rozmiar_partii]
+    st.session_state.smart_nieopanowane = pula[rozmiar_partii:]
+
+def zaladuj_kolejna_partie_smart(rozmiar_partii=20):
+    st.session_state.smart_nr_rundy += 1
+    st.session_state.smart_bledne_w_rundzie = set()
+    st.session_state.sprawdzono_odpowiedz = False
+    st.session_state.smart_ostatni_wynik = None
+    st.session_state.smart_krok += 1
+    
+    random.shuffle(st.session_state.smart_nieopanowane)
+    st.session_state.smart_kolejka_rundy = st.session_state.smart_nieopanowane[:rozmiar_partii]
+    st.session_state.smart_nieopanowane = st.session_state.smart_nieopanowane[rozmiar_partii:]
 
 def powrot_do_wyboru():
     st.session_state.wybrana_baza = None
@@ -607,7 +661,7 @@ if menu_glowne == "🏠 Strona Główna":
         st.markdown("""
         <div class="card-blue">
             <h4 style="margin-top:0;">🎮 Rozwiązywanie Testów</h4>
-            <p style="margin:0;">Wybierz część bazy, ustal tryb nauki, egzaminu lub uruchom test z całej bazy.</p>
+            <p style="margin:0;">Wybierz część bazy, ustal tryb nauki (w tym inteligentne powtórki) lub uruchom egzamin.</p>
         </div>
         """, unsafe_allow_html=True)
         st.markdown("""
@@ -637,7 +691,7 @@ elif menu_glowne == "📚 Testy i Nauka":
     if st.session_state.wybrana_baza is None and st.session_state.aktywny_tryb is None:
         st.markdown("<div class='main-header'>Wybierz tryb testowy lub bazę pytań</div>", unsafe_allow_html=True)
         
-        st.subheader("📚 PEŁNE BAZY")
+        st.subheader("📚 PEŁNE BAZY I EGZAMINY")
         if st.button("🎯 Uruchom Egzamin WIELOKROTNEGO WYBORU (1/2/3) (40 Baza 1 + 10 reszta | 50 pytań / 20 min)", use_container_width=True, type="primary"):
             st.session_state.wybrana_baza = "Wszystkie"
             start_sesji("Egzamin (Losowo – 50 pytań / 20 min)", "Egzamin mieszany (40 Baza 1 + 10 reszta)", limit_pytan=50, tylko_wielokrotne=False)
@@ -646,6 +700,10 @@ elif menu_glowne == "📚 Testy i Nauka":
         if st.button("🎯 Uruchom Egzamin WIELOKROTNEGO WYBORU (1/2) (40 Baza 1 + 10 reszta | 50 pytań / 20 min)", use_container_width=True, type="primary"):
             st.session_state.wybrana_baza = "Wszystkie"
             start_sesji("Egzamin (Losowo – 50 pytań / 20 min)", "Egzamin mieszany (40 Baza 1 + 10 reszta)", limit_pytan=50, tylko_wielokrotne=True)
+            st.rerun()
+
+        if st.button("🧠 Cała baza (wszystkie pytania) – Tryby Nauki i Powtórek", use_container_width=True):
+            st.session_state.wybrana_baza = "Cała baza (wszystkie pytania)"
             st.rerun()
 
         st.markdown("---")
@@ -676,6 +734,9 @@ elif menu_glowne == "📚 Testy i Nauka":
         
         with col_w1:
             st.markdown("### 🎯 WIELOKROTNY WYBÓR (1/2/3)")
+            if st.button("🧠 Inteligentna Nauka (Powtórki jak Quizlet - partie po 20)", key="smart_w", type="primary", use_container_width=True):
+                start_inteligentna_nauka(nazwa_bary, tylko_wielokrotne=False, rozmiar_partii=20)
+                st.rerun()
             if st.button("Tryb Nauki (Kolejno)", key="n_w_k", use_container_width=True):
                 start_sesji("Tryb Nauki (Wszystkie – Kolejno)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=False)
                 st.rerun()
@@ -688,7 +749,10 @@ elif menu_glowne == "📚 Testy i Nauka":
 
         with col_w2:
             st.markdown("### 🎯 WIELOKROTNY WYBÓR (1/2)")
-            if st.button("Tryb Nauki (Kolejno)", key="n_f_k", use_container_width=True):
+            if st.button("🧠 Inteligentna Nauka (Powtórki jak Quizlet - partie po 20)", key="smart_f", type="primary", use_container_width=True):
+                start_inteligentna_nauka(nazwa_bary, tylko_wielokrotne=True, rozmiar_partii=20)
+                st.rerun()
+            if st.button("Tryb Nauka (Kolejno)", key="n_f_k", use_container_width=True):
                 start_sesji("Tryb Nauki (Kolejno)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=True)
                 st.rerun()
             if st.button("Tryb Nauki (Losowo – 30 pytań)", key="n_f_l", use_container_width=True):
@@ -702,403 +766,8 @@ elif menu_glowne == "📚 Testy i Nauka":
             powrot_do_wyboru()
             st.rerun()
 
-    else:
-        if st.session_state.czas_konca is not None and not st.session_state.test_zakonczony:
-            pozostaly_czas_ms = int((st.session_state.czas_konca - time.time()) * 1000)
-            if pozostaly_czas_ms <= 0:
-                st.session_state.test_zakonczony = True
-                st.rerun()
-            else:
-                timer_html = """
-                <div style="font-size: 18px; font-weight: bold; color: #ff4b4b; background-color: var(--bg-sec); padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: center; border: 1px solid var(--border-color);">
-                    ⏱️ Pozostały czas egzaminu: <span id="countdown">--:--</span>
-                </div>
-                <script>
-                    var endTime = new Date().getTime() + """ + str(pozostaly_czas_ms) + """;
-                    var x = setInterval(function() {
-                        var now = new Date().getTime();
-                        var distance = endTime - now;
-                        
-                        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                        
-                        minutes = minutes < 10 ? "0" + minutes : minutes;
-                        seconds = seconds < 10 ? "0" + seconds : seconds;
-                        
-                        document.getElementById("countdown").innerHTML = minutes + ":" + seconds;
-                        
-                        if (distance < 0) {
-                            clearInterval(x);
-                            document.getElementById("countdown").innerHTML = "00:00";
-                            window.parent.location.reload();
-                        }
-                    }, 1000);
-                </script>
-                """
-                components.html(timer_html, height=60)
-
-        st.markdown(f"<div class='main-header'>{st.session_state.aktywny_tryb}</div>", unsafe_allow_html=True)
-        lista = st.session_state.pytania_sesji
-        idx = st.session_state.indeks
-
-        if st.button("← Przerwij i wróć do menu"):
-            powrot_do_wyboru()
-            st.rerun()
-
-        st.markdown("---")
-
-        if idx < len(lista) and not st.session_state.test_zakonczony:
-            p = lista[idx]
-            st.markdown(f"**Pytanie {idx + 1} z {len(lista)}** (ID: {p['id']})")
-            st.markdown(f"<div class='question-box'><h3>{p['pytanie']}</h3></div>", unsafe_allow_html=True)
-
-            if "Nauki" in st.session_state.aktywny_tryb:
-                with st.form(key=f"form_nauka_{idx}"):
-                    wybrane = []
-                    for k, v in p["odpowiedzi"].items():
-                        if st.checkbox(f"**{k}**: {v}", key=f"cb_nauka_{idx}_{k}"):
-                            wybrane.append(k)
-                    sprawdz = st.form_submit_button("Sprawdź odpowiedź")
-
-                if sprawdz:
-                    st.session_state.sprawdzono_odpowiedz = True
-
-                if st.session_state.sprawdzono_odpowiedz:
-                    poprawne = set(p["poprawne"])
-                    zaznaczone = set(wybrane)
-                    if zaznaczone == poprawne:
-                        st.success("✅ Poprawna odpowiedź!")
-                    else:
-                        st.error(f"❌ Błąd! Poprawne odpowiedzi to: {', '.join(p['poprawne'])}")
-
-                    podstawa = p.get("podstawa_prawna", "Brak zdefiniowanej podstawy prawnej")
-                    artykul = p.get("tresc_artykulu", "Brak opisu treści artykułu")
-                    st.markdown(f"""
-                    <div class='legal-box'>
-                        <strong>📜 Podstawa prawna:</strong> {podstawa}<br><br>
-                        <strong>📖 Treść artykułu:</strong><br>
-                        <em>{artykul}</em>
-                    </div>
-                    """, unsafe_allow_html=True)
-            else:
-                poprzednie_wybory = st.session_state.odpowiedzi_egzamin.get(idx, [])
-                wybrane = []
-                for k, v in p["odpowiedzi"].items():
-                    zaznaczone = k in poprzednie_wybory
-                    if st.checkbox(f"**{k}**: {v}", value=zaznaczone, key=f"cb_egz_{idx}_{k}"):
-                        wybrane.append(k)
-                st.session_state.odpowiedzi_egzamin[idx] = wybrane
-
-            col_p, col_n = st.columns([1, 1])
-            with col_p:
-                if st.button("⬅️ Poprzednie") and idx > 0:
-                    st.session_state.indeks -= 1
-                    st.session_state.sprawdzono_odpowiedz = False
-                    st.rerun()
-            with col_n:
-                if idx < len(lista) - 1:
-                    if st.button("Następne ➡️"):
-                        st.session_state.indeks += 1
-                        st.session_state.sprawdzono_odpowiedz = False
-                        st.rerun()
-
-            if st.button("🏁 Zakończ Test / Egzamin"):
-                st.session_state.test_zakonczony = True
-
-                if "Egzamin" in st.session_state.aktywny_tryb and not st.session_state.wynik_zapisany:
-                    punkty = sum(
-                        1 for i, q in enumerate(lista)
-                        if set(st.session_state.odpowiedzi_egzamin.get(i, [])) == set(q["poprawne"])
-                    )
-
-                    zapisz_wynik_egzaminu(
-                        st.session_state.zalogowany_uzytkownik,
-                        st.session_state.aktywny_tryb,
-                        st.session_state.wybrana_baza,
-                        punkty,
-                        len(lista)
-                    )
-                    st.session_state.wynik_zapisany = True
-
-                st.success("🎉 Egzamin zakończony! Wynik został zapisany.")
-                st.balloons()
-                st.rerun()
-
-        else:
-            st.success("🎉 Zakończyłeś test / egzamin!")
-            
-            if "Egzamin" in st.session_state.aktywny_tryb:
-                punkty = 0
-                szczegoly_wynikow = []
-                for i, q in enumerate(lista):
-                    user_ans = set(st.session_state.odpowiedzi_egzamin.get(i, []))
-                    correct_ans = set(q["poprawne"])
-                    is_correct = (user_ans == correct_ans)
-                    if is_correct:
-                        punkty += 1
-                    szczegoly_wynikow.append({
-                        "id": q["id"],
-                        "pytanie": q["pytanie"],
-                        "odpowiedzi": q["odpowiedzi"],
-                        "user_ans": sorted(list(user_ans)),
-                        "correct_ans": sorted(list(correct_ans)),
-                        "is_correct": is_correct,
-                        "podstawa": q.get("podstawa_prawna", "Brak"),
-                        "artykul": q.get("tresc_artykulu", "Brak")
-                    })
-                
-                procent = (punkty / len(lista)) * 100 if len(lista) > 0 else 0
-                zdane = procent >= 75.0
-
-                st.markdown("### 📊 Statystyki i Podsumowanie Egzaminu")
-                col_res1, col_res2, col_res3 = st.columns(3)
-                col_res1.metric("Uzyskany wynik", f"{punkty} / {len(lista)}")
-                col_res2.metric("Skuteczność", f"{procent:.1f}%")
-                col_res3.metric("Status egzaminu", "POZYTYWNY (ZDANE)" if zdane else "NEGATYWNY (NIEZDANE)")
-                
-                st.markdown("---")
-                st.subheader("📝 Szczegółowa Analiza Odpowiedzi")
-                
-                filtr_odp = st.radio(
-                    "Filtruj pytania:",
-                    ["Wszystkie", "Tylko poprawne ✅", "Tylko błędne ❌"],
-                    horizontal=True,
-                    key="filtr_odp_egzamin"
-                )
-
-                for i, res in enumerate(szczegoly_wynikow):
-                    if filtr_odp == "Tylko poprawne ✅" and not res["is_correct"]:
-                        continue
-                    if filtr_odp == "Tylko błędne ❌" and res["is_correct"]:
-                        continue
-
-                    status_str = "✅ POPRAWNA" if res["is_correct"] else "❌ BŁĘDNA"
-                    u_ans_str = ", ".join(res["user_ans"]) if res["user_ans"] else "Brak odpowiedzi"
-                    c_ans_str = ", ".join(res["correct_ans"])
-
-                    with st.expander(f"Pytanie {i+1} [ID: {res['id']}] - {status_str} | Twoja odp: {u_ans_str} (Poprawna: {c_ans_str})"):
-                        st.markdown(f"**Treść pytania:** {res['pytanie']}")
-                        for k, v in res["odpowiedzi"].items():
-                            st.write(f"**{k}**: {v}")
-                        
-                        st.markdown("---")
-                        st.write(f"👉 **Twoja odpowiedź:** {u_ans_str}")
-                        st.write(f"✅ **Poprawna odpowiedź:** {c_ans_str}")
-                        
-                        if res["podstawa"] != "Brak" or res["artykul"] != "Brak":
-                            st.markdown(f"""
-                            <div class='legal-box'>
-                                <strong>📜 Podstawa prawna:</strong> {res['podstawa']}<br><br>
-                                <strong>📖 Treść artykułu:</strong><br>
-                                <em>{res['artykul']}</em>
-                            </div>
-                            """, unsafe_allow_html=True)
-
-            if st.button("🔄 Rozpocznij ponownie"):
-                powrot_do_wyboru()
-                st.rerun()
-
-# ==============================================================================
-# 10. DODAJ PYTANIE
-# ==============================================================================
-elif menu_glowne == "➕ Dodaj Pytanie":
-    st.markdown("<div class='main-header'>Dodaj nowe pytanie do bazy</div>", unsafe_allow_html=True)
-    baza_docelowa = st.radio("Wybierz bazę:", list(st.session_state.bazy.keys()), horizontal=True)
-
-    with st.form("form_dodaj"):
-        tresc = st.text_area("Treść pytania:")
-        ans_a = st.text_input("Odpowiedź A:")
-        ans_b = st.text_input("Odpowiedź B:")
-        ans_c = st.text_input("Odpowiedź C:")
-        
-        pop_a = st.checkbox("A jest poprawne")
-        pop_b = st.checkbox("B jest poprawne")
-        pop_c = st.checkbox("C jest poprawne")
-        
-        podstawa = st.text_input("Podstawa prawna (opcjonalnie):")
-        artykul = st.text_area("Treść artykułu (opcjonalnie):")
-        
-        if st.form_submit_button("Zapisz pytanie"):
-            poprawne_list = []
-            if pop_a: poprawne_list.append("A")
-            if pop_b: poprawne_list.append("B")
-            if pop_c: poprawne_list.append("C")
-
-            if tresc and ans_a and ans_b and ans_c and poprawne_list:
-                nowe_id = max([p["id"] for p in st.session_state.bazy[baza_docelowa]], default=0) + 1
-                nowe_pytanie = {
-                    "id": nowe_id,
-                    "pytanie": tresc,
-                    "odpowiedzi": {"A": ans_a, "B": ans_b, "C": ans_c},
-                    "poprawne": poprawne_list,
-                }
-                if podstawa: nowe_pytanie["podstawa_prawna"] = podstawa
-                if artykul: nowe_pytanie["tresc_artykulu"] = artykul
-
-                st.session_state.bazy[baza_docelowa].append(nowe_pytanie)
-                zapisz_konkretna_baze(baza_docelowa)
-                st.success(f"Dodano pytanie o ID {nowe_id} do bazy '{baza_docelowa}' i zapisano zmiany na stałe!")
-            else:
-                st.error("Uzupełnij pola i wybierz co najmniej jedną poprawną odpowiedź!")
-
-# ==============================================================================
-# 11. PRZEGLĄD BAZY
-# ==============================================================================
-elif menu_glowne == "🔍 Przegląd Bazy":
-    st.markdown("<div class='main-header'>Przegląd Bazy Pytań</div>", unsafe_allow_html=True)
-    
-    opcje_przegladu = ["Cała baza (wszystkie pytania)", "Cała baza (pytania wielokrotnego wyboru)"] + list(st.session_state.bazy.keys())
-    wybrana = st.radio("Wybierz bazę do przeglądu:", opcje_przegladu, horizontal=True)
-    
-    if wybrana == "Cała baza (wszystkie pytania)":
-        lista_do_wyswietlenia = pobierz_pytania_z_bazy("Cała baza (wszystkie pytania)", tylko_wielokrotne=False)
-    elif wybrana == "Cała baza (pytania wielokrotnego wyboru)":
-        lista_do_wyswietlenia = pobierz_pytania_z_bazy("Cała baza (wszystkie pytania)", tylko_wielokrotne=True)
-    else:
-        lista_do_wyswietlenia = st.session_state.bazy[wybrana]
-        
-    st.caption(f"Wyświetlono pytań: {len(lista_do_wyswietlenia)}")
-
-    for item in lista_do_wyswietlenia:
-        with st.expander(f"ID {item['id']}: {item['pytanie'][:80]}..."):
-            st.write(f"**Pytanie:** {item['pytanie']}")
-            for k, v in item["odpowiedzi"].items():
-                is_correct = "✅" if k in item["poprawne"] else "❌"
-                st.write(f"{is_correct} **{k}**: {v}")
-            if "podstawa_prawna" in item:
-                st.caption(f"Podstawa: {item['podstawa_prawna']}")
-            if "tresc_artykulu" in item:
-                st.info(f"Artykuł: {item['tresc_artykulu']}")
-
-# ==============================================================================
-# 12. PANEL ADMINISTRATORA
-# ==============================================================================
-elif menu_glowne == "🔑 Panel Administratora":
-    st.markdown("<div class='main-header'>🔑 Panel Administratora</div>", unsafe_allow_html=True)
-
-    if not st.session_state.admin_logged_in:
-        with st.form("admin_login_form"):
-            pass_input = st.text_input("Podaj hasło administratora:", type="password")
-            btn_login = st.form_submit_button("Zaloguj się")
-            if btn_login:
-                if pass_input == "admin123":
-                    st.session_state.admin_logged_in = True
-                    st.success("Pomyślnie zalogowano do Panelu Administratora!")
-                    st.rerun()
-                else:
-                    st.error("Niepoprawne hasło!")
-    else:
-        if st.button("🔒 Wyloguj z Panelu Admina"):
-            st.session_state.admin_logged_in = False
-            st.rerun()
-
-        st.markdown("---")
-        st.subheader("📊 Podgląd Wyników i Statystyk Wszystkich Użytkowników")
-        
-        for u_name in USERS_PIN.keys():
-            st.markdown(f"### Użytkownik: **{u_name}**")
-            u_stats = st.session_state.statystyki.get(u_name, [])
-            
-            if u_stats:
-                u_zdane = sum(1 for s in u_stats if s['zdane'])
-                u_niezdane = len(u_stats) - u_zdane
-                
-                c1, c2, c3 = st.columns(3)
-                c1.metric("Podejścia ogółem", len(u_stats))
-                c2.metric("Egzaminy ZDANE", u_zdane)
-                c3.metric("Egzaminy NIEZDANE", u_niezdane)
-                
-                col_chart1, col_chart2 = st.columns(2)
-                with col_chart1:
-                    st.bar_chart({"Wyniki": {"Pozytywne": u_zdane, "Negatywne": u_niezdane}})
-                with col_chart2:
-                    st.line_chart([s['procent'] for s in u_stats])
-            else:
-                st.info(f"Brak zapisanych wyników dla użytkownika {u_name}.")
-            st.markdown("---")
-
-        st.subheader("✏️ Edycja oraz zarządzanie pytaniami w bazie")
-        wybrana_baza_admin = st.radio("Wybierz część bazy do edycji:", list(st.session_state.bazy.keys()), key="admin_baza_select", horizontal=True)
-        lista_pytan = st.session_state.bazy[wybrana_baza_admin]
-
-        if not lista_pytan:
-            st.warning("Wybrana baza nie posiada żadnych pytań.")
-        else:
-            opcje_pytan = [f"ID {p['id']}: {p['pytanie'][:60]}..." for p in lista_pytan]
-            wybrane_pytanie_str = st.radio("Wybierz pytanie do edycji/usunięcia:", opcje_pytan)
-            
-            pytanie_idx = opcje_pytan.index(wybrane_pytanie_str)
-            p = lista_pytan[pytanie_idx]
-
-            col_del, col_edit = st.columns([1, 4])
-            with col_del:
-                st.write("**Usuwanie**")
-                if st.button("🗑️ Usuń pytanie", type="primary"):
-                    st.session_state.bazy[wybrana_baza_admin].pop(pytanie_idx)
-                    zapisz_konkretna_baze(wybrana_baza_admin)
-                    st.success("Pytanie zostało pomyślnie usunięte z bazy!")
-                    st.rerun()
-
-            st.markdown("---")
-            st.write("### Formularz edycji pytania")
-
-            with st.form(key=f"edit_form_{p['id']}"):
-                nowa_tresc = st.text_area("Treść pytania:", value=p["pytanie"])
-                ans_a = st.text_input("Odpowiedź A:", value=p["odpowiedzi"].get("A", ""))
-                ans_b = st.text_input("Odpowiedź B:", value=p["odpowiedzi"].get("B", ""))
-                ans_c = st.text_input("Odpowiedź C:", value=p["odpowiedzi"].get("C", ""))
-
-                pop_a = st.checkbox("Odpowiedź A jest poprawne", value=("A" in p["poprawne"]))
-                pop_b = st.checkbox("Odpowiedź B jest poprawne", value=("B" in p["poprawne"]))
-                pop_c = st.checkbox("Odpowiedź C jest poprawne", value=("C" in p["poprawne"]))
-
-                podstawa = st.text_input("Podstawa prawna:", value=p.get("podstawa_prawna", ""))
-                artykul = st.text_area("Treść artykułu:", value=p.get("tresc_artykulu", ""))
-
-                if st.form_submit_button("💾 Zapisz zmiany w pytaniu"):
-                    nowe_poprawne = []
-                    if pop_a: nowe_poprawne.append("A")
-                    if pop_b: nowe_poprawne.append("B")
-                    if pop_c: nowe_poprawne.append("C")
-
-                    if nowa_tresc and ans_a and ans_b and ans_c and nowe_poprawne:
-                        p["pytanie"] = nowa_tresc
-                        p["odpowiedzi"] = {"A": ans_a, "B": ans_b, "C": ans_c}
-                        p["poprawne"] = nowe_poprawne
-                        p["podstawa_prawna"] = podstawa
-                        p["tresc_artykulu"] = artykul
-
-                        zapisz_konkretna_baze(wybrana_baza_admin)
-                        st.success("Zmiany zostały pomyślnie zapisane!")
-                        st.rerun()
-                    else:
-                        st.error("Pola pytania/odpowiedzi nie mogą być puste, oraz co najmniej jedna odpowiedź musi być zaznaczona jako poprawna!")
-
-# ==============================================================================
-# 13. USTAWIENIA I MOTYW
-# ==============================================================================
-elif menu_glowne == "⚙️ Ustawienia / Motyw":
-    st.markdown("<div class='main-header'>Ustawienia i Personalizacja</div>", unsafe_allow_html=True)
-    
-    st.subheader("🎨 Wybór motywu wizualnego")
-    
-    opcje_motywu = ["Ciemny", "Jasny"]
-    wybrany_index = opcje_motywu.index(st.session_state.theme) if st.session_state.theme in opcje_motywu else 0
-
-    nowy_motyw = st.radio(
-        "Wybierz preferowany motyw:",
-        opcje_motywu,
-        index=wybrany_index,
-        key="settings_theme_radio"
-    )
-
-    if nowy_motyw != st.session_state.theme:
-        aktualizuj_pamiec_sesji(theme=nowy_motyw)
-        st.success(f"Zmieniono tryb na: {nowy_motyw}")
-        st.rerun()
-
-st.divider()
-st.subheader("Test połączenia z GitHub API")
-if st.button("Uruchom test zapisu do GitHuba"):
-    testowe_dane = st.session_state.get("statystyki", {"Test": ["połączenie"]})
-    zapisz_json("statystyki.json", testowe_dane)
+    # ==========================================================================
+    # OBSŁUGA NOWEGO TRYBU: INTELIGENTNA NAUKA (QUIZLET / DUOLINGO)
+    # ==========================================================================
+    elif "Inteligentna Nauka" in st.session_state.aktywny_tryb:
+        st.markdown(f"<div class='main-header'>🧠 {st.session_state.aktywny_tryb} — {

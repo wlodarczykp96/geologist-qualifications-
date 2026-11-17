@@ -287,16 +287,88 @@ st.markdown(f"""
 # 2. OBSŁUGA TRWAŁEGO ZAPISU DANYCH (JSON / GITHUB)
 # ==============================================================================
 PLIK_STATYSTYK = "statystyki.json"
+PLIK_POSTEPU = "postep_nauki.json"
 
-def wczytaj_statystyki():
+def wczytaj_json_z_github_lub_lokalnie(sciezka, domyslne):
+    # Najpierw próba pobrania świeżej wersji z GitHuba (żeby zachować spójność między urządzeniami)
     try:
-        with open("statystyki.json", "r", encoding="utf-8") as f:
+        if "GITHUB_TOKEN" in st.secrets and "GITHUB_REPO" in st.secrets:
+            token = st.secrets["GITHUB_TOKEN"].strip()
+            if token.startswith("gghp_"):
+                token = token[1:]
+            repo_name = st.secrets["GITHUB_REPO"].strip().replace("https://github.com/", "").strip("/")
+            g = Github(token)
+            repo = g.get_repo(repo_name)
+            contents = repo.get_contents(sciezka)
+            dane = json.loads(contents.decoded_content.decode("utf-8"))
+            with open(sciezka, "w", encoding="utf-8") as f:
+                json.dump(dane, f, ensure_ascii=False, indent=4)
+            return dane
+    except Exception:
+        pass
+
+    # Fallback: odczyt z pliku lokalnego
+    try:
+        with open(sciezka, "r", encoding="utf-8") as f:
             return json.load(f)
     except Exception:
-        return {"Piotrek": [], "Edyta": [], "Gość": []}
+        return domyslne
 
 if "statystyki" not in st.session_state:
-    st.session_state.statystyki = wczytaj_statystyki()
+    st.session_state.statystyki = wczytaj_json_z_github_lub_lokalnie(
+        PLIK_STATYSTYK, {"Piotrek": [], "Edyta": [], "Gość": []}
+    )
+
+if "postep_nauki" not in st.session_state:
+    st.session_state.postep_nauki = wczytaj_json_z_github_lub_lokalnie(
+        PLIK_POSTEPU, {"Piotrek": {}, "Edyta": {}, "Gość": {}}
+    )
+
+def zapisz_json(sciezka, dane, komunikat_sukcesu="✅ Zapisano i zsynchronizowano z GitHubem!", pokaz_komunikat=True):
+    try:
+        with open(sciezka, "w", encoding="utf-8") as f:
+            json.dump(dane, f, ensure_ascii=False, indent=4)
+    except Exception as e:
+        st.error(f"❌ Błąd zapisu lokalnego ({sciezka}): {e}")
+
+    try:
+        if "GITHUB_TOKEN" not in st.secrets or "GITHUB_REPO" not in st.secrets:
+            if pokaz_komunikat:
+                st.warning("⚠️ Zapisano lokalnie (brak kluczy GitHub w Secrets).")
+            return
+
+        token = st.secrets["GITHUB_TOKEN"].strip()
+        if token.startswith("gghp_"):
+            token = token[1:]
+
+        repo_name = st.secrets["GITHUB_REPO"].strip().replace("https://github.com/", "").strip("/")
+
+        g = Github(token)
+        repo = g.get_repo(repo_name)
+
+        nowa_tresc = json.dumps(dane, ensure_ascii=False, indent=4)
+
+        try:
+            contents = repo.get_contents(sciezka)
+            repo.update_file(
+                path=contents.path,
+                message=f"Auto-update: {sciezka}",
+                content=nowa_tresc,
+                sha=contents.sha
+            )
+        except Exception:
+            repo.create_file(
+                path=sciezka,
+                message=f"Utworzenie pliku: {sciezka}",
+                content=nowa_tresc
+            )
+
+        st.cache_data.clear()
+        if pokaz_komunikat:
+            st.success(komunikat_sukcesu)
+
+    except Exception as e:
+        st.error(f"❌ Błąd synchronizacji {sciezka} z GitHub: {e}")
 
 def zapisz_konkretna_baze(nazwa_bazy):
     if nazwa_bazy not in PLIKI_BAZ:
@@ -355,54 +427,7 @@ def zapisz_konkretna_baze(nazwa_bazy):
     except Exception as e:
         st.error(f"❌ Błąd synchronizacji bazy {nazwa_bazy} z GitHub: {e}")
 
-def zapisz_json(sciezka, dane):
-    try:
-        with open(sciezka, "w", encoding="utf-8") as f:
-            json.dump(dane, f, ensure_ascii=False, indent=4)
-    except Exception as e:
-        st.error(f"❌ Błąd zapisu lokalnego: {e}")
-
-    try:
-        if "GITHUB_TOKEN" not in st.secrets or "GITHUB_REPO" not in st.secrets:
-            st.error("❌ BRAK KLUCZY w Streamlit Secrets!")
-            return
-
-        token = st.secrets["GITHUB_TOKEN"].strip()
-        if token.startswith("gghp_"):
-            token = token[1:]
-
-        repo_name = st.secrets["GITHUB_REPO"].strip()
-        repo_name = repo_name.replace("https://github.com/", "").strip("/")
-
-        g = Github(token)
-        repo = g.get_repo(repo_name)
-
-        nowa_tresc = json.dumps(dane, ensure_ascii=False, indent=4)
-
-        try:
-            contents = repo.get_contents(sciezka)
-            repo.update_file(
-                path=contents.path,
-                message="Auto-update statystyk egzaminu",
-                content=nowa_tresc,
-                sha=contents.sha
-            )
-        except Exception:
-            repo.create_file(
-                path=sciezka,
-                message="Utworzenie pliku statystyk",
-                content=nowa_tresc
-            )
-
-        st.cache_data.clear()
-        st.success("✅ Zapisano i zsynchronizowano z GitHubem!")
-
-    except Exception as e:
-        st.error(f"❌ Błąd synchronizacji z GitHub: {e}")
-
 def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
-    st.info("🔄 Rozpoczynam próbę zapisu do GitHuba...")
-    
     procent = (punkty / max_punkty) * 100 if max_punkty > 0 else 0
     zdane = procent >= 75.0
     
@@ -419,30 +444,18 @@ def zapisz_wynik_egzaminu(user, tryb, baza, punkty, max_punkty):
         st.session_state.statystyki[user] = []
         
     st.session_state.statystyki[user].append(wpis)
-    
-    try:
-        if "GITHUB_TOKEN" not in st.secrets or "GITHUB_REPO" not in st.secrets:
-            st.error("❌ Brak kluczy GITHUB_TOKEN lub GITHUB_REPO w Streamlit Secrets!")
-            return
+    zapisz_json(
+        PLIK_STATYSTYK,
+        st.session_state.statystyki,
+        komunikat_sukcesu="✅ Wynik egzaminu został zapisany w statystyki.json na GitHubie!",
+        pokaz_komunikat=True
+    )
 
-        token = st.secrets["GITHUB_TOKEN"]
-        repo_name = st.secrets["GITHUB_REPO"]
-        
-        g = Github(token)
-        repo = g.get_repo(repo_name)
-        
-        contents = repo.get_contents("statystyki.json")
-        nowa_tresc = json.dumps(st.session_state.statystyki, ensure_ascii=False, indent=4)
-        
-        repo.update_file(
-            path=contents.path,
-            message=f"Auto-update statystyk: {user}",
-            content=nowa_tresc,
-            sha=contents.sha
-        )
-        st.success("✅ Zamieszczono nowy commit w repozytorium GitHub!")
-    except Exception as e:
-        st.error(f"❌ Błąd GitHub API: {e}")
+def zapisz_postep_smart_na_stalo(user, klucz_bazy, opanowane_ids_set):
+    if user not in st.session_state.postep_nauki:
+        st.session_state.postep_nauki[user] = {}
+    st.session_state.postep_nauki[user][klucz_bazy] = sorted(list(opanowane_ids_set))
+    zapisz_json(PLIK_POSTEPU, st.session_state.postep_nauki, pokaz_komunikat=False)
 
 # ==============================================================================
 # 5. FUNKCJE POMOCNICZE
@@ -507,23 +520,38 @@ def start_sesji(tryb, baza_nazwa, limit_pytan=None, tylko_wielokrotne=False):
     else:
         st.session_state.czas_konca = None
 
-def start_inteligentna_nauka(baza_nazwa, tylko_wielokrotne=False, rozmiar_partii=20):
+def pobierz_klucz_postepu(baza_nazwa, tylko_wielokrotne):
+    wariant = "1_2" if tylko_wielokrotne else "1_2_3"
+    return f"{baza_nazwa}__{wariant}"
+
+def start_inteligentna_nauka(baza_nazwa, tylko_wielokrotne=False, rozmiar_partii=20, resetuj=False):
     st.session_state.aktywny_tryb = "Inteligentna Nauka (1/2)" if tylko_wielokrotne else "Inteligentna Nauka (1/2/3)"
     st.session_state.sprawdzono_odpowiedz = False
     st.session_state.smart_ostatni_wynik = None
     st.session_state.smart_krok = 0
     
     pula = pobierz_pytania_z_bazy(baza_nazwa, tylko_wielokrotne=tylko_wielokrotne)
-    random.shuffle(pula)
+    user = st.session_state.zalogowany_uzytkownik
+    klucz_postepu = pobierz_klucz_postepu(baza_nazwa, tylko_wielokrotne)
+    
+    if resetuj:
+        opanowane_z_pliku = set()
+        zapisz_postep_smart_na_stalo(user, klucz_postepu, opanowane_z_pliku)
+    else:
+        zapisane_lista = st.session_state.postep_nauki.get(user, {}).get(klucz_postepu, [])
+        dostepne_uids = {p.get("_uid", str(p["id"])) for p in pula}
+        opanowane_z_pliku = set(zapisane_lista).intersection(dostepne_uids)
+        
+    pozostale_do_nauki = [p for p in pula if p.get("_uid", str(p["id"])) not in opanowane_z_pliku]
+    random.shuffle(pozostale_do_nauki)
     
     st.session_state.smart_pula_calkowita = pula
-    st.session_state.smart_opanowane_ids = set()
-    st.session_state.smart_nr_rundy = 1
+    st.session_state.smart_opanowane_ids = opanowane_z_pliku
+    st.session_state.smart_nr_rundy = (len(opanowane_z_pliku) // rozmiar_partii) + 1
     st.session_state.smart_bledne_w_rundzie = set()
     
-    # Wydzielenie pierwszej partii (20 pytań) i reszty nieopanowanych
-    st.session_state.smart_kolejka_rundy = pula[:rozmiar_partii]
-    st.session_state.smart_nieopanowane = pula[rozmiar_partii:]
+    st.session_state.smart_kolejka_rundy = pozostale_do_nauki[:rozmiar_partii]
+    st.session_state.smart_nieopanowane = pozostale_do_nauki[rozmiar_partii:]
 
 def zaladuj_kolejna_partie_smart(rozmiar_partii=20):
     st.session_state.smart_nr_rundy += 1
@@ -661,7 +689,7 @@ if menu_glowne == "🏠 Strona Główna":
         st.markdown("""
         <div class="card-blue">
             <h4 style="margin-top:0;">🎮 Rozwiązywanie Testów</h4>
-            <p style="margin:0;">Wybierz część bazy, ustal tryb nauki (w tym inteligentne powtórki) lub uruchom egzamin.</p>
+            <p style="margin:0;">Wybierz część bazy, ustal tryb nauki (w tym inteligentne powtórki z zapisem postępu) lub uruchom egzamin.</p>
         </div>
         """, unsafe_allow_html=True)
         st.markdown("""
@@ -720,12 +748,17 @@ elif menu_glowne == "📚 Testy i Nauka":
 
     elif st.session_state.aktywny_tryb is None:
         nazwa_bary = st.session_state.wybrana_baza
+        user = st.session_state.zalogowany_uzytkownik
         wszystkie = pobierz_pytania_z_bazy(nazwa_bary, tylko_wielokrotne=False)
         wielokrotne = pobierz_pytania_z_bazy(nazwa_bary, tylko_wielokrotne=True)
 
+        # Sprawdzenie zapisanego postępu dla danej bazy
+        zapisane_123 = len(st.session_state.postep_nauki.get(user, {}).get(pobierz_klucz_postepu(nazwa_bary, False), []))
+        zapisane_12 = len(st.session_state.postep_nauki.get(user, {}).get(pobierz_klucz_postepu(nazwa_bary, True), []))
+
         st.markdown(f"**Wybrana baza:** {nazwa_bary}")
-        st.markdown(f"* Wszystkie pytania WIELOKROTNEGO WYBORU (1/2/3): **{len(wszystkie)}**")
-        st.markdown(f"* Wszystkie pytania WIELOKROTNEGO WYBORU (1/2): **{len(wielokrotne)}**")
+        st.markdown(f"* Wszystkie pytania WIELOKROTNEGO WYBORU (1/2/3): **{len(wszystkie)}** *(zapisany postęp: {zapisane_123}/{len(wszystkie)})*")
+        st.markdown(f"* Wszystkie pytania WIELOKROTNEGO WYBORU (1/2): **{len(wielokrotne)}** *(zapisany postęp: {zapisane_12}/{len(wielokrotne)})*")
         st.write("")
 
         st.subheader("Wybierz wariant testu:")
@@ -734,7 +767,7 @@ elif menu_glowne == "📚 Testy i Nauka":
         
         with col_w1:
             st.markdown("### 🎯 WIELOKROTNY WYBÓR (1/2/3)")
-            if st.button("🧠 Inteligentna Nauka (Powtórki jak Quizlet - partie po 20)", key="smart_w", type="primary", use_container_width=True):
+            if st.button(f"🧠 Inteligentna Nauka (Kontynuuj: {zapisane_123}/{len(wszystkie)})", key="smart_w", type="primary", use_container_width=True):
                 start_inteligentna_nauka(nazwa_bary, tylko_wielokrotne=False, rozmiar_partii=20)
                 st.rerun()
             if st.button("Tryb Nauki (Kolejno)", key="n_w_k", use_container_width=True):
@@ -749,10 +782,10 @@ elif menu_glowne == "📚 Testy i Nauka":
 
         with col_w2:
             st.markdown("### 🎯 WIELOKROTNY WYBÓR (1/2)")
-            if st.button("🧠 Inteligentna Nauka (Powtórki jak Quizlet - partie po 20)", key="smart_f", type="primary", use_container_width=True):
+            if st.button(f"🧠 Inteligentna Nauka (Kontynuuj: {zapisane_12}/{len(wielokrotne)})", key="smart_f", type="primary", use_container_width=True):
                 start_inteligentna_nauka(nazwa_bary, tylko_wielokrotne=True, rozmiar_partii=20)
                 st.rerun()
-            if st.button("Tryb Nauka (Kolejno)", key="n_f_k", use_container_width=True):
+            if st.button("Tryb Nauki (Kolejno)", key="n_f_k", use_container_width=True):
                 start_sesji("Tryb Nauki (Kolejno)", nazwa_bary, limit_pytan=None, tylko_wielokrotne=True)
                 st.rerun()
             if st.button("Tryb Nauki (Losowo – 30 pytań)", key="n_f_l", use_container_width=True):
@@ -767,14 +800,21 @@ elif menu_glowne == "📚 Testy i Nauka":
             st.rerun()
 
     # ==========================================================================
-    # OBSŁUGA NOWEGO TRYBU: INTELIGENTNA NAUKA (QUIZLET / DUOLINGO)
+    # OBSŁUGA TRYBU: INTELIGENTNA NAUKA (QUIZLET / DUOLINGO Z AUTO-ZAPISEM)
     # ==========================================================================
     elif "Inteligentna Nauka" in st.session_state.aktywny_tryb:
         st.markdown(f"<div class='main-header'>🧠 {st.session_state.aktywny_tryb} — {st.session_state.wybrana_baza}</div>", unsafe_allow_html=True)
         
-        if st.button("← Przerwij i wróć do menu"):
-            powrot_do_wyboru()
-            st.rerun()
+        col_top1, col_top2 = st.columns([3, 1])
+        with col_top1:
+            if st.button("← Wróć do menu (postęp jest zapisany)"):
+                powrot_do_wyboru()
+                st.rerun()
+        with col_top2:
+            if st.button("🗑️ Resetuj zapisany postęp"):
+                czy_1_2 = "(1/2)" in st.session_state.aktywny_tryb
+                start_inteligentna_nauka(st.session_state.wybrana_baza, tylko_wielokrotne=czy_1_2, rozmiar_partii=20, resetuj=True)
+                st.rerun()
             
         st.markdown("---")
         
@@ -782,7 +822,6 @@ elif menu_glowne == "📚 Testy i Nauka":
         opanowane_liczba = len(st.session_state.smart_opanowane_ids)
         w_kolejce_rundy = len(st.session_state.smart_kolejka_rundy)
         
-        # Pasek postępu i statystyki nauki
         col_s1, col_s2, col_s3, col_s4 = st.columns(4)
         col_s1.metric("Aktualna partia", f"Runda {st.session_state.smart_nr_rundy}")
         col_s2.metric("Opanowane łącznie", f"{opanowane_liczba} / {calkowita_liczba}")
@@ -798,15 +837,15 @@ elif menu_glowne == "📚 Testy i Nauka":
         if w_kolejce_rundy == 0 and len(st.session_state.smart_nieopanowane) == 0:
             st.balloons()
             st.success(f"🏆 GRATULACJE! Opanowałeś wszystkie {calkowita_liczba} pytań z wybranej bazy!")
-            if st.button("🔄 Zacznij naukę od początku", type="primary", use_container_width=True):
+            if st.button("🔄 Zacznij naukę od początku (wyczyść postęp)", type="primary", use_container_width=True):
                 czy_1_2 = "(1/2)" in st.session_state.aktywny_tryb
-                start_inteligentna_nauka(st.session_state.wybrana_baza, tylko_wielokrotne=czy_1_2, rozmiar_partii=20)
+                start_inteligentna_nauka(st.session_state.wybrana_baza, tylko_wielokrotne=czy_1_2, rozmiar_partii=20, resetuj=True)
                 st.rerun()
                 
         # SCENARIUSZ 2: KONIEC PARTII 20 PYTAŃ -> PODSUMOWANIE I PRZEJŚCIE DO KOLEJNEJ
         elif w_kolejce_rundy == 0:
             st.success(f"🎉 Świetna robota! Ukończyłeś Rundę {st.session_state.smart_nr_rundy}!")
-            st.info(f"Wszystkie pytania z tej partii zostały opanowane i odrzucone z dalszej puli. Pozostało jeszcze **{len(st.session_state.smart_nieopanowane)}** nowych pytań do nauki.")
+            st.info(f"Wszystkie pytania z tej partii zostały opanowane, zapisane na stałe i odrzucone z dalszej puli. Pozostało jeszcze **{len(st.session_state.smart_nieopanowane)}** nowych pytań do nauki.")
             
             if st.button("➡️ Następna partia (kolejne 20 pytań)", type="primary", use_container_width=True):
                 zaladuj_kolejna_partie_smart(rozmiar_partii=20)
@@ -842,10 +881,10 @@ elif menu_glowne == "📚 Testy i Nauka":
                     st.session_state.smart_ostatni_wynik = (zaznaczone == poprawne)
                     st.rerun()
                     
-            # Etap B: Wyświetlenie wyniku i przycisku "Dalej"
+            # Etap B: Wyświetlenie wyniku i przycisku "Następne pytanie" (z auto-zapisem!)
             else:
                 if st.session_state.smart_ostatni_wynik:
-                    st.success("✅ **Świetnie! Poprawna odpowiedź!** Pytanie zostaje oznaczone jako opanowane.")
+                    st.success("✅ **Świetnie! Poprawna odpowiedź!** Pytanie zostaje zapisane jako opanowane.")
                 else:
                     st.error(f"❌ **Błąd!** Poprawne odpowiedzi to: **{', '.join(p['poprawne'])}**. Pytanie wróci na koniec tej partii do powtórki.")
                 
@@ -863,9 +902,18 @@ elif menu_glowne == "📚 Testy i Nauka":
                     aktualne_pytanie = st.session_state.smart_kolejka_rundy.pop(0)
                     
                     if st.session_state.smart_ostatni_wynik:
-                        # Dobrze -> dodaj do opanowanych, usuń z listy błędów
+                        # Dobrze -> dodaj do opanowanych, usuń z listy błędów i ZAPISZ NA STAŁE
                         st.session_state.smart_opanowane_ids.add(uid)
                         st.session_state.smart_bledne_w_rundzie.discard(uid)
+                        
+                        czy_1_2 = "(1/2)" in st.session_state.aktywny_tryb
+                        klucz_p = pobierz_klucz_postepu(st.session_state.wybrana_baza, czy_1_2)
+                        with st.spinner("💾 Zapisywanie postępu..."):
+                            zapisz_postep_smart_na_stalo(
+                                st.session_state.zalogowany_uzytkownik,
+                                klucz_p,
+                                st.session_state.smart_opanowane_ids
+                            )
                     else:
                         # Źle -> oznacz jako błędne i wrzuć na koniec bieżącej rundy
                         st.session_state.smart_bledne_w_rundzie.add(uid)
@@ -880,10 +928,27 @@ elif menu_glowne == "📚 Testy i Nauka":
     # STANDARDOWE TRYBY TESTÓW I EGZAMINÓW
     # ==========================================================================
     else:
+        lista = st.session_state.pytania_sesji
+        idx = st.session_state.indeks
+
+        # Obsługa automatycznego zakończenia po upływie czasu (20 min)
         if st.session_state.czas_konca is not None and not st.session_state.test_zakonczony:
             pozostaly_czas_ms = int((st.session_state.czas_konca - time.time()) * 1000)
             if pozostaly_czas_ms <= 0:
                 st.session_state.test_zakonczony = True
+                if "Egzamin" in st.session_state.aktywny_tryb and not st.session_state.wynik_zapisany:
+                    punkty = sum(
+                        1 for i, q in enumerate(lista)
+                        if set(st.session_state.odpowiedzi_egzamin.get(i, [])) == set(q["poprawne"])
+                    )
+                    zapisz_wynik_egzaminu(
+                        st.session_state.zalogowany_uzytkownik,
+                        st.session_state.aktywny_tryb,
+                        st.session_state.wybrana_baza,
+                        punkty,
+                        len(lista)
+                    )
+                    st.session_state.wynik_zapisany = True
                 st.rerun()
             else:
                 timer_html = """
@@ -915,8 +980,6 @@ elif menu_glowne == "📚 Testy i Nauka":
                 components.html(timer_html, height=60)
 
         st.markdown(f"<div class='main-header'>{st.session_state.aktywny_tryb}</div>", unsafe_allow_html=True)
-        lista = st.session_state.pytania_sesji
-        idx = st.session_state.indeks
 
         if st.button("← Przerwij i wróć do menu"):
             powrot_do_wyboru()
@@ -979,7 +1042,7 @@ elif menu_glowne == "📚 Testy i Nauka":
                         st.session_state.sprawdzono_odpowiedz = False
                         st.rerun()
 
-            if st.button("🏁 Zakończ Test / Egzamin"):
+            if st.button("🏁 Zakończ Test / Egzamin", type="primary"):
                 st.session_state.test_zakonczony = True
 
                 if "Egzamin" in st.session_state.aktywny_tryb and not st.session_state.wynik_zapisany:
@@ -988,16 +1051,16 @@ elif menu_glowne == "📚 Testy i Nauka":
                         if set(st.session_state.odpowiedzi_egzamin.get(i, [])) == set(q["poprawne"])
                     )
 
-                    zapisz_wynik_egzaminu(
-                        st.session_state.zalogowany_uzytkownik,
-                        st.session_state.aktywny_tryb,
-                        st.session_state.wybrana_baza,
-                        punkty,
-                        len(lista)
-                    )
+                    with st.spinner("💾 Zapisywanie wyniku egzaminu do plików..."):
+                        zapisz_wynik_egzaminu(
+                            st.session_state.zalogowany_uzytkownik,
+                            st.session_state.aktywny_tryb,
+                            st.session_state.wybrana_baza,
+                            punkty,
+                            len(lista)
+                        )
                     st.session_state.wynik_zapisany = True
 
-                st.success("🎉 Egzamin zakończony! Wynik został zapisany.")
                 st.balloons()
                 st.rerun()
 

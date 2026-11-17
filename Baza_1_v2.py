@@ -2671,7 +2671,7 @@ BAZY_PYTAN = {
     },
     "poprawne": [
       "A",
-      "B"
+      "B",
       "C"
     ],
     "podstawa_prawna": "Art. 162 ust. 1 PGiG",

@@ -35,8 +35,8 @@ except ImportError:
     baza_4_lista = []
 
 try:
-    from Baza_5_v1 import BAZY_PYTAN as b5
-    baza_5_lista = b5.get("BAZA PYTAŃ - CZĘŚĆ 5 (Wiedz ogólna o Prawie Górniczym i geologicznym [...])", [])
+    from Baza_5_v2 import BAZY_PYTAN as b5
+    baza_5_lista = ist(b5.values())[0] if b5 else []
 except ImportError:
     baza_5_lista = []
 
@@ -45,7 +45,7 @@ PLIKI_BAZ = {
     "Baza 2": "Baza_2_v2.py",
     "Baza 3": "Baza_3_v2.py",
     "Baza 4": "Baza_4_v2.py",
-    "Baza 5": "Baza_5_v1.py"
+    "Baza 5": "Baza_5_v2.py"
 }
 
 if 'bazy' not in st.session_state:

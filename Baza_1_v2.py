@@ -1,5 +1,5 @@
 BAZY_PYTAN = [
-    "BAZA PYTAŃ - CZĘŚĆ 5 (Wiedz ogólna o Prawie Górniczym i geologicznym [...])":
+    "BAZA PYTAŃ - CZĘŚĆ 1 (Wiedz ogólna o Prawie Górniczym i geologicznym [...])":
   {
     "id": 1,
     "pytanie": "Czy przepisy Prawa geologicznego i górniczego obejmują m. in. :",

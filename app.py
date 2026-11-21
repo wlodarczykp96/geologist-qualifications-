@@ -36,7 +36,7 @@ except ImportError:
 
 try:
     from Baza_5_v2 import BAZY_PYTAN as b5
-    baza_5_lista = ist(b5.values())[0] if b5 else []
+    baza_5_lista = list(b5.values())[0] if b5 else []
 except ImportError:
     baza_5_lista = []
 

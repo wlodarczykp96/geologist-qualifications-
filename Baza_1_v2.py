@@ -2998,21 +2998,7 @@ BAZY_PYTAN = {
     ],
     "podstawa_prawna": "Art. 10 ust. 4 PGiG",
     "tresc_artykulu": "Własnością górniczą są objęte także części górotworu położone poza granicami przestrzennymi nieruchomości gruntowej, w szczególności znajdujące się w granicach obszarów morskich Rzeczypospolitej Polskiej."
-  }, 
-  {
-    "id": 234,
-    "pytanie": "Wydobywani kopalin można podjąć:",
-    "odpowiedzi": {
-      "A": "za zgodą właściciela nieruchomości na potrzeby gminy",
-      "B": "za zgodą wójta",
-      "C": "wyłącznie jako koncesjonowaną działalność gospodarczą w rozumieniu ustawy z dnia 2 lipca 2004 r o swobodzie działalności gospodarczej"
-    },
-    "poprawne": [
-      ""
-    ],
-    "podstawa_prawna": "Art. 21 ust. 1 PGiG",
-    "tresc_artykulu": "Działalność w zakresie: 2) wydobywania kopalin ze złóż – może być wykonywana po uzyskaniu koncesji. Prawo o swobodzie działalności gospodarczej zastąpiono Prawem Przedsiębiorców."
-  },
+  },  
   {
     "id": 235,
     "pytanie": "Projektowanie i wykonywanie badań na potrzeby wykorzystania ciepła Ziemi to:",
@@ -3222,7 +3208,7 @@ BAZY_PYTAN = {
     "poprawne": [
       "B"
     ],
-    "podstawa_prawna": "Art. 180 ust. ",
+    "podstawa_prawna": "Art. 180 PGiG",
     "tresc_artykulu": "Kto nie wykonuje decyzji organu administracji geologicznej, dotyczącej: 1) zakazu wykonywania określonych czynności przez osoby, które wykonują te czynności z rażącym niedbalstwem, z naruszeniem ustawy lub rażącym naruszeniem wydanych na jej podstawie przepisów, 2) wstrzymania działalności lub nakazu niezwłocznego usunięcia stwierdzonych uchybień lub nakazu podjęcia czynności mających na celu doprowadzenie środowiska do należytego stanu, w przypadku stwierdzenia wykonywania działalności bez zatwierdzonego projektu robót geologicznych, lub bez przedłożonego projektu robót geologicznych, który nie podlega zatwierdzeniu, lub z naruszeniem warunków określonych w koncesji lub tym projekcie, podlega karze grzywny. "
   },
   {

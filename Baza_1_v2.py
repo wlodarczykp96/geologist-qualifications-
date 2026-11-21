@@ -1921,7 +1921,7 @@ BAZY_PYTAN = {
     "tresc_artykulu": "3. W ramach prowadzonej ewidencji zasobów złoża kopaliny sporządza się corocznie, w terminie do dnia 28 lutego, według stanu na dzień 31 grudnia poprzedniego roku, operat ewidencyjny zasobów złoża kopaliny, zwany dalej „operatem ewidencyjnym”."
   },
   {
-    "id": *145,
+    "id": 145,
     "pytanie": "W których spośród wymienionych okoliczności przedsiębiorca sporządza corocznie operat ewidencyjny na podstawie obmiaru wyrobiska lub pomiarów wydajności odwiertów:",
     "odpowiedzi": {
       "A": "dla złóż kopalin pospolitych, z których wydobycie w roku kalendarzowym nie przekracza 20.000 m3 kopaliny,",

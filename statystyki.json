@@ -479,6 +479,14 @@
             "zdane": true,
             "wynik_str": "44/50",
             "procent": 88.0
+        },
+        {
+            "data": "2026-11-22",
+            "tryb": "Egzamin (Losowo – 50 pytań / 20 min)",
+            "baza": "Wszystkie",
+            "zdane": true,
+            "wynik_str": "39/50",
+            "procent": 78.0
         }
     ],
     "Edyta": [],
